@@ -1,7 +1,7 @@
 
 # SONATA
 
-ACS source and split ASSETS for SONATA.
+ACS source and split ASSETS for SONATA. for use with Ultimate Doom Builder. untested outside of custom eos fork of GZ/UZDoom.
 
 as such, this repo contains spoilers for SONATA.
 
