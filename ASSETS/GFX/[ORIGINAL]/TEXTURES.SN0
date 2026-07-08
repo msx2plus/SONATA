@@ -1,0 +1,1197 @@
+// SONATA COMPILED GRAPHICS DEFINITIONS
+
+Graphic "RPGBLSC1", 320, 256
+{
+	Patch "_COMPILE", 0, 0
+}
+
+Graphic "RPGBLSC2", 320, 256
+{
+	Patch "_COMPILE", -320, 0
+}
+
+Graphic "RPGBRDR", 89, 256
+{
+	Patch "_COMPILE", -640, 0
+}
+
+Graphic "_BBGHALF", 320, 256
+{
+	Patch "_COMPILE", 0, -256
+}
+
+Graphic "_BBGPE", 96, 256
+{
+	Patch "_COMPILE", -320, -256
+}
+
+Graphic "_BBGPA", 102, 254
+{
+	Patch "_COMPILE", -416, -256
+}
+
+Graphic "_BBGPH", 112, 236
+{
+	Patch "_COMPILE", -518, -256
+}
+
+Graphic "RPGSHOP", 224, 224
+{
+	Patch "_COMPILE", -630, -256
+}
+
+Graphic "_BBGPB", 142, 190
+{
+	Patch "_COMPILE", -854, -256
+}
+
+Graphic "GO_ANGEL", 224, 160
+{
+	Patch "_COMPILE", 0, -512
+}
+
+Graphic "_BBGPEA", 160, 160
+{
+	Patch "_COMPILE", -224, -512
+}
+
+Graphic "RPGOVER", 144, 144
+{
+	Patch "_COMPILE", -384, -512
+}
+
+Graphic "_BBGP0", 96, 128
+{
+	Patch "_COMPILE", -528, -512
+}
+
+Graphic "_BBGP1", 78, 128
+{
+	Patch "_COMPILE", -624, -512
+}
+
+Graphic "_BBGP3", 96, 128
+{
+	Patch "_COMPILE", -702, -512
+}
+
+Graphic "_BBGP6", 96, 128
+{
+	Patch "_COMPILE", -798, -512
+}
+
+Graphic "_BBGP7", 87, 128
+{
+	Patch "_COMPILE", -894, -512
+}
+
+Graphic "_BBGP8", 128, 128
+{
+	Patch "_COMPILE", 0, -672
+}
+
+Graphic "_BBGPC", 83, 128
+{
+	Patch "_COMPILE", -128, -672
+}
+
+Graphic "_BBGPD", 96, 128
+{
+	Patch "_COMPILE", -211, -672
+}
+
+Graphic "_BBGPF", 144, 128
+{
+	Patch "_COMPILE", -307, -672
+}
+
+Graphic "_BBGP4", 96, 120
+{
+	Patch "_COMPILE", -451, -672
+}
+
+Graphic "_BBGPG", 128, 120
+{
+	Patch "_COMPILE", -547, -672
+}
+
+Graphic "RPGBFX1", 128, 112
+{
+	Patch "_COMPILE", -675, -672
+}
+
+Graphic "RPGSCRN1", 160, 112
+{
+	Patch "_COMPILE", -803, -672
+}
+
+Graphic "RPGSCRN2", 160, 112
+{
+	Patch "_COMPILE", 0, -800
+}
+
+Graphic "RPGSCRN3", 160, 112
+{
+	Patch "_COMPILE", -160, -800
+}
+
+Graphic "RPGSCRN4", 160, 112
+{
+	Patch "_COMPILE", -320, -800
+}
+
+Graphic "RPGSCRN5", 160, 112
+{
+	Patch "_COMPILE", -480, -800
+}
+
+Graphic "RPGSCRN6", 160, 112
+{
+	Patch "_COMPILE", -640, -800
+}
+
+Graphic "_BGBS01", 160, 112
+{
+	Patch "_COMPILE", -800, -800
+}
+
+Graphic "_BGBS02", 160, 112
+{
+	Patch "_COMPILE", 0, -912
+}
+
+Graphic "_BGBS03", 160, 112
+{
+	Patch "_COMPILE", -160, -912
+}
+
+Graphic "RPGDMENU", 88, 88
+{
+	Patch "_COMPILE", -320, -912
+}
+
+Graphic "RPGTITLE", 214, 84
+{
+	Patch "_COMPILE", -408, -912
+}
+
+Graphic "RPGBFX5", 80, 80
+{
+	Patch "_COMPILE", -622, -912
+}
+
+Graphic "RPGBFX6", 80, 80
+{
+	Patch "_COMPILE", -702, -912
+}
+
+Graphic "RPGBFX7", 80, 80
+{
+	Patch "_COMPILE", -782, -912
+}
+
+Graphic "RPGCONSP", 80, 80
+{
+	Patch "_COMPILE", -862, -912
+}
+
+Graphic "RPGMENU", 80, 64
+{
+	Patch "_COMPILE", 0, -1024
+}
+
+Graphic "RPGRUN", 128, 64
+{
+	Patch "_COMPILE", -80, -1024
+}
+
+Graphic "RPGTBOX", 224, 64
+{
+	Patch "_COMPILE", -208, -1024
+}
+
+Graphic "RPGBFX2", 48, 48
+{
+	Patch "_COMPILE", -432, -1024
+}
+
+Graphic "RPGBFX4", 48, 48
+{
+	Patch "_COMPILE", -480, -1024
+}
+
+Graphic "RPGBTILE", 48, 48
+{
+	Patch "_COMPILE", -528, -1024
+}
+
+Graphic "RPGBTILG", 48, 48
+{
+	Patch "_COMPILE", -576, -1024
+}
+
+Graphic "RPGBTILM", 48, 48
+{
+	Patch "_COMPILE", -624, -1024
+}
+
+Graphic "RPGPBOX", 48, 48
+{
+	Patch "_COMPILE", -672, -1024
+}
+
+Graphic "_BBGP5", 96, 48
+{
+	Patch "_COMPILE", -720, -1024
+}
+
+Graphic "RPGDD1", 150, 40
+{
+	Patch "_COMPILE", -816, -1024
+}
+
+Graphic "RPGDD2", 150, 40
+{
+	Patch "_COMPILE", 0, -1088
+}
+
+Graphic "RPGDD3", 150, 40
+{
+	Patch "_COMPILE", -150, -1088
+}
+
+Graphic "RPGDD4", 150, 40
+{
+	Patch "_COMPILE", -300, -1088
+}
+
+Graphic "RPGDD5", 150, 40
+{
+	Patch "_COMPILE", -450, -1088
+}
+
+Graphic "RPGBEX0", 32, 32
+{
+	Patch "_COMPILE", -600, -1088
+}
+
+Graphic "RPGBEX1", 32, 32
+{
+	Patch "_COMPILE", -632, -1088
+}
+
+Graphic "RPGBEX2", 32, 32
+{
+	Patch "_COMPILE", -664, -1088
+}
+
+Graphic "RPGBEX3", 32, 32
+{
+	Patch "_COMPILE", -696, -1088
+}
+
+Graphic "RPGBEX4", 32, 32
+{
+	Patch "_COMPILE", -728, -1088
+}
+
+Graphic "RPGBEX5", 32, 32
+{
+	Patch "_COMPILE", -760, -1088
+}
+
+Graphic "RPGBEX6", 32, 32
+{
+	Patch "_COMPILE", -792, -1088
+}
+
+Graphic "RPGBFX3", 32, 32
+{
+	Patch "_COMPILE", -824, -1088
+}
+
+Graphic "RPGDRK", 32, 32
+{
+	Patch "_COMPILE", -856, -1088
+}
+
+Graphic "RPGELPHD", 32, 32
+{
+	Patch "_COMPILE", -888, -1088
+}
+
+Graphic "RPGEYE", 32, 32
+{
+	Patch "_COMPILE", -920, -1088
+}
+
+Graphic "RPGEYE1", 32, 32
+{
+	Patch "_COMPILE", -952, -1088
+}
+
+Graphic "RPGEYE2", 32, 32
+{
+	Patch "_COMPILE", -984, -1088
+}
+
+Graphic "RPGEYE3", 32, 32
+{
+	Patch "_COMPILE", 0, -1128
+}
+
+Graphic "RPGEYE4", 32, 32
+{
+	Patch "_COMPILE", -32, -1128
+}
+
+Graphic "RPGEYE5", 32, 32
+{
+	Patch "_COMPILE", -64, -1128
+}
+
+Graphic "RPGEYE6", 32, 32
+{
+	Patch "_COMPILE", -96, -1128
+}
+
+Graphic "RPGFACE6", 32, 32
+{
+	Patch "_COMPILE", -128, -1128
+}
+
+Graphic "RPGFACE7", 32, 32
+{
+	Patch "_COMPILE", -160, -1128
+}
+
+Graphic "RPGFACE8", 32, 32
+{
+	Patch "_COMPILE", -192, -1128
+}
+
+Graphic "RPGFACE9", 32, 32
+{
+	Patch "_COMPILE", -224, -1128
+}
+
+Graphic "RPGGUTS", 32, 32
+{
+	Patch "_COMPILE", -256, -1128
+}
+
+Graphic "RPGHUD", 320, 32
+{
+	Patch "_COMPILE", -288, -1128
+}
+
+Graphic "RPGIDOL", 32, 32
+{
+	Patch "_COMPILE", -608, -1128
+}
+
+Graphic "RPGLTQ", 32, 32
+{
+	Patch "_COMPILE", -640, -1128
+}
+
+Graphic "RPGMGARD", 32, 32
+{
+	Patch "_COMPILE", -672, -1128
+}
+
+Graphic "RPGMONS1", 32, 32
+{
+	Patch "_COMPILE", -704, -1128
+}
+
+Graphic "RPGMONS2", 32, 32
+{
+	Patch "_COMPILE", -736, -1128
+}
+
+Graphic "RPGMONS3", 32, 32
+{
+	Patch "_COMPILE", -768, -1128
+}
+
+Graphic "RPGMOON", 32, 32
+{
+	Patch "_COMPILE", -800, -1128
+}
+
+Graphic "RPGMSXP", 32, 32
+{
+	Patch "_COMPILE", -832, -1128
+}
+
+Graphic "RPGPNF", 32, 32
+{
+	Patch "_COMPILE", -864, -1128
+}
+
+Graphic "RPGSLOT0", 32, 32
+{
+	Patch "_COMPILE", -896, -1128
+}
+
+Graphic "RPGSLOT1", 32, 32
+{
+	Patch "_COMPILE", -928, -1128
+}
+
+Graphic "RPGSLOT2", 32, 32
+{
+	Patch "_COMPILE", -960, -1128
+}
+
+Graphic "RPGSLOT3", 32, 32
+{
+	Patch "_COMPILE", 0, -1160
+}
+
+Graphic "RPGSLOT4", 32, 32
+{
+	Patch "_COMPILE", -32, -1160
+}
+
+Graphic "RPGSLOT5", 32, 32
+{
+	Patch "_COMPILE", -64, -1160
+}
+
+Graphic "RPGSLOT6", 32, 32
+{
+	Patch "_COMPILE", -96, -1160
+}
+
+Graphic "RPGTUNL", 32, 32
+{
+	Patch "_COMPILE", -128, -1160
+}
+
+Graphic "_PGCOMP1", 16, 32
+{
+	Patch "_COMPILE", -160, -1160
+}
+
+Graphic "_PGCOMP2", 32, 32
+{
+	Patch "_COMPILE", -176, -1160
+}
+
+Graphic "_PGCOMP3", 56, 32
+{
+	Patch "_COMPILE", -208, -1160
+}
+
+Graphic "RPGNOWAY", 144, 24
+{
+	Patch "_COMPILE", -264, -1160
+}
+
+Graphic "GUWA0", 8, 16
+{
+	Patch "_COMPILE", -408, -1160
+}
+
+Graphic "GUWA1", 8, 16
+{
+	Patch "_COMPILE", -416, -1160
+}
+
+Graphic "GUWA2", 8, 16
+{
+	Patch "_COMPILE", -424, -1160
+}
+
+Graphic "GUWA3", 8, 16
+{
+	Patch "_COMPILE", -432, -1160
+}
+
+Graphic "GUWA4", 8, 16
+{
+	Patch "_COMPILE", -440, -1160
+}
+
+Graphic "GUWA5", 8, 16
+{
+	Patch "_COMPILE", -448, -1160
+}
+
+Graphic "GUWA6", 8, 16
+{
+	Patch "_COMPILE", -456, -1160
+}
+
+Graphic "GUWA7", 8, 16
+{
+	Patch "_COMPILE", -464, -1160
+}
+
+Graphic "GUWA8", 8, 16
+{
+	Patch "_COMPILE", -472, -1160
+}
+
+Graphic "GUWA9", 8, 16
+{
+	Patch "_COMPILE", -480, -1160
+}
+
+Graphic "RPGBANDP", 14, 16
+{
+	Patch "_COMPILE", -488, -1160
+}
+
+Graphic "RPGBANDS", 14, 16
+{
+	Patch "_COMPILE", -502, -1160
+}
+
+Graphic "RPGBATK1", 16, 16
+{
+	Patch "_COMPILE", -516, -1160
+}
+
+Graphic "RPGBATK2", 16, 16
+{
+	Patch "_COMPILE", -532, -1160
+}
+
+Graphic "RPGBATK3", 16, 16
+{
+	Patch "_COMPILE", -548, -1160
+}
+
+Graphic "RPGBBMX1", 16, 16
+{
+	Patch "_COMPILE", -564, -1160
+}
+
+Graphic "RPGBBMX2", 16, 16
+{
+	Patch "_COMPILE", -580, -1160
+}
+
+Graphic "RPGBBMX3", 16, 16
+{
+	Patch "_COMPILE", -596, -1160
+}
+
+Graphic "RPGBBOM1", 16, 16
+{
+	Patch "_COMPILE", -612, -1160
+}
+
+Graphic "RPGBBOM2", 16, 16
+{
+	Patch "_COMPILE", -628, -1160
+}
+
+Graphic "RPGBBOW0", 16, 16
+{
+	Patch "_COMPILE", -644, -1160
+}
+
+Graphic "RPGBBOW1", 16, 16
+{
+	Patch "_COMPILE", -660, -1160
+}
+
+Graphic "RPGBBOW2", 16, 16
+{
+	Patch "_COMPILE", -676, -1160
+}
+
+Graphic "RPGBICO3", 16, 16
+{
+	Patch "_COMPILE", -692, -1160
+}
+
+Graphic "RPGBICO4", 16, 16
+{
+	Patch "_COMPILE", -708, -1160
+}
+
+Graphic "RPGBICO5", 16, 16
+{
+	Patch "_COMPILE", -724, -1160
+}
+
+Graphic "RPGBICO6", 16, 16
+{
+	Patch "_COMPILE", -740, -1160
+}
+
+Graphic "RPGBICO7", 16, 16
+{
+	Patch "_COMPILE", -756, -1160
+}
+
+Graphic "RPGBICO8", 16, 16
+{
+	Patch "_COMPILE", -772, -1160
+}
+
+Graphic "RPGBICO9", 16, 16
+{
+	Patch "_COMPILE", -788, -1160
+}
+
+Graphic "RPGBICOA", 16, 16
+{
+	Patch "_COMPILE", -804, -1160
+}
+
+Graphic "RPGBICOB", 16, 16
+{
+	Patch "_COMPILE", -820, -1160
+}
+
+Graphic "RPGBICOC", 16, 16
+{
+	Patch "_COMPILE", -836, -1160
+}
+
+Graphic "RPGBICOD", 16, 16
+{
+	Patch "_COMPILE", -852, -1160
+}
+
+Graphic "RPGBICOE", 16, 16
+{
+	Patch "_COMPILE", -868, -1160
+}
+
+Graphic "RPGBMEL0", 16, 16
+{
+	Patch "_COMPILE", -884, -1160
+}
+
+Graphic "RPGBMEL1", 16, 16
+{
+	Patch "_COMPILE", -900, -1160
+}
+
+Graphic "RPGBMEL2", 16, 16
+{
+	Patch "_COMPILE", -916, -1160
+}
+
+Graphic "RPGBOM", 16, 16
+{
+	Patch "_COMPILE", -932, -1160
+}
+
+Graphic "RPGBOMW", 16, 16
+{
+	Patch "_COMPILE", -948, -1160
+}
+
+Graphic "RPGBOOK", 16, 16
+{
+	Patch "_COMPILE", -964, -1160
+}
+
+Graphic "RPGBS1", 16, 16
+{
+	Patch "_COMPILE", -980, -1160
+}
+
+Graphic "RPGBS10", 16, 16
+{
+	Patch "_COMPILE", -996, -1160
+}
+
+Graphic "RPGBS11", 16, 16
+{
+	Patch "_COMPILE", 0, -1192
+}
+
+Graphic "RPGBS12", 16, 16
+{
+	Patch "_COMPILE", -16, -1192
+}
+
+Graphic "RPGBS13", 16, 16
+{
+	Patch "_COMPILE", -32, -1192
+}
+
+Graphic "RPGBS14", 16, 16
+{
+	Patch "_COMPILE", -48, -1192
+}
+
+Graphic "RPGBS15", 16, 16
+{
+	Patch "_COMPILE", -64, -1192
+}
+
+Graphic "RPGBS2", 16, 16
+{
+	Patch "_COMPILE", -80, -1192
+}
+
+Graphic "RPGBS3", 16, 16
+{
+	Patch "_COMPILE", -96, -1192
+}
+
+Graphic "RPGBS4", 16, 16
+{
+	Patch "_COMPILE", -112, -1192
+}
+
+Graphic "RPGBS5", 16, 16
+{
+	Patch "_COMPILE", -128, -1192
+}
+
+Graphic "RPGBS6", 16, 16
+{
+	Patch "_COMPILE", -144, -1192
+}
+
+Graphic "RPGBS7", 16, 16
+{
+	Patch "_COMPILE", -160, -1192
+}
+
+Graphic "RPGBS8", 16, 16
+{
+	Patch "_COMPILE", -176, -1192
+}
+
+Graphic "RPGBS9", 16, 16
+{
+	Patch "_COMPILE", -192, -1192
+}
+
+Graphic "RPGBUI", 48, 16
+{
+	Patch "_COMPILE", -208, -1192
+}
+
+Graphic "RPGBWRN0", 16, 16
+{
+	Patch "_COMPILE", -256, -1192
+}
+
+Graphic "RPGBWRN1", 16, 16
+{
+	Patch "_COMPILE", -272, -1192
+}
+
+Graphic "RPGBWRN2", 16, 16
+{
+	Patch "_COMPILE", -288, -1192
+}
+
+Graphic "RPGBWRN3", 16, 16
+{
+	Patch "_COMPILE", -304, -1192
+}
+
+Graphic "RPGBWRN4", 16, 16
+{
+	Patch "_COMPILE", -320, -1192
+}
+
+Graphic "RPGBWRN5", 16, 16
+{
+	Patch "_COMPILE", -336, -1192
+}
+
+Graphic "RPGBWRN6", 16, 16
+{
+	Patch "_COMPILE", -352, -1192
+}
+
+Graphic "RPGBWRN7", 16, 16
+{
+	Patch "_COMPILE", -368, -1192
+}
+
+Graphic "RPGBWRN8", 16, 16
+{
+	Patch "_COMPILE", -384, -1192
+}
+
+Graphic "RPGBWRN9", 16, 16
+{
+	Patch "_COMPILE", -400, -1192
+}
+
+Graphic "RPGELPH1", 16, 16
+{
+	Patch "_COMPILE", -416, -1192
+}
+
+Graphic "RPGELPH2", 16, 16
+{
+	Patch "_COMPILE", -432, -1192
+}
+
+Graphic "RPGELPHB", 16, 16
+{
+	Patch "_COMPILE", -448, -1192
+}
+
+Graphic "RPGHOWL", 80, 16
+{
+	Patch "_COMPILE", -464, -1192
+}
+
+Graphic "RPGKEY1", 16, 16
+{
+	Patch "_COMPILE", -544, -1192
+}
+
+Graphic "RPGKEY2", 16, 16
+{
+	Patch "_COMPILE", -560, -1192
+}
+
+Graphic "RPGKEY3", 16, 16
+{
+	Patch "_COMPILE", -576, -1192
+}
+
+Graphic "RPGKEYH1", 16, 16
+{
+	Patch "_COMPILE", -592, -1192
+}
+
+Graphic "RPGKEYH2", 16, 16
+{
+	Patch "_COMPILE", -608, -1192
+}
+
+Graphic "RPGKEYH3", 16, 16
+{
+	Patch "_COMPILE", -624, -1192
+}
+
+Graphic "RPGLTQS", 16, 16
+{
+	Patch "_COMPILE", -640, -1192
+}
+
+Graphic "RPGPOSR", 16, 16
+{
+	Patch "_COMPILE", -656, -1192
+}
+
+Graphic "RPGPOSW", 16, 16
+{
+	Patch "_COMPILE", -672, -1192
+}
+
+Graphic "RPGPOT", 16, 16
+{
+	Patch "_COMPILE", -688, -1192
+}
+
+Graphic "RPGPOTW", 16, 16
+{
+	Patch "_COMPILE", -704, -1192
+}
+
+Graphic "RPGSKATE", 16, 16
+{
+	Patch "_COMPILE", -720, -1192
+}
+
+Graphic "RPGSSLT", 16, 16
+{
+	Patch "_COMPILE", -736, -1192
+}
+
+Graphic "RPGTPORT", 16, 16
+{
+	Patch "_COMPILE", -752, -1192
+}
+
+Graphic "RPGTUNLS", 16, 16
+{
+	Patch "_COMPILE", -768, -1192
+}
+
+Graphic "RPGTUNLT", 16, 16
+{
+	Patch "_COMPILE", -784, -1192
+}
+
+Graphic "RPGBUIA", 1, 8
+{
+	Patch "_COMPILE", -800, -1192
+}
+
+Graphic "RPGBUIM", 1, 8
+{
+	Patch "_COMPILE", -801, -1192
+}
+
+Graphic "UNSCII0", 8, 8
+{
+	Patch "_COMPILE", -802, -1192
+}
+
+Graphic "UNSCII1", 8, 8
+{
+	Patch "_COMPILE", -810, -1192
+}
+
+Graphic "UNSCII2", 8, 8
+{
+	Patch "_COMPILE", -818, -1192
+}
+
+Graphic "UNSCII3", 8, 8
+{
+	Patch "_COMPILE", -826, -1192
+}
+
+Graphic "UNSCII4", 8, 8
+{
+	Patch "_COMPILE", -834, -1192
+}
+
+Graphic "UNSCII5", 8, 8
+{
+	Patch "_COMPILE", -842, -1192
+}
+
+Graphic "UNSCII6", 8, 8
+{
+	Patch "_COMPILE", -850, -1192
+}
+
+Graphic "UNSCII7", 8, 8
+{
+	Patch "_COMPILE", -858, -1192
+}
+
+Graphic "UNSCII8", 8, 8
+{
+	Patch "_COMPILE", -866, -1192
+}
+
+Graphic "UNSCII9", 8, 8
+{
+	Patch "_COMPILE", -874, -1192
+}
+
+Graphic "UNSCIIA", 8, 8
+{
+	Patch "_COMPILE", -882, -1192
+}
+
+Graphic "UNSCIIAM", 8, 8
+{
+	Patch "_COMPILE", -890, -1192
+}
+
+Graphic "UNSCIIAP", 8, 8
+{
+	Patch "_COMPILE", -898, -1192
+}
+
+Graphic "UNSCIIB", 8, 8
+{
+	Patch "_COMPILE", -906, -1192
+}
+
+Graphic "UNSCIIB1", 8, 8
+{
+	Patch "_COMPILE", -914, -1192
+}
+
+Graphic "UNSCIIB2", 8, 8
+{
+	Patch "_COMPILE", -922, -1192
+}
+
+Graphic "UNSCIIBA", 8, 8
+{
+	Patch "_COMPILE", -930, -1192
+}
+
+Graphic "UNSCIIC", 8, 8
+{
+	Patch "_COMPILE", -938, -1192
+}
+
+Graphic "UNSCIICM", 8, 8
+{
+	Patch "_COMPILE", -946, -1192
+}
+
+Graphic "UNSCIICO", 8, 8
+{
+	Patch "_COMPILE", -954, -1192
+}
+
+Graphic "UNSCIID", 8, 8
+{
+	Patch "_COMPILE", -962, -1192
+}
+
+Graphic "UNSCIIDA", 8, 8
+{
+	Patch "_COMPILE", -970, -1192
+}
+
+Graphic "UNSCIIDL", 8, 8
+{
+	Patch "_COMPILE", -978, -1192
+}
+
+Graphic "UNSCIIE", 8, 8
+{
+	Patch "_COMPILE", -986, -1192
+}
+
+Graphic "UNSCIIEX", 8, 8
+{
+	Patch "_COMPILE", -994, -1192
+}
+
+Graphic "UNSCIIF", 8, 8
+{
+	Patch "_COMPILE", -1002, -1192
+}
+
+Graphic "UNSCIIFA", 8, 8
+{
+	Patch "_COMPILE", 0, -1208
+}
+
+Graphic "UNSCIIG", 8, 8
+{
+	Patch "_COMPILE", -8, -1208
+}
+
+Graphic "UNSCIIH", 8, 8
+{
+	Patch "_COMPILE", -16, -1208
+}
+
+Graphic "UNSCIIHS", 8, 8
+{
+	Patch "_COMPILE", -24, -1208
+}
+
+Graphic "UNSCIII", 8, 8
+{
+	Patch "_COMPILE", -32, -1208
+}
+
+Graphic "UNSCIIJ", 8, 8
+{
+	Patch "_COMPILE", -40, -1208
+}
+
+Graphic "UNSCIIK", 8, 8
+{
+	Patch "_COMPILE", -48, -1208
+}
+
+Graphic "UNSCIIL", 8, 8
+{
+	Patch "_COMPILE", -56, -1208
+}
+
+Graphic "UNSCIIM", 8, 8
+{
+	Patch "_COMPILE", -64, -1208
+}
+
+Graphic "UNSCIIN", 8, 8
+{
+	Patch "_COMPILE", -72, -1208
+}
+
+Graphic "UNSCIIO", 8, 8
+{
+	Patch "_COMPILE", -80, -1208
+}
+
+Graphic "UNSCIIP", 8, 8
+{
+	Patch "_COMPILE", -88, -1208
+}
+
+Graphic "UNSCIIPR", 8, 8
+{
+	Patch "_COMPILE", -96, -1208
+}
+
+Graphic "UNSCIIQ", 8, 8
+{
+	Patch "_COMPILE", -104, -1208
+}
+
+Graphic "UNSCIIQU", 8, 8
+{
+	Patch "_COMPILE", -112, -1208
+}
+
+Graphic "UNSCIIR", 8, 8
+{
+	Patch "_COMPILE", -120, -1208
+}
+
+Graphic "UNSCIIS", 8, 8
+{
+	Patch "_COMPILE", -128, -1208
+}
+
+Graphic "UNSCIISC", 8, 8
+{
+	Patch "_COMPILE", -136, -1208
+}
+
+Graphic "UNSCIISL", 8, 8
+{
+	Patch "_COMPILE", -144, -1208
+}
+
+Graphic "UNSCIIT", 8, 8
+{
+	Patch "_COMPILE", -152, -1208
+}
+
+Graphic "UNSCIIU", 8, 8
+{
+	Patch "_COMPILE", -160, -1208
+}
+
+Graphic "UNSCIIV", 8, 8
+{
+	Patch "_COMPILE", -168, -1208
+}
+
+Graphic "UNSCIIW", 8, 8
+{
+	Patch "_COMPILE", -176, -1208
+}
+
+Graphic "UNSCIIX", 8, 8
+{
+	Patch "_COMPILE", -184, -1208
+}
+
+Graphic "UNSCIIY", 8, 8
+{
+	Patch "_COMPILE", -192, -1208
+}
+
+Graphic "UNSCIIZ", 8, 8
+{
+	Patch "_COMPILE", -200, -1208
+}
+

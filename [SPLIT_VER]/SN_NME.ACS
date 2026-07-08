@@ -1,0 +1,407 @@
+// ENEMIES ////////////////////
+
+	#define bENEMY_VICTIM 0
+	#define bENEMY_CHICKEN 12
+	#define bENEMY_PRAYER 24
+	#define bENEMY_SEER 36
+	#define bENEMY_WILLO 48
+    #define bENEMY_GUTS 60
+    #define bENEMY_MASS 72
+    #define bENEMY_CRAWL 84
+    #define bENEMY_NOVA 96
+    #define bENEMY_ELPH 108
+    #define bENEMY_HATCHLING 120
+    #define bENEMY_MOONGUARD 132
+    #define bENEMY_ELPH2 144
+    #define bENEMY_ENT 156
+    #define bENEMY_HOLY1 168
+    #define bENEMY_HOLY2 180
+    #define bENEMY_FLY 192
+    #define bENEMY_PAINFRAME 204
+    #define bENEMY_DARK 216
+    #define bENEMY_SYSTEM 228
+    #define bENEMY_MOON1 240
+    #define bENEMY_MOON2 252
+    #define bENEMY_ATLAS 264
+
+int enemyDB [276] =
+{
+    // 0 VICTIM (0)
+    "ANGEL",           // name
+    "RPGNME0",          // texture
+    50,                 // HP
+    12,                 // y amplitude
+    960,                // y frequency
+    24,                 // x amplitude
+    750,                // x frequency
+    BGM_INTERLOCUTEUR,// music
+    "BATLBG1",                  // bg
+    "RPGVICT",          // hurt sound
+    1.4,                 // bow multiplier
+    1.0,                 // melee multipleir
+
+    // 1 CHICKEN (10)
+    "CHICKEN",          // name
+    "RPGNME1",          // texture
+    66,                 // HP
+    12,                 // y amplitude
+    1230,               // y frequency
+    0,                  // x amplitude
+    0,                  // x frequency
+    BGM_PROVOCATEUR,  // music
+    "BATLBG4",                  // bg
+    "RPGCHICK",             // hurt sound
+    1.0,                 // bow multiplier
+    1.5,                 // melee multipleir
+
+    // 2 PRAYER & SHADOW (20)
+    "PRAYER && SHADOW",  // name
+    "RPGNME2",          // texture
+    75,                // HP
+    6,                  // y amplitude
+    520,                // y frequency
+    48,                 // x amplitude
+    323,                // x frequency
+    BGM_PRAYER,       // music
+    "BATLBG0",                  // bg
+    "RPGPRAY",             // hurt sound
+    1.25,                 // bow multiplier
+    1.0,                 // melee multipleir
+
+    // 3 SEER (30)
+    "SEER", // name
+    "RPGNME3",          // texture
+    77,                 // HP
+    13,                 // y amplitude
+    243,                // y frequency
+    3,                  // x amplitude
+    323,                // x frequency
+    BGM_SEER,         // music
+    "BATLBG7",                  // bg
+    "RPGSEER",             // hurt sound
+    1.0,                 // bow multiplier
+    0.0,                 // melee multipleir
+
+	// 4 WILL-O' (40)
+    "WILL-O'-THE_WISP", // name
+    "RPGNME4",          // texture
+    70,                 // HP
+    8,                 // y amplitude
+    742,                // y frequency
+    6,                  // x amplitude
+    472,                // x frequency
+    BGM_FORBADE,         // music
+    "BATLBG5",                  // bg
+    "RPGWILLO",             // hurt sound
+    0.0,                 // bow multiplier
+    1.0,                 // melee multipleir
+
+	// 5 GUTS (50)
+    "GUTS", // name
+    "RPGNME5",          // texture
+    127,                 // HP
+    4,                 // y amplitude
+    343,                // y frequency
+    7,                  // x amplitude
+    989,                // x frequency
+    BGM_DEVIL,         // music
+    "BATLBG3",                  // bg
+    "RPGWILLO",             // hurt sound
+    0.8,                 // bow multiplier
+    1.2,                 // melee multipleir
+
+	// 6 MASS (60)
+    "MASS", // name
+    "RPGNME6",          // texture
+    88,                 // HP
+    4,                 // y amplitude
+    678,                // y frequency
+    7,                  // x amplitude
+    100,                // x frequency
+    BGM_SHAMBLE,         // music
+    "BATLBG8",                  // bg
+    "RPGMASS",             // hurt sound
+    0.5,                 // bow multiplier
+    4.0,                 // melee multipleir
+
+	// 7 CRAWLER (70)
+    "BURROWER", // name
+    "RPGNME7",          // texture
+    99,                 // HP
+    5,                 // y amplitude
+    678,                // y frequency
+    5,                  // x amplitude
+    544,                // x frequency
+    BGM_CRAWL,         // music
+    "BATLBG9",                  // bg
+    "RPGPEDE",             // hurt sound
+    1.0,                 // bow multiplier
+    1.3,                 // melee multipleir
+
+	// 8 SUPERNOVA (60)
+    "NOVA", // name
+    "RPGNME8",          // texture
+    88,                 // HP
+    16,                 // y amplitude
+    444,                // y frequency
+    16,                  // x amplitude
+    339,                // x frequency
+    BGM_SUPERNOVA,         // music
+    "BATLBG8",                  // bg
+    "RPGMASS",             // hurt sound
+    1.5,                 // bow multiplier
+    1.0,
+
+	// 9 ELPH
+    "VICTIM", // name
+    "RPGNMEB",          // texture
+    100,                 // HP
+    0,                 // y amplitude
+    1,                // y frequency
+    8,                  // x amplitude
+    100,                // x frequency
+    BGM_MIRROR,         // music
+    "JUSTBLK",                  // bg
+    "RPGELPH",             // hurt sound
+    1.5,                 // bow multiplier
+    1.5,
+
+    // 10 HATCHLING
+    "HATCHLING", // name
+    "RPGNME9",          // texture
+    70,                 // HP
+    4,                 // y amplitude
+    333,                // y frequency
+    24,                  // x amplitude
+    500,                // x frequency
+    BGM_EGG,         // music
+    "BATLBGC",                  // bg
+    "RPGHATCH",             // hurt sound
+    1.4,                 // bow multiplier
+    1.0,
+
+    // 11 MOONGUARD
+    "MOONGUARD", // name
+    "RPGNMEA",          // texture
+    128,                 // HP
+    4,                 // y amplitude
+    333,                // y frequency
+    8,                  // x amplitude
+    500,                // x frequency
+    BGM_DIVINITY,         // music
+    "BATLBGA",                  // bg
+    "RPGGUARD",             // hurt sound
+    1.0,                 // bow multiplier
+    1.0,
+
+	// 12 ELPH 2
+    "VICTIM II", // name
+    "RPGNMEC",          // texture
+    128,                 // HP
+    0,                 // y amplitude
+    1,                // y frequency
+    8,                  // x amplitude
+    100,                // x frequency
+    BGM_EPISODE,         // music
+    "BATLBGB",                  // bg
+    "RPGELPH2",             // hurt sound
+    1.5,                 // bow multiplier
+    1.5,
+
+	// 13 ENT
+    "ENT", // name
+    "RPGNMED",          // texture
+    80,                 // HP
+    0,                 // y amplitude
+    1,                // y frequency
+    12,                  // x amplitude
+    323,                // x frequency
+    BGM_ENT,         // music
+    "BATLBG6",                  // bg
+    "RPGENT",             // hurt sound
+    1.0,                 // bow multiplier
+    1.5,
+
+    // 14 HOLY 1
+    "LIGHTBEARER", // name
+    "RPGNMEE",          // texture
+    100,                 // HP
+    8,                 // y amplitude
+    323,                // y frequency
+    0,                  // x amplitude
+    1,                // x frequency
+    BGM_BLEAK,         // music
+    "BATLBG0",                  // bg
+    "RPGPHURT",             // hurt sound
+    1.0,                 // bow multiplier
+    1.5,
+
+    // 15 HOLY 2
+    "KEEPER", // name
+    "RPGNMEF",          // texture
+    50,                 // HP
+    4,                 // y amplitude
+    555,                // y frequency
+    16,                  // x amplitude
+    175,                // x frequency
+    BGM_HOLY,         // music
+    "BATLBG0",                  // bg
+    "RPGPHURT",             // hurt sound
+    1.0,                 // bow multiplier
+    0.0,
+
+	// 16 TEPHRITIDAE
+    "TEPHRITIDAE", // name
+    "RPGNMEG",          // texture
+    100,                 // HP
+    8,                 // y amplitude
+    444,                // y frequency
+    8,                  // x amplitude
+    555,                // x frequency
+    BGM_FIELD,         // music
+    "BATLBG6",                  // bg
+    "RPGFLY",             // hurt sound
+    1.0,                 // bow multiplier
+    1.5,
+
+	// 17 PAINFRAME
+    "PAINFRAME", // name
+    "RPGNMEH",          // texture
+    128,                 // HP
+    0,                 // y amplitude
+    0,                // y frequency
+    0,                  // x amplitude
+    0,                // x frequency
+    BGM_PFRM,         // music
+    "BATLBG8",                  // bg
+    "RPGPFRM",             // hurt sound
+    0.8,                 // bow multiplier
+    1.2,
+
+	// 18 DARK
+    "THE DARK", // name
+    "RPGNMEI",          // texture
+    128,                 // HP
+    0,                 // y amplitude
+    0,                // y frequency
+    0,                  // x amplitude
+    0,                // x frequency
+    BGM_DARK,         // music
+    "JUSTBLK",                  // bg
+    "RPGDARK",             // hurt sound
+    1.0,                 // bow multiplier
+    1.0,
+
+	// 19 NERVOUS SYSTEM
+    "SYSTEM", // name
+    "RPGNMEJ",          // texture
+    128,                 // HP
+    0,                 // y amplitude
+    0,                // y frequency
+    0,                  // x amplitude
+    0,                // x frequency
+    BGM_SHE,         // music
+    "BATLBGD",                  // bg
+    "RPGNERV",             // hurt sound
+    1.0,                 // bow multiplier
+    1.0,
+
+	// 20 MOON PT 1
+    "MIND", // name
+    "RPGNMEK",          // texture
+    128,                 // HP
+    3,                 // y amplitude
+    300,                // y frequency
+    0,                  // x amplitude
+    850,                // x frequency
+    BGM_END,         // music
+    "BBGMOON",                  // bg
+    "RPGMOON1",             // hurt sound
+    1.0,                 // bow multiplier
+    0.3,
+
+	// 20 MOON PT 2
+    "BODY", // name
+    "RPGNMEL",          // texture
+    128,                 // HP
+    0,                 // y amplitude
+    0,                // y frequency
+    5,                  // x amplitude
+    400,                // x frequency
+    BGM_BLEAK,         // music
+    "BBGMOON2",                  // bg
+    "RPGMOON2",             // hurt sound
+    0.3,                 // bow multiplier
+    1.0,
+
+	// 21 MOON PT 2
+    "ATLAS", // name
+    "RPGNMEM",          // texture
+    192,                 // HP
+    4,                 // y amplitude
+    400,                // y frequency
+    0,                  // x amplitude
+    0,                // x frequency
+    BGM_ATLAS,         // music
+    "BATLBGE",                  // bg
+    "RPGATLAS",             // hurt sound
+    1.0,               // bow multiplier
+    1.0,
+};
+
+int bgmEncounterDBsize = 255;
+
+int bgmEncounterDB[255] =
+{
+    ROOM_KEYS,          BGM_RAINBOW,        99,             99,             1,
+    ROOM_KEYS_OPEN,     BGM_SPACE,          99,             99,             1,
+    ROOM_MYSTERY,       BGM_ENCROACHING,    99,             99,             1,
+    ROOM_BURNING,       BGM_ENCROACHING,    99,             99,             1,
+    ROOM_BUSH_ENTRANCE, BGM_JADE,           bENEMY_ENT,     bENEMY_ENT,     1,
+    69,                 BGM_JADE,           bENEMY_ENT,     bENEMY_ENT,     1,
+    ROOM_FLY,           BGM_NONE,           99,             99,             1,
+    ROOM_TOWERA,        BGM_ENCROACHING,    bENEMY_ELPH,    99,             1,
+    ROOM_TOWERC,        BGM_ENCROACHING,    bENEMY_ELPH,    99,             1,
+    ROOM_TOWERBASEMENT, BGM_NONE,           99,             99,             1,
+    ROOM_TREE_EXIT,     BGM_CAVERN,         bENEMY_CRAWL,   bENEMY_CRAWL,   0,
+    ROOM_TREE_ENTRANCE, BGM_CAVERN,         bENEMY_CRAWL,   bENEMY_CRAWL,   0,
+    ROOM_HOMEELPH,      BGM_GRAVITY,        99,             99,             1,
+    ROOM_HOMEHALL,      BGM_GRAVITY,        99,             99,             1,
+    ROOM_HOMEMOON,      BGM_MOONROOM,       99,             99,             1,
+    ROOM_HOMEMOONBACK,  BGM_MOONROOM,       99,             99,             1,
+    ROOM_MOUNTAINTOP,   BGM_FAE,            bENEMY_SEER,    bENEMY_WILLO,   1,
+    ROOM_FAIRYTREE,     BGM_FAE,            bENEMY_SEER,    bENEMY_WILLO,   1,
+    ROOM_ANGELHALL,     BGM_NONE,           99,             99,             1,
+    ROOM_BURNING_BACK,  BGM_NONE,           99,             99,             1,
+    ROOM_BLOCKMAZE,     BGM_NONE,           99,             99,             1,
+    ROOM_GLITCHTOWER,   BGM_GLITCH,         bENEMY_PRAYER,  bENEMY_PRAYER,  1,
+    ROOM_GLITCH,        BGM_GLITCH,         bENEMY_PRAYER,  bENEMY_PRAYER,  1,
+    ROOM_WEST_GOINGDOWN,BGM_NEXUS,          bENEMY_VICTIM,  bENEMY_VICTIM,  1,
+    ROOM_HOMEOUTSIDE,   BGM_NEXUS,          bENEMY_VICTIM,  bENEMY_VICTIM,  1,
+    ROOM_EASTWARD,      BGM_NEXUS,          bENEMY_VICTIM,  bENEMY_VICTIM,  1,
+    ROOM_WESTWARD,      BGM_NEXUS,          bENEMY_VICTIM,  bENEMY_VICTIM,  1,
+    ROOM_SOUTHBOUND,    BGM_NEXUS,          bENEMY_VICTIM,  bENEMY_VICTIM,  1,
+    ROOM_GP,            BGM_ENDLESS,        bENEMY_CHICKEN, bENEMY_CHICKEN, 1,
+    ROOM_GLOW,          BGM_ENDLESS,        bENEMY_CHICKEN, bENEMY_CHICKEN, 1,
+    ROOM_PROTECTORS,    BGM_TENSION,        99,             99,             1,
+    ROOM_SOUTH_START,   BGM_CRAWL,          bENEMY_MASS,    bENEMY_NOVA,    1,
+    ROOM_PREPAIN,       BGM_CRAWL,          bENEMY_MASS,    bENEMY_NOVA,    1,
+    ROOM_PAINFRAME,     BGM_TENSION,        99,             99,             1,
+    ROOM_SOUTH_COMPUTER,BGM_CRAWL,          bENEMY_MASS,    bENEMY_NOVA,    1,
+    ROOM_POSTGUTS,      BGM_NONE,           99,             99,             1,
+    ROOM_STAR_MAZE_POST,BGM_NONE,           99,             99,             1,
+    ROOM_STAR_MAZE_A,   BGM_SPACE,          bENEMY_HATCHLING,99,            1,
+    ROOM_STAR_MAZE_C,   BGM_SPACE,          bENEMY_HATCHLING,99,            1,
+    ROOM_STAR_MAZE_D,   BGM_TENSION,        99,             99,             1,
+    ROOM_CHURCH,        BGM_TEMPLE,         bENEMY_HOLY1,   bENEMY_HOLY2,   0,
+    ROOM_MOON,          BGM_TEMPLE,         bENEMY_HOLY1,   bENEMY_HOLY2,   0,
+    ROOM_MOON_HOUSE,    BGM_NERVES,         99,             99,             1,
+    ROOM_MOON_HOUSE_3,  BGM_NERVES,         99,             99,             1,
+    ROOM_MOON_HOUSE_END,BGM_NONE,           99,             99,             1,
+    ROOM_CHURCH_3,      BGM_TEMPLE,         bENEMY_HOLY1,   bENEMY_HOLY2,   0,
+    ROOM_MSX,           BGM_MSX,            99,             99,             0,
+    ROOM_E,             BGM_ENDLESS,        bENEMY_CHICKEN, bENEMY_CHICKEN, 1,
+    ROOM_LTQ,           BGM_LTQ,            99,             99,             1,
+    ROOM_LTQ_UPPER,     BGM_NONE,           99,             99,             0,
+    ROOM_OUTSIDE_HOUSE, BGM_NONE,           bENEMY_ATLAS,   bENEMY_ATLAS,   1,
+};

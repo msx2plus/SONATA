@@ -1,0 +1,1397 @@
+// BATTLE ////////////////////////
+
+function void b_ClearFX (void)
+{
+	for (int i = 0; i < 12; i++)
+	{
+		clear(BATTLE_FX+i);
+	}
+}
+
+function void b_ClearSquares (void)
+{
+	for (int i = 0; i < 10; i++)
+	{
+		clear(BATTLE_SQUARE+i);
+	}
+}
+
+function void b_ClearIcons (void)
+{
+	for (int i = 0; i < 8; i++)
+	{
+		clear(BATTLE_ICONS+i);
+	}
+}
+
+function void b_ClearATBmeter (void)
+{
+	for (int i = 0; i < 100; i++)
+	{
+		clear(BATTLE_ATBMETER-i);
+	}
+}
+
+function void b_ClearSlot (void)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		clear(BATTLE_SLOT+i);
+	}
+}
+
+function void b_ClearAll (void)
+{
+	b_ClearFX();
+	b_ClearSquares();
+	b_ClearIcons();
+	b_ClearATBmeter();
+	clear(BATTLE_DMGNUM);
+	clear(BATTLE_ELPH);
+	clear(BATTLE_INFO1);
+	clear(BATTLE_INFO2);
+	clear(BATTLE_ENEMY);
+    clear(BATTLE_ENEMY-1);
+    clear(BATTLE_ENEMY-2);
+	clear(BATTLE_GRID);
+	clear(BATTLE_BG);
+}
+
+function void b_killScriptsSounds (void)
+{
+    ACS_NamedTerminate("b_potionHeal",0);
+    ACS_NamedTerminate("b_bombLaunch",0);
+    ACS_NamedTerminate("b_bombExplosions",0);
+    ACS_NamedTerminate("b_drawEnemy",0);
+    ACS_NamedTerminate("b_moveHandler",0);
+    ACS_NamedTerminate("b_battleMenu",0);
+    ACS_NamedTerminate("b_ATB",0);
+    ACS_NamedTerminate("b_attackSquare",0);
+    ACS_NamedTerminate("b_winExplosions",0);
+    ACS_NamedTerminate(strParam(s:"b_attackPatterns",i:bEnemyType),0);
+    StopSound(0,1);
+    StopSound(0,2);
+    StopSound(0,3);
+    StopSound(0,4);
+    StopSound(0,5);
+}
+
+script "b_initBattle" (int eType)
+{
+    if (eType == bENEMY_ATLAS || eType == bENEMY_ELPH2 || eType == bENEMY_FLY || eType == bENEMY_MOONGUARD || eType == bENEMY_GUTS || eType == bENEMY_PAINFRAME || eType == bENEMY_DARK || eType == bENEMY_MOON1 || eType == bENEMY_MOON2 || eType == bENEMY_SYSTEM)
+    {
+        bEnemyBoss = 1;
+    }
+    else {bEnemyBoss = 0;}
+
+    drawTime = 0;
+    bSafetyCheck = 1;
+    vHasControl = 0;
+    if (battleMusicSwitch)
+    {
+        SetMusicVolume(0.0);
+        changeBGM(BGM_NONE,2,FALSE);
+        if (eType != bENEMY_MOON1 && eType != bENEMY_MOON2 && eType != bENEMY_SYSTEM) {AmbientSound("RPGENCNT",127);}
+    }
+
+	for (int i = 1; i <= 8; i++)
+	{
+		str texture = strParam(s:"RPGBS",i:i);
+		for (int j = 0; j < 320; j++)
+		{
+			draw(texture,"A",UI_BATTLESTART+j,
+			0.1 + (((j%20)*16)<<16),
+			0.1 + (((j/20)*16)<<16));
+		}
+		Delay(2);
+	}
+	Delay(23);
+
+    if (battleMusicSwitch)
+    {
+        changeBGM(enemyDB[eType+7],0,FALSE);
+        SetMusicVolume(1.0);
+    }
+    bEnemyHP = enemyDB[eType+2];
+    bEnemyName = enemyDB[eType];
+    bEnemyType = eType;
+    bEnemyAttacking = 0;
+
+    b_ClearAll();
+    clear(UI_MENU);
+    clear(UI_MENUINFO);
+    clear(UI_MENUTEXT);
+    clear(UI_BOX);
+    clear(UI_MENUSELECTOR);
+    clear(UI_PORTBOX);
+    clear(UI_PORT);
+    clear(UI_TEXT);
+    clear(UI_MENUSELECTOR);
+    clear(UI_HUDBAR);
+    clear(UI_HUDFACE);
+    clear(UI_HUDKEY1);
+    clear(UI_HUDKEY2);
+    clear(UI_HUDKEY3);
+    clear(UI_HUDSKATE);
+    clear(UI_HUDBAND);
+    clear(UI_HUDBOOK);
+    clear(UI_HUDROOMNAME);
+    clear(ZONE_ELPH);
+    clear(ZONE_ROOM);
+    clear(ZONE_SPRITE1);
+    clear(ZONE_SPRITE2);
+    clear(ZONE_SPRITE3);
+    clear(ZONE_BG);
+
+    bElphPos = 4;
+
+    ACS_NamedExecute("b_drawEnemy",0);
+    b_drawHUD();
+    b_ATBreset();
+    draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+    draw(enemyDB[eType+8],"A",BATTLE_BG,160.0,128.0);
+
+	for (i = 8; i <= 15; i++)
+	{
+		texture = strParam(s:"RPGBS",i:i);
+		for (j = 0; j < 320; j++)
+		{
+			draw(texture,"A",UI_BATTLESTART+j,
+			0.1 + (((j%20)*16)<<16),
+			0.1 + (((j/20)*16)<<16));
+		}
+		Delay(2);
+	}
+	for (j = 0; j < 320; j++)
+	{
+		clear(UI_BATTLESTART+j);
+	}
+
+	bHasControl = 1;
+    ACS_NamedExecute("b_moveHandler",0);
+	Delay(90);
+    ACS_NamedExecute(strParam(s:"b_attackPatterns",i:eType),0);
+}
+
+script "b_drawEnemy" (void)
+{
+    bXSine = 0;
+    bYSine = 0;
+    bXOffset = 0;
+    bYOffset = 0;
+
+    int bXSineLH = 0;
+    int bYSineLH = 0;
+    int bXOffsetLH = 0;
+    int bYOffsetLH = 0;
+    int bXSineRH = 0;
+    int bYSineRH = 0;
+    int bXOffsetRH = 0;
+    int bYOffsetRH = 0;
+
+    bYAmp = enemyDB[bEnemyType+3];
+    bYFreq = enemyDB[bEnemyType+4];
+    bXAmp = enemyDB[bEnemyType+5];
+    bXFreq = enemyDB[bEnemyType+6];
+
+    while (1)
+    {
+        bXOffset = (FixedMul(sin(bXSine), bXAmp << 16)) >> 16;
+        bXSine = (bXSine + bXFreq) % 65535;
+        bYOffset = (FixedMul(sin(bYSine), bYAmp << 16)) >> 16;
+        bYSine = (bYSine + bYFreq) % 65535;
+        if (Timer()%7 < 3 && bEnemyHurt == 1 && bEnemyType != bENEMY_ATLAS)
+        {
+            clear(BATTLE_ENEMY);
+            clear(BATTLE_ENEMY-1);
+            clear(BATTLE_ENEMY-2);
+        }
+        else
+        {
+            // draw(enemyDB[bEnemyType+1], "A", BATTLE_ENEMY, BATTLE_GRID_X + (bXOffset << 16), (BATTLE_GRID_Y-112.0) + (bYOffset << 16));
+			setRes();
+			setFont((strParam(s:enemyDB[bEnemyType+1],s:(bEnemyHurt && Timer()%2 == 0 ? "X" : ""))));
+			HudMessage
+			(
+			s:"A";
+			HUDMSG_PLAIN,
+			BATTLE_ENEMY,
+			CR_UNTRANSLATED,
+			BATTLE_GRID_X + (bXOffset << 16),
+			(BATTLE_GRID_Y-112.0) + (bYOffset << 16),
+			0
+			);
+
+            if (bEnemyType == bENEMY_MOON1)
+            {
+                bXOffsetLH = (FixedMul(sin(bXSineLH), 4 << 16)) >> 16;
+                bXSineLH = (bXSineLH + Floor(bXFreq*0.9)) % 65535;
+                bYOffsetLH = (FixedMul(sin(bYSineLH), 4 << 16)) >> 16;
+                bYSineLH = (bYSineLH + Floor(bYFreq*0.9)) % 65535;
+
+                bXOffsetRH = (FixedMul(sin(bXSineRH), 4 << 16)) >> 16;
+                bXSineRH = (bXSineRH + Floor(bXFreq*0.85)) % 65535;
+                bYOffsetRH = (FixedMul(sin(bYSineRH), 4 << 16)) >> 16;
+                bYSineRH = (bYSineRH + Floor(bYFreq*0.85)) % 65535;
+
+                setRes();
+                setFont("RPGNMEK1");
+                HudMessage
+                (
+                s:"A";
+                HUDMSG_PLAIN,
+                BATTLE_ENEMY-1,
+                CR_UNTRANSLATED,
+                (BATTLE_GRID_X-96.0) + (bXOffsetLH << 16),
+                (BATTLE_GRID_Y-16.0) + (bYOffsetLH << 16),
+                0
+                );
+
+                setRes();
+                setFont("RPGNMEK2");
+                HudMessage
+                (
+                s:"A";
+                HUDMSG_PLAIN,
+                BATTLE_ENEMY-2,
+                CR_UNTRANSLATED,
+                (BATTLE_GRID_X+96.0) + (bXOffsetRH << 16),
+                (BATTLE_GRID_Y-16.0) + (bYOffsetRH << 16),
+                0
+                );
+            }
+        }
+        Delay(1);
+    }
+}
+
+function void b_drawHUD (void)
+{
+	if (bSafetyCheck)
+	{
+        str battleEnemyInfo = strparam(s:(bEnemyAttacking ? strParam(s:"\c[FamiRed]",s:bEnemyName) : bEnemyName),s:"\n",i:bEnemyHP);
+        draw("UNSCII",battleEnemyInfo,BATTLE_INFO2,162.4,158.0);
+        draw("RPGBUI","A",BATTLE_ATBMETER,BATTLE_GRID_X,BATTLE_GRID_Y+32.0);
+        drawElphHPmeter();
+	}
+}
+
+script "b_battleMenu" (void)
+{
+    bATBactive = 0;
+    PlaySound(0,"RPGATBF",4);
+    draw("RPGBICOE","A",BATTLE_ICONS,BATTLE_GRID_X-16.0,BATTLE_GRID_Y-16.0);
+    draw("RPGBICOD","A",BATTLE_ICONS+1,BATTLE_GRID_X+16.0,BATTLE_GRID_Y-16.0);
+    if (!bEnemyBoss) {draw("RPGBICOC","A",BATTLE_ICONS+2,BATTLE_GRID_X,BATTLE_GRID_Y+16.0);}
+    draw("RPGBICOB","A",BATTLE_ICONS+3,BATTLE_GRID_X,BATTLE_GRID_Y);
+    if (vHasBomb) {draw("RPGBOMW","A",BATTLE_ICONS+4,BATTLE_GRID_X-16.0,BATTLE_GRID_Y+16.0);}
+    if (vHasPotion) {draw("RPGPOTW","A",BATTLE_ICONS+5,BATTLE_GRID_X+16.0,BATTLE_GRID_Y+16.0);}
+    Delay(2);
+    draw(strParam(s:"RPGBBOW",i:vBowBoost),"A",BATTLE_ICONS,BATTLE_GRID_X-16.0,BATTLE_GRID_Y-16.0);
+    draw(strParam(s:"RPGBMEL",i:vMeleeBoost),"A",BATTLE_ICONS+1,BATTLE_GRID_X+16.0,BATTLE_GRID_Y-16.0);
+    if (!bEnemyBoss) {draw("RPGBICO3","A",BATTLE_ICONS+2,BATTLE_GRID_X,BATTLE_GRID_Y+16.0);}
+    draw("RPGBICO8","A",BATTLE_ICONS+3,BATTLE_GRID_X,BATTLE_GRID_Y);
+    if (vHasBomb) {draw("RPGBOM","A",BATTLE_ICONS+4,BATTLE_GRID_X-16.0,BATTLE_GRID_Y+16.0);}
+    if (vHasPotion) {draw("RPGPOT","A",BATTLE_ICONS+5,BATTLE_GRID_X+16.0,BATTLE_GRID_Y+16.0);}
+    while (!inputUse && bSafetyCheck)
+    {
+        Delay(1);
+    }
+    switch (bElphPos)
+    {
+        case 0:
+            if (bSafetyCheck)
+            {
+                ACS_NamedExecute("b_elphAttack",0,bPATK_BOW);
+                PlaySound(0,"RPGBSEL1",2);
+                draw("RPGBTILG","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                Delay(1);
+                draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+            }
+            break;
+
+        case 2:
+            if (bSafetyCheck)
+            {
+                ACS_NamedExecute("b_elphAttack",0,bPATK_MELEE);
+                PlaySound(0,"RPGBSEL1",2);
+                draw("RPGBTILG","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                Delay(1);
+                draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+            }
+            break;
+
+		case 4:
+            if (bSafetyCheck)
+            {
+                ACS_NamedExecute("b_elphHeal",0);
+                PlaySound(0,"RPGBSEL1",2);
+                draw("RPGBTILG","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                Delay(1);
+                draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+            }
+            break;
+
+        case 6:
+            if (bSafetyCheck)
+            {
+                if (vHasBomb)
+                {
+                    PlaySound(0,"RPGBSEL1",2);
+                    draw("RPGBTILG","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                    Delay(1);
+                    draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                    ACS_NamedExecute("b_bombLaunch",0);
+                    vHasBomb = 0;
+                }
+                else
+                {
+                    ACS_NamedExecute("b_battleMenuMiss",0);
+                }
+            }
+            b_ATBreset();
+            break;
+
+        case 7:
+            if (bSafetyCheck && !bEnemyBoss)
+            {
+                PlaySound(0,"RPGBSEL1",2);
+                draw("RPGBTILG","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                Delay(1);
+                draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                ACS_NamedExecute("b_runSlot",0);
+            }
+            else
+            {
+                ACS_NamedExecute("b_battleMenuMiss",0);
+                b_ATBreset();
+            }
+            break;
+
+        case 8:
+            if (bSafetyCheck)
+            {
+                if (vHasPotion)
+                {
+                    PlaySound(0,"RPGBSEL1",2);
+                    draw("RPGBTILG","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                    Delay(1);
+                    draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+                    vHasPotion = 0;
+                    ACS_NamedExecute("b_potionHeal",0);
+                }
+                else
+                {
+                    ACS_NamedExecute("b_battleMenuMiss",0);
+                }
+            }
+            b_ATBreset();
+            break;
+
+        default:
+            if (bSafetyCheck)
+            {
+                ACS_NamedExecute("b_battleMenuMiss",0);
+            }
+            b_ATBreset();
+            break;
+    }
+    b_clearIcons();
+}
+
+script "b_potionHeal" (void)
+{
+    if (vHP > 0 && bSafetyCheck)
+    {
+        vHP += 40;
+        if (vHP > 40) {vHP = 40;}
+        PlaySound(0,"RPGPOT",2);
+        ACS_NamedTerminate("b_dmgNum",0);
+    }
+    delay(1);
+    ACS_NamedExecute("b_dmgNum",0,40,1,bElphPos+100);
+    b_drawHUD();
+}
+
+script "b_bombLaunch" (void)
+{
+    int bombDMG = (getRNG()%10)+65;
+    for (int i = 1; i < 8; i++)
+    {
+        ACS_NamedExecuteAlways("b_bombExplosions",0,i);
+        Delay(3);
+    }
+	if (bSafetyCheck)
+	{
+		ACS_NamedTerminate("b_dmgNum",0);
+		delay(1);
+        ACS_NamedExecute("b_dmgNum",0,bombDMG);
+		bEnemyHP -= bombDMG;
+		if (bEnemyHP < 0) {bEnemyHP = 0;}
+		b_drawHUD();
+		b_ATBreset();
+	}
+
+	if (bEnemyHP > 0 && bSafetyCheck)
+	{
+        ACS_NamedExecute("b_hurtEnemyFeedback",0,bombDMG);
+	}
+	else
+	{
+		ACS_NamedExecute("b_win",0);
+	}
+}
+
+script "b_elphHeal" (void)
+{
+    int attackProgress = 0;
+    int attackStrength = 1;
+    int attackBonusTimer = 0;
+	int attackBonus = 3;
+    draw("RPGBICOB","A",BATTLE_ICONS,BATTLE_GRID_X-16.0,BATTLE_GRID_Y-16.0);
+    draw("RPGBICOB","A",BATTLE_ICONS+1,BATTLE_GRID_X,BATTLE_GRID_Y-16.0);
+    draw("RPGBICOB","A",BATTLE_ICONS+2,BATTLE_GRID_X+16.0,BATTLE_GRID_Y-16.0);
+    draw("RPGBICOB","A",BATTLE_ICONS+3,BATTLE_GRID_X-16.0,BATTLE_GRID_Y);
+    draw("RPGBICOB","A",BATTLE_ICONS+4,BATTLE_GRID_X+16.0,BATTLE_GRID_Y);
+    draw("RPGBICOB","A",BATTLE_ICONS+5,BATTLE_GRID_X-16.0,BATTLE_GRID_Y+16.0);
+    draw("RPGBICOB","A",BATTLE_ICONS+6,BATTLE_GRID_X,BATTLE_GRID_Y+16.0);
+    draw("RPGBICOB","A",BATTLE_ICONS+7,BATTLE_GRID_X+16.0,BATTLE_GRID_Y+16.0);
+    Delay(2);
+	while (attackProgress != 255 && bSafetyCheck)
+	{
+		draw(strParam(s:(attackProgress & 1 ? "RPGBICOA" : "RPGBICO9")),"A",BATTLE_ICONS,BATTLE_GRID_X-16.0,BATTLE_GRID_Y-16.0);
+		draw(strParam(s:(attackProgress & 2 ? "RPGBICOA" : "RPGBICO9")),"A",BATTLE_ICONS+1,BATTLE_GRID_X,BATTLE_GRID_Y-16.0);
+		draw(strParam(s:(attackProgress & 4 ? "RPGBICOA" : "RPGBICO9")),"A",BATTLE_ICONS+2,BATTLE_GRID_X+16.0,BATTLE_GRID_Y-16.0);
+		draw(strParam(s:(attackProgress & 8 ? "RPGBICOA" : "RPGBICO9")),"A",BATTLE_ICONS+3,BATTLE_GRID_X-16.0,BATTLE_GRID_Y);
+		draw(strParam(s:(attackProgress & 16 ? "RPGBICOA" : "RPGBICO9")),"A",BATTLE_ICONS+4,BATTLE_GRID_X+16.0,BATTLE_GRID_Y);
+		draw(strParam(s:(attackProgress & 32 ? "RPGBICOA" : "RPGBICO9")),"A",BATTLE_ICONS+5,BATTLE_GRID_X-16.0,BATTLE_GRID_Y+16.0);
+		draw(strParam(s:(attackProgress & 64 ? "RPGBICOA" : "RPGBICO9")),"A",BATTLE_ICONS+6,BATTLE_GRID_X,BATTLE_GRID_Y+16.0);
+		draw(strParam(s:(attackProgress & 128 ? "RPGBICOA" : "RPGBICO9")),"A",BATTLE_ICONS+7,BATTLE_GRID_X+16.0,BATTLE_GRID_Y+16.0);
+
+		if (bElphPos == 0 && !(attackProgress & 1)) {attackProgress |= 1; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+		if (bElphPos == 1 && !(attackProgress & 2)) {attackProgress |= 2; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+		if (bElphPos == 2 && !(attackProgress & 4)) {attackProgress |= 4; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+		if (bElphPos == 3 && !(attackProgress & 8)) {attackProgress |= 8; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+		if (bElphPos == 5 && !(attackProgress & 16)) {attackProgress |= 16; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+		if (bElphPos == 6 && !(attackProgress & 32)) {attackProgress |= 32; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+		if (bElphPos == 7 && !(attackProgress & 64)) {attackProgress |= 64; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+		if (bElphPos == 8 && !(attackProgress & 128)) {attackProgress |= 128; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+
+		attackBonusTimer = (attackBonusTimer+1)%2;
+		if (attackBonusTimer == 1 && attackStrength > 1) {attackStrength--;}
+        if (debugger) {debugMessage3 = strParam(s:"HEAL ",i: attackStrength,s:" ",i:attackProgress);}
+		Delay(1);
+	}
+	b_clearIcons();
+	b_ATBreset();
+    if (vHP > 0 && bSafetyCheck)
+    {
+        vHP += attackStrength;
+        if (vHP > 40) {vHP = 40;}
+        PlaySound(0,"RPGHEAL",2);
+        ACS_NamedTerminate("b_dmgNum",0);
+        draw("RPGBTILG","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);
+    }
+	delay(1);
+	ACS_NamedExecute("b_dmgNum",0,attackStrength,1,bElphPos+100);
+	b_drawHUD();
+    Delay(1);
+    if (vHP > 0 && bSafetyCheck) {draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);}
+}
+
+script "b_elphAttack" (int attackType)
+{
+    int attackProgress = 0;
+    int attackStrength = 1;
+    int attackBonusTimer = 0;
+    bool attackPattern = getRNG()%2;
+	int attackBonus = 0;
+	switch (attackType)
+	{
+		case bPATK_BOW:
+		attackBonus = (altBoss2Clear && vPowerSpeed == 0 ? 10 : 8);
+		break;
+
+		case bPATK_MELEE:
+		attackBonus = (altBoss2Clear && vPowerSpeed == 0 ? 8 : 6);
+		break;
+	}
+
+    if (attackType == bPATK_BOW)
+    {
+        attackBonus = attackBonus + (vBowBoost);
+        if (attackPattern)
+        {
+            draw("RPGBICOE","A",BATTLE_ICONS,BATTLE_GRID_X,BATTLE_GRID_Y-16.0);
+            draw("RPGBICOE","A",BATTLE_ICONS+1,BATTLE_GRID_X-16.0,BATTLE_GRID_Y);
+            draw("RPGBICOE","A",BATTLE_ICONS+2,BATTLE_GRID_X+16.0,BATTLE_GRID_Y);
+        }
+        else
+        {
+            draw("RPGBICOE","A",BATTLE_ICONS,BATTLE_GRID_X,BATTLE_GRID_Y);
+            draw("RPGBICOE","A",BATTLE_ICONS+1,BATTLE_GRID_X-16.0,BATTLE_GRID_Y+16.0);
+            draw("RPGBICOE","A",BATTLE_ICONS+2,BATTLE_GRID_X+16.0,BATTLE_GRID_Y+16.0);
+        }
+    }
+    else if (attackType == bPATK_MELEE)
+    {
+        attackBonus = attackBonus + (vMeleeBoost);
+        if (attackPattern)
+        {
+            draw("RPGBICOD","A",BATTLE_ICONS,BATTLE_GRID_X-16.0,BATTLE_GRID_Y);
+            draw("RPGBICOD","A",BATTLE_ICONS+1,BATTLE_GRID_X,BATTLE_GRID_Y);
+            draw("RPGBICOD","A",BATTLE_ICONS+2,BATTLE_GRID_X+16.0,BATTLE_GRID_Y);
+        }
+        else
+        {
+            draw("RPGBICOD","A",BATTLE_ICONS,BATTLE_GRID_X,BATTLE_GRID_Y-16.0);
+            draw("RPGBICOD","A",BATTLE_ICONS+1,BATTLE_GRID_X,BATTLE_GRID_Y);
+            draw("RPGBICOD","A",BATTLE_ICONS+2,BATTLE_GRID_X,BATTLE_GRID_Y+16.0);
+        }
+    }
+    Delay(2);
+
+    if (attackType == bPATK_BOW)
+    {
+        while (attackProgress != 7 && bSafetyCheck)
+        {
+            if (attackPattern)
+            {
+                draw(strParam(s:(attackProgress & 1 ? "RPGBICO7" : "RPGBICO6")),"A",BATTLE_ICONS,BATTLE_GRID_X,BATTLE_GRID_Y-16.0);
+                draw(strParam(s:(attackProgress & 2 ? "RPGBICO7" : "RPGBICO6")),"A",BATTLE_ICONS+1,BATTLE_GRID_X-16.0,BATTLE_GRID_Y);
+                draw(strParam(s:(attackProgress & 4 ? "RPGBICO7" : "RPGBICO6")),"A",BATTLE_ICONS+2,BATTLE_GRID_X+16.0,BATTLE_GRID_Y);
+
+                if (bElphPos == 1 && !(attackProgress & 1)) {attackProgress |= 1; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+                if (bElphPos == 3 && !(attackProgress & 2)) {attackProgress |= 2; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+                if (bElphPos == 5 && !(attackProgress & 4)) {attackProgress |= 4; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+            }
+
+            else
+            {
+                draw(strParam(s:(attackProgress & 1 ? "RPGBICO7" : "RPGBICO6")),"A",BATTLE_ICONS,BATTLE_GRID_X,BATTLE_GRID_Y);
+                draw(strParam(s:(attackProgress & 2 ? "RPGBICO7" : "RPGBICO6")),"A",BATTLE_ICONS+1,BATTLE_GRID_X-16.0,BATTLE_GRID_Y+16.0);
+                draw(strParam(s:(attackProgress & 4 ? "RPGBICO7" : "RPGBICO6")),"A",BATTLE_ICONS+2,BATTLE_GRID_X+16.0,BATTLE_GRID_Y+16.0);
+
+                if (bElphPos == 4 && !(attackProgress & 1)) {attackProgress |= 1; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+                if (bElphPos == 6 && !(attackProgress & 2)) {attackProgress |= 2; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+                if (bElphPos == 8 && !(attackProgress & 4)) {attackProgress |= 4; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+            }
+
+            attackBonusTimer = (attackBonusTimer+1)%2;
+            if (attackBonusTimer == 1 && attackStrength > 1) {attackStrength--;}
+            if (debugger) {debugMessage3 = strParam(s:"ATKB ",i: attackStrength,s:" ",i:attackProgress);}
+            Delay(1);
+        }
+    }
+
+    else if (attackType == bPATK_MELEE)
+    {
+        while (attackProgress != 7 && bSafetyCheck)
+        {
+            if (attackPattern)
+            {
+                draw(strParam(s:(attackProgress & 1 ? "RPGBICO5" : "RPGBICO4")),"A",BATTLE_ICONS,BATTLE_GRID_X-16.0,BATTLE_GRID_Y);
+                draw(strParam(s:(attackProgress & 2 ? "RPGBICO5" : "RPGBICO4")),"A",BATTLE_ICONS+1,BATTLE_GRID_X,BATTLE_GRID_Y);
+                draw(strParam(s:(attackProgress & 4 ? "RPGBICO5" : "RPGBICO4")),"A",BATTLE_ICONS+2,BATTLE_GRID_X+16.0,BATTLE_GRID_Y);
+
+                if (bElphPos == 3 && !(attackProgress & 1)) {attackProgress |= 1; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+                if (bElphPos == 4 && !(attackProgress & 2)) {attackProgress |= 2; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+                if (bElphPos == 5 && !(attackProgress & 4)) {attackProgress |= 4; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+            }
+
+            else
+            {
+                draw(strParam(s:(attackProgress & 1 ? "RPGBICO5" : "RPGBICO4")),"A",BATTLE_ICONS,BATTLE_GRID_X,BATTLE_GRID_Y-16.0);
+                draw(strParam(s:(attackProgress & 2 ? "RPGBICO5" : "RPGBICO4")),"A",BATTLE_ICONS+1,BATTLE_GRID_X,BATTLE_GRID_Y);
+                draw(strParam(s:(attackProgress & 4 ? "RPGBICO5" : "RPGBICO4")),"A",BATTLE_ICONS+2,BATTLE_GRID_X,BATTLE_GRID_Y+16.0);
+
+                if (bElphPos == 1 && !(attackProgress & 1)) {attackProgress |= 1; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+                if (bElphPos == 4 && !(attackProgress & 2)) {attackProgress |= 2; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+                if (bElphPos == 7 && !(attackProgress & 4)) {attackProgress |= 4; attackStrength += attackBonus; PlaySound(0,"RPGBSEL2",2);}
+            }
+
+            attackBonusTimer = (attackBonusTimer+1)%3;
+            if (attackBonusTimer == 2 && attackStrength > 1) {attackStrength--;}
+            if (debugger) {debugMessage3 = strParam(s:"ATKM ",i: attackStrength,s:" ",i:attackProgress);}
+            Delay(1);
+        }
+    }
+
+    attackStrength = (attackStrength * (attackType == bPATK_BOW ? enemyDB[bEnemyType+10] : enemyDB[bEnemyType+11])) + killCount >> 16;
+
+    PlaySound(0,"RPGBSEL3",2);
+    b_clearIcons();
+
+    if (bSafetyCheck && vHP > 0) {draw("RPGBTILG","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);}
+    Delay(2);
+    if (bSafetyCheck && vHP > 0) {draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);}
+
+    Delay(4);
+
+	if (attackType == bPATK_MELEE && bSafetyCheck)
+	{
+		PlaySound(0,"RPGBMEL",3);
+		draw("RPGBFX1", "A", BATTLE_FX, BATTLE_GRID_X, BATTLE_GRID_Y-112.0); Delay(2);
+		draw("RPGBFX2", "A", BATTLE_FX, BATTLE_GRID_X, BATTLE_GRID_Y-112.0); Delay(3);
+		draw("RPGBFX3", "A", BATTLE_FX, BATTLE_GRID_X, BATTLE_GRID_Y-112.0); Delay(4);
+	}
+
+	else if (attackType == bPATK_BOW && bSafetyCheck)
+	{
+		PlaySound(0,"RPGBBOW",3);
+		draw("RPGBFX4", "A", BATTLE_FX, BATTLE_GRID_X, BATTLE_GRID_Y-112.0); Delay(2);
+		draw("RPGBFX5", "A", BATTLE_FX, BATTLE_GRID_X, BATTLE_GRID_Y-112.0); Delay(2);
+		draw("RPGBFX6", "A", BATTLE_FX, BATTLE_GRID_X, BATTLE_GRID_Y-112.0); Delay(3);
+		draw("RPGBFX7", "A", BATTLE_FX, BATTLE_GRID_X, BATTLE_GRID_Y-112.0); Delay(4);
+	}
+
+	if (bSafetyCheck)
+	{
+		ACS_NamedTerminate("b_dmgNum",0);
+		delay(1);
+        if (attackStrength > 0) {ACS_NamedExecute("b_dmgNum",0,attackStrength);}
+		bEnemyHP -= attackStrength;
+		if (bEnemyHP < 0) {bEnemyHP = 0;}
+		b_drawHUD();
+		b_ATBreset();
+	}
+
+	clear(BATTLE_FX);
+
+	if (bEnemyHP > 0 && bSafetyCheck)
+	{
+        if (attackStrength > 0)
+        {
+            ACS_NamedExecute("b_hurtEnemyFeedback",0,attackStrength);
+        }
+        else {PlaySound(0,"RPGDEFL",4);}
+	}
+	else
+	{
+		ACS_NamedExecute("b_win",0);
+	}
+}
+
+script "b_dmgNum" (int attack, int entity, int lastPos)
+{
+	bool heal = 0;
+	if (lastPos > 9) {lastPos -= 100; heal = 1;}
+    setRes();
+    SetFont("guwa8-1");
+    int moveUp = 1.0;
+    for (int i = 1; i < 24; i++)
+    {
+		if (entity == 0)
+		{
+			HudMessage(i:attack;HUDMSG_PLAIN|HUDMSG_COLORSTRING,BATTLE_DMGNUM,(i <= 7 ? "Harsh" : (Timer()%2 == 0 && i > 7 ? "HarshPurple" : "HarshRed")),BATTLE_GRID_X, (BATTLE_GRID_Y-144.0)-moveUp,0.1);
+		}
+		else
+		{
+			HudMessage(
+			i:attack;
+			HUDMSG_PLAIN|HUDMSG_COLORSTRING,
+			BATTLE_DMGNUM,
+			(i <= 7 ? "Harsh" : (heal ? "HarshGreen" : (Timer()%2 == 0 && i > 7 ? "HarshPurple" : "HarshRed"))),
+			(BATTLE_GRID_X - 16.0) + ((lastPos % 3) * 16 << 16),
+			(BATTLE_GRID_Y - 16.0) + ((lastPos / 3) * 16 << 16)- 24.0 - moveUp,0.1);
+		}
+        if (i < 8)
+        {
+            moveUp += (i < 5 ? (i < 2 ? 3.0 : 2.0 ) : 1.0);
+            Delay(i < 7 ? (i < 4 ? 1 : 2) : 3);
+        }
+        else {Delay(1);}
+    }
+    clear(BATTLE_DMGNUM);
+}
+
+script "b_battleMenuMiss" (void)
+{
+    PlaySound(0,"RPGMISS",4);
+    for (int i = 0; i < 4; i++)
+    {
+        if (bSafetyCheck && vHP > 0) {draw("RPGBTILM","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);} Delay(3);
+        if (bSafetyCheck && vHP > 0) {draw("RPGBTILE","A",BATTLE_GRID, BATTLE_GRID_X, BATTLE_GRID_Y);} Delay(3);
+    }
+}
+
+script "b_moveHandler" (void)
+{
+    while (vHP > 0)
+    {
+        if (inputUp && bElphPos > 2)
+        {
+            PlaySound(0,"RPGSTEP",4);
+            bElphPos -= 3;
+			bMoved = 1;
+            getRNG();
+        }
+        if (inputDown && bElphPos < 6)
+        {
+            PlaySound(0,"RPGSTEP",4);
+            bElphPos += 3;
+			bMoved = 1;
+            getRNG();
+        }
+        if (inputLeft && bElphPos % 3 > 0)
+        {
+            PlaySound(0,"RPGSTEP",4);
+            bElphPos -= 1;
+			bMoved = 1;
+            getRNG();
+        }
+        if (inputRight && bElphPos % 3 < 2)
+        {
+            PlaySound(0,"RPGSTEP",4);
+            bElphPos += 1;
+			bMoved = 1;
+            getRNG();
+        }
+        if (bElphPos < 0) {bElphPos = 0;}
+        if (bElphPos > 8) {bElphPos = 8;}
+        draw(strParam(s:(bElphHurt && Timer()%2 == 0 ? "RPGELPHD" : "RPGELPHB")), "A", BATTLE_ELPH, (BATTLE_GRID_X - 16.0) + ((bElphPos % 3) * 16 << 16), (BATTLE_GRID_Y - 16.0) + ((bElphPos / 3) * 16 << 16));
+        Delay(1);
+    }
+}
+
+function void drawElphHPmeter (void)
+{
+    for (int i = 0; i < 40; i++)
+	{
+		clear(BATTLE_ATBMETER-(i+41));
+	}
+    setRes();
+    SetFont("RPGBUIM");
+    for (i = 0; i < vHP; i++)
+    {
+        HudMessage(s:"A";HUDMSG_PLAIN,BATTLE_ATBMETER-(i+41),CR_UNTRANSLATED,(BATTLE_GRID_X-16.0)+(i<<16),BATTLE_GRID_Y+28.0,0);
+    }
+}
+
+function void drawATBmeter (void)
+{
+    setRes();
+    SetFont("RPGBUIA");
+    for (int i = 0; i < bATBvalue; i++)
+    {
+        HudMessage(s:"A";HUDMSG_PLAIN,BATTLE_ATBMETER-(i+1),CR_UNTRANSLATED,(BATTLE_GRID_X-16.0)+(i<<16),BATTLE_GRID_Y+35.0,0);
+    }
+}
+
+script "b_ATB" (void)
+{
+    while (bATBvalue < 40 && bATBactive)
+    {
+		if (!bMoved)
+        {
+            if (altBoss2Clear && vPowerSpeed && Timer()%3 == 2)
+            {bATBvalue++;}
+            else if (Timer()%5 == 4)
+            {bATBvalue++;}
+        }
+		if (Timer()%5 == 4) {bMoved = 0;}
+        if (bATBvalue > 40) {bATBvalue = 40;}
+        drawATBmeter();
+        Delay(1);
+    }
+    drawATBmeter();
+    bATBactive = 0;
+    ACS_NamedExecute("b_battleMenu",0);
+}
+
+function void b_ATBreset (void)
+{
+	for (int i = 0; i < 40; i++)
+	{
+		clear(BATTLE_ATBMETER-(i+1));
+	}
+    bATBactive = 1;
+    bATBvalue = 0;
+    ACS_NamedExecute("b_ATB",0);
+}
+
+function int b_dmgRNG (int attack)
+{
+    int output = attack+getRNG()%5-2;
+    return output;
+}
+
+script "b_hurtEnemyFeedback" (int attackStrength)
+{
+    if (bEnemyType != bENEMY_ATLAS)
+    {
+        bYAmp = attackStrength/2;
+        bYFreq = attackStrength*1000;
+        bXAmp = attackStrength/3;
+        bXFreq = attackStrength*700;
+    }
+    bEnemyHurt = 1;
+    b_enemyAttacking(0);
+
+	ACS_NamedTerminate(strParam(s:"b_attackPatterns",i:bEnemyType),0);
+    ACS_NamedTerminate("b_attackSquare",0);
+    bSquareKill = 1;
+    AmbientSound(enemyDB[bEnemyType+9],127);
+
+    Delay(30);
+    bSquareKill = 0;
+
+    bYAmp = enemyDB[bEnemyType+3];
+    bYFreq = enemyDB[bEnemyType+4];
+    bXAmp = enemyDB[bEnemyType+5];
+    bXFreq = enemyDB[bEnemyType+6];
+    bXSine = 0;
+    bYSine = 0;
+    bXOffset = 0;
+    bYOffset = 0;
+    bEnemyHurt = 0;
+	Delay(30);
+	if (bSafetyCheck) {ACS_NamedExecute(strParam(s:"b_attackPatterns",i:bEnemyType),0);}
+}
+
+function void b_hurtPlayer (int hurtAmount)
+{
+    vHP -= hurtAmount;
+	if (vHP <= 0) {vHP = 0;}
+	b_drawHUD();
+    if (vHP <= 0)
+    {
+        ACS_NamedExecute("b_End",0,2);
+    }
+    else
+    {
+        if (bSafetyCheck)
+		{
+		ACS_NamedExecute("b_hurtPlayerFeedback",0, hurtAmount);
+		}
+    }
+}
+
+script "b_hurtPlayerFeedback" (int hurtAmount)
+{
+    PlaySound(0,"RPGHURT",1);
+    bElphHurt = 1;
+	ACS_NamedTerminate("b_dmgNum",0);
+	delay(1);
+	ACS_NamedExecute("b_dmgNum",0,hurtAmount,1, bElphPos);
+    Delay(4);
+    bElphHurt = 0;
+}
+
+script "b_attackSquare" (int squarePos, int attackPower, int holdTime)
+{
+    if (holdTime > 0) {bool held = 1;}
+    if (bSafetyCheck)
+    {
+        int squarePosX = (BATTLE_GRID_X - 16.0) + ((squarePos % 3) * 16 << 16);
+        int squarePosY = (BATTLE_GRID_Y - 16.0) + ((squarePos / 3) * 16 << 16);
+        str attackTexture = "";
+
+        AmbientSound(strParam(s:"RPGNOTE",i:squarePos),127);
+        for (int i = 0; i < 10; i++)
+        {
+            if (bSafetyCheck && !bSquareKill)
+            {
+                attackTexture = strParam(s:(held ? "RPGBWRX" : "RPGBWRN"),i:i);
+                draw(attackTexture,"A",BATTLE_SQUARE+squarePos, squarePosX, squarePosY);
+                Delay((i < 3 ? (vHardMode >= 0 ? 2 : 1) : (vHardMode < 2 ? 1 : 2)));
+            }
+        }
+
+        clear(BATTLE_SQUARE+squarePos);
+
+        if (holdTime == 0 && bSafetyCheck && !bSquareKill)
+        {
+            PlaySound(0,"RPGTARGT",1);
+            bATBvalue++;
+            if (bATBvalue > 40) {bATBvalue = 40;}
+        }
+
+        if (held)
+        {
+            PlaySound(0,"RPGBALL",2);
+            bATBvalue++;
+            if (bATBvalue > 40) {bATBvalue = 40;}
+        }
+
+        while (holdTime > 0 && bSafetyCheck && !bSquareKill)
+        {
+            draw("RPGBBOM1","A",BATTLE_SQUARE+squarePos, squarePosX, squarePosY);
+            Delay(1);
+            draw("RPGBBOM2","A",BATTLE_SQUARE+squarePos, squarePosX, squarePosY);
+            Delay(1);
+            if (squarePos == bElphPos && !bElphHurt && bSafetyCheck && holdTime > 2) {b_hurtPlayer(2+(getRNG()%3)-vHardMode);}
+            holdTime--;
+        }
+
+        for (i = 1; i < 3; i++)
+        {
+            if (bSafetyCheck && !bSquareKill)
+            {
+                attackTexture = strParam(s:(held ? "RPGBBMX" : "RPGBATK"),i:i);
+                draw(attackTexture,"A",BATTLE_SQUARE+squarePos, squarePosX, squarePosY);
+                Delay(2);
+                if (!held && squarePos == bElphPos && i == 1 && !bElphHurt) {b_hurtPlayer(4+(getRNG()%3)-vHardMode);}
+            }
+        }
+        clear(BATTLE_SQUARE+squarePos);
+    }
+}
+
+function void b_attackGrid (int attackType)
+{
+    int thisAttack[9] =
+    {
+        attackGridDB[attackType+0],
+        attackGridDB[attackType+1],
+        attackGridDB[attackType+2],
+        attackGridDB[attackType+3],
+        attackGridDB[attackType+4],
+        attackGridDB[attackType+5],
+        attackGridDB[attackType+6],
+        attackGridDB[attackType+7],
+        attackGridDB[attackType+8],
+    };
+    for (int x = 0; x < 9; x++)
+    {
+        if (thisAttack[x] > 1)
+        {
+            ACS_NamedExecuteAlways("b_attackSquare",0,x,0,thisAttack[x]);
+        }
+        else if (thisAttack[x] == 1)
+        {
+            ACS_NamedExecuteAlways("b_attackSquare",0,x,0);
+        }
+    }
+}
+
+function void b_attackPass (int squarePos, int holdTime)
+{
+    ACS_NamedExecuteAlways("b_attackSquare",0,squarePos,0,holdTime);
+}
+
+function void b_enemyAttacking (bool attacking)
+{
+    switch (attacking)
+    {
+        case 0:
+        bEnemyAttacking = 0;
+        b_drawHud();
+        break;
+
+        case 1:
+        bEnemyAttacking = 1;
+        b_drawHud();
+        break;
+    }
+}
+
+#include "SN_ATK.ACS"
+
+script "b_runSlot" (void)
+{
+    bATBactive = 0;
+    setRes();
+    int slot1 = 0;
+    int slot2 = 0;
+    int slot3 = 0;
+    int chosen = 0;
+
+    PlaySound(0,"RPGSLOT",3,1.0,1);
+    while (chosen != 7)
+    {
+        if (!(chosen & 1) && Timer()%(vHasSlowSlots ? 20 : (3+vHardMode)) == 0) {slot1 = (slot1+1)%7;}
+        if (!(chosen & 2) && Timer()%(vHasSlowSlots ? 20 : (3+vHardMode)) == 0) {slot2 = (slot2+1)%7;}
+        if (!(chosen & 4) && Timer()%(vHasSlowSlots ? 20 : (3+vHardMode)) == 0) {slot3 = (slot3+1)%7;}
+
+        draw(strParam(s:"RPGSLOT",i:slot1),"A",BATTLE_SLOT,BATTLE_GRID_X-48.0,BATTLE_GRID_Y-112.0);
+        draw(strParam(s:"RPGSLOT",i:slot2),"A",BATTLE_SLOT+1,BATTLE_GRID_X,BATTLE_GRID_Y-112.0);
+        draw(strParam(s:"RPGSLOT",i:slot3),"A",BATTLE_SLOT+2,BATTLE_GRID_X+48.0,BATTLE_GRID_Y-112.0);
+
+        if (inputUse && chosen != 1|2|4)
+        {
+            if (!(chosen & 1))
+            {
+                chosen |= 1;
+                ACS_NamedExecute("b_runSlotSound",0);
+            }
+            else if (!(chosen & 2))
+            {
+                chosen |= 2;
+                ACS_NamedTerminate("b_runSlotSound",0);
+                ACS_NamedExecute("b_runSlotSound",0);
+            }
+            else if (!(chosen & 4))
+            {
+                chosen |= 4;
+                ACS_NamedTerminate("b_runSlotSound",0);
+                PlaySound(0,"RPGSLOTC",3,1.0,0);
+            }
+        }
+
+        if (debugger) {debugMessage2 = strParam(i:slot1,s:",",i:slot2,s:",",i:slot3,s:"\n");}
+        Delay(1);
+    }
+
+    if (slot1 == slot2 && slot2 == slot3)
+    {
+        if (bSafetyCheck)
+        {
+            b_clearSlot();
+            ACS_NamedExecute("b_End",0,1);
+        }
+    }
+
+    else
+    {
+        AmbientSound("RPGNOPE",127);
+        Delay(10);
+        b_clearSlot();
+        for (int i = 0; i < 50; i++)
+        {
+            if (Timer()%4 <=1)
+            {
+                draw("RPGNOWAY", "A", BATTLE_SLOT, BATTLE_GRID_X, (BATTLE_GRID_Y-112.0) + (bYOffset << 16));
+            }
+            else
+            {
+                clear(BATTLE_SLOT);
+            }
+            Delay(1);
+        }
+        clear(BATTLE_SLOT);
+        b_ATBreset();
+    }
+}
+
+script "b_runSlotSound" (void)
+{
+    PlaySound(0,"RPGSLOTC",3,1.0,0);
+    Delay(7);
+    PlaySound(0,"RPGSLOT",3,1.0,1);
+}
+
+script "b_win" (void)
+{
+    str winText = "";
+    int healthAdd = 0;
+    bSafetyCheck = 0;
+    Delay(1);
+    b_killScriptsSounds();
+    if (vHP > 0)
+    {
+        if (battleMusicSwitch)
+        {
+            changeBGM(BGM_NONE,2,FALSE);
+        }
+        ACS_NamedExecute("b_enemyFlickerOut",0);
+        for (int i = 1; i < 16; i++)
+        {
+            ACS_NamedExecuteAlways("b_winExplosions",0,i);
+            Delay(4);
+        }
+        Delay(12);
+        ACS_NamedTerminate("b_winExplosions",0);
+
+        if (bEnemyType == bENEMY_MOON1)
+        {
+            ACS_NamedExecute("b_initBattle",0,bENEMY_MOON2);
+        }
+        else if (bEnemyType == bENEMY_MOON2)
+        {
+            ACS_NamedExecute("b_initBattle",0,bENEMY_SYSTEM);
+        }
+        else if (bEnemyType == bENEMY_SYSTEM)
+        {
+            ACS_NamedTerminate("sonataTimer",0);
+            b_clearAll();
+            vCurrentScreen = 44;
+            Delay(60);
+            drawRoom(0);
+            clear(UI_BOX);
+            clear(UI_PORTBOX);
+            clear(UI_TEXT);
+            clear(UI_PORT);
+            clear(UI_HUDFACE);
+            clear(UI_HUDKEY1);
+            clear(UI_HUDKEY2);
+            clear(UI_HUDKEY3);
+            clear(UI_HUDKEY3);
+            clear(UI_HUDSKATE);
+            clear(UI_HUDBAND);
+            clear(UI_HUDBOOK);
+            clear(UI_HUDROOMNAME);
+            clear(UI_HUDBAR);
+
+            changeBGM(BGM_STAR,2,FALSE);
+            int sTimeS = sonataTime/35;
+            int sTimeSec = sTimeS % 60;
+            int sTimeMin = (sTimeS / 60) % 60;
+            int sTimeHr = sTimeS / 3600;
+            int sTimeFrames = fixedMul(fixedDiv((sonataTime%35),35),100);
+            str endTimeDisplay = strParam(s:"FINAL TIME:\n",i:sTimeHr/10,i:sTimeHr%10,s:":",i:sTimeMin/10,i:sTimeMin%10,s:":",i:sTimeSec/10,i:sTimeSec%10,s:".",i:sTimeFrames/10,i:sTimeFrames%10);
+            if (vOpenedDebug) {endTimeDisplay = "FINAL TIME:\nXX:XX:XX.XX\nDEBUG MENU OPENED";}
+
+            delay(98);
+            draw("UNSCII","SONATA",ZONE_BG,160.4,80.0); Delay(80);
+            clear(ZONE_BG);
+            delay(20);
+            draw("UNSCII","PRESENTED BY\nHOWLING",ZONE_BG,160.4,80.0); Delay(80);
+            clear(ZONE_BG);
+            delay(20);
+            draw("UNSCII","MUSIC BY\nMSX",ZONE_BG,160.4,80.0); Delay(80);
+            clear(ZONE_BG);
+            delay(20);
+            draw("UNSCII",endTimeDisplay,ZONE_BG,160.4,80.0);
+
+            while (!inputUse)
+            {
+                Delay(1);
+                debugMessageInput = StrParam(s:"WAIT");
+            }
+            debugMessageInput = "";
+            changeBGM(BGM_NONE,2,FALSE);
+            clear(ZONE_BG);
+            clear(ZONE_ROOM);
+            Delay(10);
+            if (!GetCvar("clearedSonata"))
+            {
+                SetCvar("clearedSonata",1);
+                ChangeLevel("SNTEND",0,CHANGELEVEL_NOINTERMISSION|CHANGELEVEL_RESETHEALTH|CHANGELEVEL_RESETINVENTORY,2);
+            }
+
+            else
+            {
+                ACS_NamedExecute("titleMenu",0);
+            }
+        }
+        else
+        {
+            if (battleMusicSwitch)
+            {
+                changeBGM(BGM_ANGEL,2,FALSE);
+            }
+            b_ClearAll();
+
+            if (bEnemyBoss == 1) {healthAdd = 40;}
+            else {healthAdd = getRNG()%7+5;}
+
+            int goldAdd = fixedMul(enemyDB[bEnemyType+2],0.66)+(getRNG()%6);
+
+            if (bEnemyType == bENEMY_ELPH2) {winText = strParam(s:"WIN\n\nGAIN ",i:healthAdd,s:" MIND\n\nGAIN ",i:goldAdd,s:" GOLD\n\nYOU GOT SKATES");}
+            else if (bEnemyType == bENEMY_FLY) {winText = strParam(s:"WIN\n\nGAIN ",i:healthAdd,s:" MIND\n\nGAIN ",i:goldAdd,s:" GOLD\n\nYOU GOT POWER BAND");}
+            else if (bEnemyType == bENEMY_ATLAS)
+            {
+                goldAdd = 999;
+                vHasTeleport = 9;
+                vBowBoost = 2;
+                vMeleeBoost = 2;
+                vHasPotion = 1;
+                vHasBomb = 1;
+                winText = strParam(s:"WIN\n\nGAIN ",i:healthAdd,s:" MIND\n\nGAIN ",i:goldAdd,s:" GOLD\n\nALL FULL MAXIMUM");
+            }
+
+            else {winText = strParam(s:"WIN\n\nGAIN ",i:healthAdd,s:" MIND\n\nGAIN ",i:goldAdd,s:" GOLD");}
+            draw("UNSCII",winText,BATTLE_BG,BATTLE_GRID_X+0.4,BATTLE_GRID_Y-112.0);
+
+            vHP = vHP+healthAdd;
+            vGold = vGold + goldAdd;
+            if (vHP > 40) {vHP = 40;}
+            Delay(35);
+            clear(BATTLE_BG);
+            ACS_NamedExecute("b_End",0,0);
+
+            if (bEnemyType == bENEMY_GUTS)
+            {
+                boss1Clear = 1;
+            }
+
+            if (bEnemyType == bENEMY_PAINFRAME)
+            {
+                boss2Clear = 1;
+            }
+
+            if (bEnemyType == bENEMY_DARK)
+            {
+                boss3Clear = 1;
+            }
+
+            if (bEnemyType == bENEMY_MOONGUARD)
+            {
+                boss4Clear = 1;
+            }
+
+            if (bEnemyType == bENEMY_FLY)
+            {
+                altBoss2Clear = 1;
+            }
+
+            if (bEnemyType == bENEMY_ATLAS)
+            {
+                SetCvar("beatAtlas",1);
+                ScriptCall("metaSaver","saveProgress");
+                atlasDone = 1;
+            }
+
+            if (bEnemyType == bENEMY_ELPH2)
+            {
+                altBoss1Clear = 1;
+                TWEEN_SPEED = 2;
+                TWEEN_MULT = 8;
+                MOVE_DELAY = 1;
+                vStep1 = "RPGSK81";
+                vStep2 = "RPGSK82";
+            }
+        }
+    }
+}
+
+script "b_enemyFlickerOut" (void)
+{
+    for (int i = 0; i < 64; i++)
+    {
+        if ((i < 32 ? sonataTime%4 <= 3 : sonataTime%2 == 0))
+        {
+            setRes();
+            setFont(strParam(s:enemyDB[bEnemyType+1],s:(sonataTime%2 == 0 ? "X" : "")));
+            hudMessage(s:"A";HUDMSG_PLAIN,BATTLE_ENEMY,CR_UNTRANSLATED,BATTLE_GRID_X + (bXOffset << 16), (BATTLE_GRID_Y-112.0) + (bYOffset << 16),0.0);
+        }
+        else
+        {
+            clear(BATTLE_ENEMY);
+            clear(BATTLE_ENEMY-1);
+            clear(BATTLE_ENEMY-2);
+        }
+        Delay(1);
+    }
+    clear(BATTLE_ENEMY);
+    clear(BATTLE_ENEMY-1);
+    clear(BATTLE_ENEMY-2);
+}
+
+script "b_winExplosions" (int zone)
+{
+    int offsetX = (getRNG()%64-32);
+    int offsetY = (getRNG()%64-32);
+    PlaySound(0,"RPGEDIE",1);
+    PlaySound(0,enemyDB[bEnemyType+9],2);
+	for (int i=4; i < 8; i++)
+	{
+        if (debugger) {debugMessage3 = strParam(i:offsetX,s:",",i:offsetY);}
+		draw(strParam(s:"RPGBFX",i:i), "A", BATTLE_FX+zone, BATTLE_GRID_X + ((bXOffset + offsetX) << 16), (BATTLE_GRID_Y-112.0) + ((bYOffset + offsetY) << 16));
+		Delay(getRNG()%2+2);
+	}
+    clear(BATTLE_FX+zone);
+}
+
+script "b_bombExplosions" (int zone)
+{
+    int offsetX = (getRNG()%64-32);
+    int offsetY = (getRNG()%64-32);
+    PlaySound(0,"RPGBEXP",5);
+	for (int i=0; i <6; i++)
+	{
+        if (debugger) {debugMessage3 = strParam(i:offsetX,s:",",i:offsetY);}
+		draw(strParam(s:"RPGBEX",i:i), "A", BATTLE_FX+zone, BATTLE_GRID_X + ((bXOffset + offsetX) << 16), (BATTLE_GRID_Y-112.0) + ((bYOffset + offsetY) << 16));
+		Delay(2);
+	}
+    clear(BATTLE_FX+zone);
+}
+
+script "b_End" (int endType)
+{
+    ACS_NamedTerminate("b_runSlot",0);
+    b_ClearSlot();
+    bSafetyCheck = 0;
+    bHasControl = 0;
+    Delay(1);
+    ACS_NamedTerminate("b_runSlot",0);
+    b_killScriptsSounds();
+
+    b_ClearAll();
+
+    if (battleMusicSwitch || vHP <= 0)
+    {
+        changeBGM(BGM_NONE,2,FALSE);
+    }
+    Delay(15);
+
+    b_ClearAll();
+
+    if (endType == 1)
+    {
+        draw("RPGRUN","A",BATTLE_SLOT,160.0,128.0);
+        AmbientSound("RPGRUN",127);
+
+        Delay(35);
+        clear(BATTLE_SLOT);
+        Delay(15);
+        drawHud();
+        drawRoom(0);
+        drawElph();
+        drawTime = 1;
+		vStepCount = 0;
+        if (battleMusicSwitch)
+        {
+            ChangeBGM(vLastMusic,vLastMusicFile,TRUE);
+        }
+
+        vHasControl = 1;
+    }
+
+    else if (endType == 2)
+    {
+
+        AmbientSound("RPGDIE",127);
+        for (int j = 0 ; j < 30 ; j++)
+        {
+        draw("RPGELPH1", "A", BATTLE_ELPH, (BATTLE_GRID_X - 16.0) + ((bElphPos % 3) * 16 << 16) + ((getRNG()%9-4) << 16), (BATTLE_GRID_Y - 16.0) + ((bElphPos / 3) * 16 << 16) + ((getRNG()%9-4) << 16));
+        Delay(1);
+        }
+
+        clear(BATTLE_ELPH);
+        Delay(5);
+
+        for (int i = 0; i < 8; i++)
+        {
+            int eyeCount = i+1;
+            if (eyeCount > 4) {eyeCount = 5+(i%2);}
+            draw(strParam(s:"RPGEYE",i:eyeCount),"A",BATTLE_ELPH, BATTLE_GRID_X, BATTLE_GRID_Y);
+            Delay((i < 2 ? 3 : 2));
+        }
+        clear(BATTLE_ELPH);
+        Delay(2);
+        if (getRNG() >= 62) {draw("RPGMOON","A",BATTLE_ELPH, BATTLE_GRID_X, BATTLE_GRID_Y);}
+        else {draw(strParam(s:"RPGFACE",i:(getRNG()%4+6)),"A",BATTLE_ELPH, BATTLE_GRID_X, BATTLE_GRID_Y);}
+        AmbientSound("RPGDIE3",127);
+        Delay(10);
+        clear(BATTLE_ELPH);
+
+        Delay(5);
+        AmbientSound("RPGDIE2",127);
+        draw("RPGBFX3", "A", BATTLE_ELPH, BATTLE_GRID_X, BATTLE_GRID_Y); Delay(2);
+        draw("RPGBFX1", "A", BATTLE_ELPH, BATTLE_GRID_X, BATTLE_GRID_Y); Delay(4);
+        draw("RPGBFX2", "A", BATTLE_ELPH, BATTLE_GRID_X, BATTLE_GRID_Y); Delay(4);
+        draw("RPGBFX3", "A", BATTLE_ELPH, BATTLE_GRID_X, BATTLE_GRID_Y); Delay(4);
+
+        clear(BATTLE_ELPH);
+        Delay(10);
+
+        ACS_NamedExecute("gameOver",0,GO_NORMAL);
+    }
+
+    else
+    {
+        drawHud();
+        drawRoom(0);
+        drawElph();
+        drawTime = 1;
+		vStepCount = 0;
+        if (battleMusicSwitch)
+        {
+            ChangeBGM(vLastMusic,vLastMusicFile,TRUE);
+        }
+
+        vHasControl = 1;
+    }
+}

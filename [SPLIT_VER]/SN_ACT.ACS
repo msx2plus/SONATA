@@ -1,0 +1,1169 @@
+// ROOMS AND OBJECTS ////////////////////
+
+// ROOM 10: ELPH'S ROOM
+    #define ROOM_HOMEELPH 10
+    #define ENTER_HOMEELPH 207
+    #define EXIT_HOMEELPH_EXIT 227
+    #define OBJ_HOMEELPH_TV 111
+    #define OBJ_HOMEELPH_BOOKS_L 127
+    #define OBJ_HOMEELPH_BOOKS_R 128
+    #define OBJ_HOMEELPH_PLANT 193
+    #define OBJ_HOMEELPH_BED 133
+    #define OBJ_HOMEELPH_TURNTABLE 191
+
+// ROOM 22: HALLWAY
+    #define ROOM_HOMEHALL 22
+    #define ENTER_HOMEHALL_FROMELPH 114
+    #define ENTER_HOMEHALL_FROMMOON 156
+    #define ENTER_HOMEHALL_FROMOUT 143
+    #define EXIT_HOMEHALL_ELPH 94
+    #define EXIT_HOMEHALL_MOON 157
+    #define EXIT_HOMEHALL_EXIT 142
+    #define OBJ_HOMEHALL_PIC_L 107
+    #define OBJ_HOMEHALL_PIC_R 110
+
+// ROOM 23: HER ROOM
+    #define ROOM_HOMEMOON 23
+    #define ENTER_HOMEMOON 143
+    #define EXIT_HOMEMOON_EXIT 142
+    #define OBJ_HOMEMOON_RADIO 185
+    #define OBJ_HOMEMOON_BOOKS_L 166
+    #define OBJ_HOMEMOON_BOOKS_R 167
+    #define OBJ_HOMEMOON_TABLE 106
+    #define OBJ_HOMEMOON_BED 127
+
+// ROOM 35: HER ROOM ALT
+    #define ROOM_HOMEMOONBACK 35
+    #define ENTER_HOMEMOONBACK 176
+    #define EXIT_HOMEMOONBACK_STAIRS 177
+    #define EXIT_HOMEMOONBACK_WALL 147
+    #define OBJ_HOMEMOONBACK_BODY 113
+
+// ROOM 51: HOME OUTSIDE
+    #define ROOM_HOMEOUTSIDE 51
+    #define ENTER_HOMEOUTSIDE 92
+    #define EXIT_HOMEOUTSIDE_EXIT 72
+
+// ROOM 52: BLOCK MAZE
+    #define ROOM_BLOCKMAZE 52
+    #define EXIT_BLOCKMAZE 150
+    #define ENTER_BLOCKMAZE 130
+
+// ROOM 54: PROTECTORS
+    #define ROOM_PROTECTORS 54
+    #define OBJ_PROTECTORS_GUTS 70
+    #define OBJ_PROTECTORS_SNAKE1 186
+    #define OBJ_PROTECTORS_SNAKE2 194
+
+// ROOM 63: CROSSING
+    #define ROOM_CROSSING 63
+    #define OBJ_CROSSING_STATUE_L 169
+    #define OBJ_CROSSING_STATUE_R 170
+    #define OBJ_CROSSING_SHOP 176
+
+// ROOM 65: STRUCTURE A
+    #define ROOM_PINKTOWER 65
+    #define OBJ_PINKTOWER_BOOKS 106
+    #define EXIT_PINKTOWER_L 109
+    #define EXIT_PINKTOWER_R 110
+
+// ROOM 66: ROOM GLOW
+    #define ROOM_GLOW 66
+    #define OBJ_GLOW_TV 30
+    #define ENTER_GLOW 10
+
+// ROOM 73: GOING DOWN
+    #define ROOM_WEST_GOINGDOWN 73
+    #define ENTER_WEST_GOINGDOWN 184
+    #define EXIT_WEST_GOINGDOWN 183
+
+// ROOM 78: TRACT
+    #define ROOM_TRACT 78
+    #define OBJ_TRACT_BOOKS_L 94
+    #define OBJ_TRACT_BOOKS_R 95
+
+// ROOM 85: GLITCH TOWER
+    #define ROOM_GLITCHTOWER 85
+    #define ENTER_GLITCHTOWER 184
+    #define ENTER_GLITCHTOWER2 59
+    #define ENTER_GLITCHTOWER3 53
+    #define ENTER_GLITCHTOWER4 158
+    #define ENTER_GLITCHTOWER5 236
+    #define EXIT_GLITCHTOWER 183
+    #define EXIT_GLITCHTOWER2 237
+    #define EXIT_GLITCHTOWER3 54
+    #define EXIT_GLITCHTOWER4 39
+    #define EXIT_GLITCHTOWER5 138
+    #define EXIT_GLITCHTOWER6 129
+    #define EXIT_GLITCHTOWER7 130
+    #define ENTER_GLITCHTOWER6 149
+
+// ROOM 86 GLITCH
+    #define ROOM_GLITCH 86
+    #define EXIT_GLITCH 243
+    #define EXIT_GLITCH2 45
+    #define EXIT_GLITCH3 29
+    #define EXIT_GLITCH4 97
+    #define EXIT_GLITCH5 251
+    #define ENTER_GLITCH 244
+    #define ENTER_GLITCH2 65
+    #define ENTER_GLITCH3 49
+    #define ENTER_GLITCH4 117
+    #define ENTER_GLITCH5 231
+
+// ROOM 112 PREPAIN
+    #define ROOM_PREPAIN 112
+
+// ROOM 113 PAINFRAME
+    #define ROOM_PAINFRAME 113
+    #define OBJ_PAINFRAME_3 149
+    #define OBJ_PAINFRAME_4 150
+
+// ROOM 123 SOUTH COMPUTER
+    #define ROOM_SOUTH_COMPUTER 123
+    #define EXIT_SOUTH_COMPUTER 129
+    #define ENTER_SOUTH_COMPUTER 149
+
+// ROOM 135 KEYS
+    #define ROOM_KEYS 135
+    #define ENTER_KEYS 189
+    #define EXIT_KEYS 149
+    #define OBJ_KEYS_LEFT 122
+    #define OBJ_KEYS_MID 49
+    #define OBJ_KEYS_RIGHT 136
+
+// ROOM 90: E
+    #define ROOM_E 90
+    #define EXIT_E 154
+    #define ENTER_E 174
+
+// ROOM 122 FAE HOME
+    #define ROOM_FAE 122
+    #define OBJ_FAE_TAPE 54
+    #define OBJ_FAE_RADIO 55
+    #define OBJ_FAE_SPIRIT1 61
+    #define OBJ_FAE_SPIRIT2 78
+
+// ROOM 134 FAIRYTREE
+    #define ROOM_FAIRYTREE 134
+    #define EXIT_FAIRYTREE1 169
+    #define EXIT_FAIRYTREE2 170
+    #define ENTER_FAIRYTREE 189
+    #define OBJ_FAIRYTREE_STATUE 237
+
+// ROOM 1: TOWER FLR A
+    #define ROOM_TOWERA 1
+    #define OBJ_TOWERA_BODY 105
+    #define ENTER_TOWERA 69
+    #define EXIT_TOWERA1 49
+    #define EXIT_TOWERA2 50
+    #define EXIT_TOWERA3 204
+    #define ENTER_TOWERA2 205
+
+// ROOM 13: TOWER FLR B
+    #define ROOM_TOWERB 13
+    #define ENTER_TOWERB 63
+    #define ENTER_TOWERB2 174
+    #define EXIT_TOWERB1 62
+    #define EXIT_TOWERB2 194
+
+// ROOM 25: TOWER FLR C
+    #define ROOM_TOWERC 25
+    #define ENTER_TOWERC 236
+    #define ENTER_TOWERC2 43
+    #define EXIT_TOWERC1 237
+    #define EXIT_TOWERC2 42
+
+// ROOM 37: TOWER BASEMENT
+    #define ROOM_TOWERBASEMENT 37
+    #define ENTER_TOWERBASEMENT 124
+    #define EXIT_TOWERBASEMENT 123
+    #define OBJ_TOWERBASEMENT_DARK 130
+
+// ROOM 57: FLY
+    #define ROOM_FLY 57
+
+// ROOM 81: BUSH ENTRANCE
+    #define ROOM_BUSH_ENTRANCE 81
+    #define ENTER_BUSH_ENTRANCE 249
+    #define EXIT_BUSH_ENTRANCE_1 269
+    #define EXIT_BUSH_ENTRANCE_2 270
+
+// ROOM 93: BURNING BUSH
+    #define ROOM_BURNING 93
+    #define OBJ_BURNING_IDOL 255
+    #define ENTER_BURNING 149
+    #define EXIT_BURNING1 129
+    #define EXIT_BURNING2 130
+
+// ROOM 133: TREE ENTRANCE
+    #define ROOM_TREE_ENTRANCE 133
+    #define EXIT_TREE_ENTRANCE 176
+    #define ENTER_TREE_ENTRANCE 175
+
+// ROOM 120: TREE EXIT
+    #define ROOM_TREE_EXIT 120
+    #define EXIT_TREE_EXIT 241
+    #define ENTER_TREE_EXIT 242
+    #define OBJ_TREE_TUNNELER 72
+
+// ROOM 84  MYSTERY SPACE
+    #define ROOM_MYSTERY 84
+    #define ENTER_MYSTERY 89
+    #define EXIT_MYSTERY_1 69
+    #define EXIT_MYSTERY_2 70
+
+// ROOM 42 POSTGUTS
+    #define ROOM_POSTGUTS 42
+    #define ENTER_POSTGUTS 70
+    #define EXIT_POSTGUTS_TOP 50
+    #define EXIT_POSTGUTS_BOTTOM_1 269
+    #define EXIT_POSTGUTS_BOTTOM_2 270
+    #define EXIT_POSTGUTS_BOTTOM_3 271
+
+// ROOM 30 POSTGUTS2
+    #define ROOM_POSTGUTS2 30
+    #define ENTER_POSTGUTS2 250
+    #define EXIT_POSTGUTS2 270
+
+// ETC ....
+    #define ROOM_ANGELHALL 98
+    #define ROOM_MOUNTAINTOP 110
+    #define ROOM_GP 77
+    #define ROOM_0X3E 62
+    #define ROOM_0X40 64
+    #define ROOM_0X4B 75
+    #define ROOM_EASTWARD 76
+    #define ROOM_WESTWARD 74
+    #define ROOM_SOUTHBOUND 87
+    #define ROOM_SOUTH_START 99
+    #define ROOM_BURNING_BACK 94
+
+// CHURCH & MOON
+
+    #define ROOM_CHURCH 7
+    #define EXIT_CHURCH_1 109
+    #define EXIT_CHURCH_2 110
+    #define ENTER_CHURCH 149
+
+    #define ROOM_CHURCH_2 19
+    #define OBJ_CHURCH_2_BOOK_L 64
+    #define OBJ_CHURCH_2_BOOK_R 153
+
+    #define ROOM_CHURCH_3 31
+    #define OBJ_CHURCH_3_BOOK 33
+
+    #define ROOM_MOON 55
+    #define EXIT_MOON_1 237
+    #define EXIT_MOON_2 238
+    #define ENTER_MOON_1 257
+    #define ENTER_MOON_2 258
+
+    #define ROOM_MOON_HOUSE 92
+    #define ENTER_MOON_HOUSE_1 237
+    #define ENTER_MOON_HOUSE_2 238
+    #define EXIT_MOON_HOUSE_1 257
+    #define EXIT_MOON_HOUSE_2 258
+
+    #define OBJ_MOON_HOUSE_BED_1 93
+    #define OBJ_MOON_HOUSE_BED_2 113
+    #define OBJ_MOON_HOUSE_TABLE_1 129
+    #define OBJ_MOON_HOUSE_TABLE_2 31
+    #define OBJ_MOON_HOUSE_BODY 85
+
+    #define ROOM_MOON_HOUSE_2 80
+    #define OBJ_MOON_HOUSE_PLANT 115
+
+    #define ROOM_MOON_HOUSE_3 68
+    #define EXIT_MOON_HOUSE_3_1 109
+    #define EXIT_MOON_HOUSE_3_2 110
+    #define ENTER_MOON_HOUSE_3_1 129
+    #define ENTER_MOON_HOUSE_3_2 130
+
+    #define ROOM_MOON_HOUSE_END 56
+    #define OBJ_MOON_HOUSE_END_SUN 169
+    #define OBJ_MOON_HOUSE_END_MOON 170
+
+// STAR MAZE
+
+    #define ROOM_KEYS_OPEN 72
+    #define ENTER_KEYS_OPEN 189
+    #define EXIT_KEYS_OPEN 149
+
+    #define ROOM_STAR_MAZE_A 60
+    #define ROOM_STAR_MAZE_B 48
+    #define ROOM_STAR_MAZE_C 36
+    #define ROOM_STAR_MAZE_D 24
+    #define ROOM_STAR_MAZE_POST 12
+    #define ROOM_STAR_MAZE_KEY 0
+
+    #define EXIT_STAR_MAZE_POST1 269
+    #define EXIT_STAR_MAZE_POST2 270
+    #define ENTER_STAR_MAZE_C1 9
+    #define ENTER_STAR_MAZE_C2 10
+
+    #define OBJ_STAR_MAZE_D_B1 109
+    #define OBJ_STAR_MAZE_D_B2 110
+
+    #define ENTER_STAR_MAZE_1 189
+    #define EXIT_STAR_MAZE_1 169
+    #define ENTER_STAR_MAZE_2 83
+    #define EXIT_STAR_MAZE_2 82
+    #define ENTER_STAR_MAZE_3 75
+    #define EXIT_STAR_MAZE_3 55
+    #define ENTER_STAR_MAZE_4 50
+    #define EXIT_STAR_MAZE_4 30
+    #define ENTER_STAR_MAZE_5 230
+    #define EXIT_STAR_MAZE_5 250
+    #define ENTER_STAR_MAZE_6 128
+    #define EXIT_STAR_MAZE_6 108
+    #define ENTER_STAR_MAZE_16 184
+    #define EXIT_STAR_MAZE_16 185
+    #define EXIT_STAR_MAZE_7 175
+    #define ENTER_STAR_MAZE_7 174
+    #define EXIT_STAR_MAZE_8 213
+    #define ENTER_STAR_MAZE_8 214
+    #define ENTER_STAR_MAZE_9 213
+    #define EXIT_STAR_MAZE_9 212
+    #define ENTER_STAR_MAZE_10 196
+    #define EXIT_STAR_MAZE_10 195
+    #define EXIT_STAR_MAZE_11 28
+    #define ENTER_STAR_MAZE_11 48
+    #define ENTER_STAR_MAZE_12 69
+    #define EXIT_STAR_MAZE_12 89
+    #define ENTER_STAR_MAZE_13 32
+    #define EXIT_STAR_MAZE_13 31
+    #define ENTER_STAR_MAZE_14 74
+    #define EXIT_STAR_MAZE_14 75
+    #define ENTER_STAR_MAZE_15 163
+    #define EXIT_STAR_MAZE_15 143
+    #define ENTER_STAR_MAZE_17 45
+    #define EXIT_STAR_MAZE_17 25
+    #define ENTER_STAR_MAZE_18 146
+    #define EXIT_STAR_MAZE_18 126
+    #define ENTER_STAR_MAZE_19 202
+    #define EXIT_STAR_MAZE_19 222
+    #define ENTER_STAR_MAZE_20 144
+    #define EXIT_STAR_MAZE_20 124
+    #define ENTER_STAR_MAZE_21 68
+    #define EXIT_STAR_MAZE_21 69
+    #define ENTER_STAR_MAZE_22 41
+    #define EXIT_STAR_MAZE_22 21
+    #define ENTER_STAR_MAZE_23 204
+    #define EXIT_STAR_MAZE_23 203
+    #define ENTER_STAR_MAZE_24 27
+    #define EXIT_STAR_MAZE_24 28
+    #define ENTER_STAR_MAZE_25 152
+    #define EXIT_STAR_MAZE_25 172
+    #define ENTER_STAR_MAZE_26 43
+    #define EXIT_STAR_MAZE_26 23
+    #define ENTER_STAR_MAZE_27 115
+    #define EXIT_STAR_MAZE_27 116
+    #define ENTER_STAR_MAZE_28 73
+    #define EXIT_STAR_MAZE_28 53
+    #define ENTER_STAR_MAZE_29 115
+    #define EXIT_STAR_MAZE_29 114
+    #define ENTER_STAR_MAZE_30 236
+    #define EXIT_STAR_MAZE_30 256
+
+    #define ROOM_MSX 32
+    #define EXIT_MSX 74
+    #define OBJ_MSX 166
+
+    #define ROOM_LTQ 89
+    #define EXIT_LTQ_1 234
+    #define ENTER_LTQ_1 214
+    #define EXIT_LTQ_2 45
+    #define ENTER_LTQ_2 65
+    #define OBJ_LTQ 130
+
+    #define ROOM_LTQ_UPPER 88
+    #define ENTER_LTQ_UPPER 214
+    #define EXIT_LTQ_UPPER 234
+
+    #define ROOM_OUTSIDE_HOUSE 16
+    #define EXIT_OUTSIDE_HOUSE 170
+    #define ENTER_OUTSIDE_HOUSE 250
+
+// interaction types
+    #define INT_OBJ 0
+    #define INT_NPC 1
+
+// interaction data addresses
+    #define INT_PLANT 0
+    #define INT_BOOKCASE 10
+    #define INT_TELEVISION 20
+    #define INT_GUTS 30
+    #define INT_MOON_BOOK_L 40
+    #define INT_MOON_BOOK_R 50
+    #define INT_HOMEELPH_BED 60
+    #define INT_HOMEHALL_PIC_L 70
+    #define INT_HOMEHALL_PIC_R 80
+    #define INT_HOMEMOON_RADIO 90
+    #define INT_HOMEMOON_TABLE 100
+    #define INT_HOMEMOON_BED 110
+    #define INT_PROTECTORS_SNAKE1 120
+    #define INT_PROTECTORS_SNAKE2 130
+    #define INT_CROSSING_STATUE_L 140
+    #define INT_CROSSING_STATUE_R 150
+    #define INT_PINKTOWER_BOOKS 160
+    #define INT_GLOW_TV 170
+    #define INT_TRACT_BOOKS_L 180
+    #define INT_TRACT_BOOKS_R 190
+    #define INT_FAE_TAPE 200
+    #define INT_FAE_RADIO 210
+    #define INT_FAE_SPIRIT1 220
+    #define INT_FAE_SPIRIT2 230
+    #define INT_FAIRYTREE_STATUE 240
+    #define INT_TOWERA_BODY 250
+    #define INT_HOMEMOONBACK_BODY 260
+    #define INT_HOMEELPH_TURNTABLE 270
+    #define INT_HOMEMOONBACK_BODY2 280
+    #define INT_TUNNELER 290
+    #define INT_MOONGUARD 300
+    #define INT_PAINFRAME 310
+    #define INT_PAINFRAME_POST 320
+    #define INT_THEDARK 330
+    #define INT_THEDARK_POST 340
+    #define INT_CHURCH_2_BOOK_L 350
+    #define INT_CHURCH_2_BOOK_R 360
+    #define INT_CHURCH_3_BOOK 370
+    #define INT_MOON_HOUSE_BED 380
+    #define INT_MOON_HOUSE_TABLE_1 390
+    #define INT_MOON_HOUSE_TABLE_2 400
+    #define INT_MOON_HOUSE_BODY 410
+    #define INT_MOON_HOUSE_PLANT 420
+    #define INT_MOON_HOUSE_END_SUN 430
+    #define INT_MOON_HOUSE_END_MOON 440
+    #define INT_LTQ 450
+    #define INT_MSX 460
+
+    #define INTERACTION_ARRAY_SIZE 560
+
+int objInteractions [470] =
+{
+// 00 PLANT
+    "PLANT",                            // NAME
+    INT_OBJ,                            // TYPE
+    PORT_NONE,                          // PORTRAIT
+    2,                                  // LINES
+    "Dieffenbachia. It's not ideal to have it in the corner like this.",
+    "Regardless, it grows.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 10 BOOKCASE
+    "BOOKCASE",
+    INT_OBJ,
+    PORT_NONE,
+    2,
+    "The shelf is heavy with objects. Mostly, old computer hardware and software...",
+    "They seem to bring you some kind of comfort.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 20 ELPH TV
+    "TELEVISION",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "A high score table is faintly burned into the glass.",
+    "NULL",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 30 GUTS
+    "GUTS",
+    INT_NPC,
+    "RPGGUTS",
+    3,
+    "\nYOU LEAK WRONGNESSS.\nYOU WARP THIS VERY ROOM\nWITH YOUR PRESENCE.",
+    "            I TASTE ROT.\n\n I TASTE ROT.\n\n       I TASTE ROT!",
+    "\n     So,\nstay forever,and allow me\n  to continue to taste.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 40 MOON ROOM BOOKS L
+    "BOOKCASE",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "A collection of obscure divinatory and occultic works. You can't make sense of any of this.",
+    "It's all beyond you. You're bound by proofs and reason. There is no point in you reading these.",
+    "The concept of lucidity in simple belief evades you.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 50 MOON ROOM BOOKS R
+    "BOOKCASE",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "A collection of obscure divinatory and occultic works. A hand-written page is nestled between them.",
+    "'(...) knife into their lower chest and pulled downwards. I filleted them like a fish. Their insides poured out.'",
+    "'I got closer than ever before, my face buried in their chest (...)'\n\nOh. You're done reading?",
+    EXP_NORMAL,
+    EXP_WORRY,
+    EXP_HYSTERIC,
+
+// 60 ELPH BED
+    "BED",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "Your bed. It is unusually well-made.",
+    "NULL",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 70 HALLWAY PIC L
+    "PHOTOGRAPH",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "It's the same as the photograph on the right.",
+    "NULL",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 80 HALLWAY PIC R
+    "PHOTOGRAPH",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "It's the same as the photograph on the left.",
+    "NULL",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 90 MOON ROOM RADIO
+    "RADIO",
+    INT_OBJ,
+    PORT_NONE,
+    2,
+    "Washes of static and humming emanate from the radio. It's not tuned to any specific station.",
+    "The entropy of the cosmos calms you somehow, bringing to mind waves gently pulsing against the shore.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 100 MOON ROOM TABLE
+    "BOOK",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "A book of summoning.",
+    "Some of these creatures are pretty cute.",
+    "The Lunar Disciple has hearts drawn around it.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 110 MOON ROOM BED
+    "BED",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "The sleeping place.",
+    "NULL.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 120 PROTECTOR LEFT
+    "PROTECTOR",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "sssssss s s sssssss ssssssss ssssss ss sssssssss ss  ss s s",
+    "NULL.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 130 PROTECTOR RIGHT
+    "PROTECTOR",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "sss sss s sssssssss ssss ss sssss ss ssssss ss sss sssssss ss",
+    "NULL.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 140 CROSSING STATUE LEFT
+    "IDOL",
+    INT_NPC,
+    PORT_IDOL,
+    1,
+    "SUN",
+    "NULL.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 150 CROSSING STATUE RIGHT
+    "IDOL",
+    INT_NPC,
+    PORT_IDOL,
+    1,
+    "MOON",
+    "NULL",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 160 TV TOWER BOOKCASE
+    "BOOKCASE",
+    INT_OBJ,
+    PORT_NONE,
+    2,
+    "In this way, transmission became environment. It ceased to belong to any single place or time.",
+    "The medium, having escaped gravity, declared dominion over meaning.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 170 GLOW ROOM TV
+    "TV",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "THE TV GLOWS.",
+    "NULL",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 180 TRACT BOOKS L
+    "BOOKCASE",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "Wires implied direction and sequence. Without them, we expect simultaneity.",
+    "We learn to expect everything at once, everywhere, without origin.",
+    "What persists is a hum of relevance without context.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 190 TRACT BOOKS R
+    "BOOKCASE",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "The planet is transformed into a single acoustic chamber.",
+    "The sky, once a symbol of the heavens, is repurposed as infrastructure.",
+    "The need to seek reason withers.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 200 FAE TAPE
+    "TAPE MACHINE",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "A tape loop is playing...",
+    "'-teraction...' 'bodies...' '-ystems...' 'interdepen-'",
+    "The cuts make it hard to parse meaningfully.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 210 FAE RADIO
+    "RADIO",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "The radio hums, picking up errant signals...",
+    "'... can you feel it? ... the pull of Saturn's...'",
+    "'... a twist of the cosmic thread ... the stars only laugh...'",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 220 FAE SPIRIT 1
+    "WILL-O'-THE_WISP",
+    INT_NPC,
+    PORT_GHOST,
+    3,
+    "At first, one offers what is light, what feels like a spark of joy. An idea, a thought, a secret desire.",
+    "The act of giving is not without its price. It is the yearning to be seen, to be known... ",
+    "that causes the soul to fray.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 230 FAE SPIRIT 2
+    "WILL-O'-THE_WISP",
+    INT_NPC,
+    PORT_GHOST,
+    3,
+    "The whisper becomes a chant, a plea, a cry for attention, and then a demand.",
+    "Once two souls are entwined in the same obsession, they pull at each other.",
+    "In the end, both are consumed. What was once a mutual understanding becomes a prison of thoughts.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 240 FAIRY TREE IDOL
+    "IDOL",
+    INT_NPC,
+    PORT_IDOL,
+    2,
+    "To walk this path is not to ascend. The call to dissolve enters through the marrow.",
+    "It reveals moments when bindings weaken and the border between desire and will becomes permeable.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 250 TOWER A BODY
+    "BODY",
+    INT_NPC,
+    EXP_JAW,
+    2,
+    "Imperfect.",
+    "Imperfections.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 260 TOWER A BODY
+    "BODY",
+    INT_NPC,
+    EXP_JAW,
+    2,
+    "Don't look so surprised.",
+    "Maybe you'll come to enjoy it.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 270 TURNTABLE
+    "TURNTABLE",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "Your turntable. The label of the record currently on it reads 'HALO FOURTEEN.'",
+    "NULL",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 280 BODY POST_FIGHT
+    "BODY",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "...",
+    "NULL",
+    "NULL",
+    EXP_HYSTERIC,
+    EXP_HYSTERIC,
+    EXP_HYSTERIC,
+// 290 TUNNELER
+    "TUNNELER",
+    INT_NPC,
+    "RPGTUNL",
+    3,
+    "Fancy seeing you here.\nDigging deep today?",
+    "The path you walked - \ni'll be clear:\nthere's another way.",
+    "Where the idols congregate\nwith those who peer - \nno more can I say.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 300 MOONGUARD
+    "MOONGUARD",
+    INT_NPC,
+    "RPGMGARD",
+    3,
+    "(The creature says nothing, yet you feel its voice in your mind, a shadow looming over you.)",
+    "(The language means nothing, yet you feel panic in the tone, striking out in fear.)",
+    "(Nothing, nothing, nothing. All the way down.)",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 310 PAINFRAME
+    "PAINFRAME",
+    INT_NPC,
+    "RPGPNF",
+    3,
+    "LDA #$FF\nSTA $D020",
+    "LDA #$00\nSTA $D020",
+    "INC $D020",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 320 PAINFRAME
+    "MAINFRAME",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "It's been shut down.",
+    "NULL",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 330 THE DARK
+    "THE DARK",
+    INT_NPC,
+    "RPGDRK",
+    3,
+    "Sun wakes sky.\nBright clock ticks.\nMorning smiles.",
+    "Moon steps in.\nLight hides.\nShadows whisper.",
+    "Will the sky exhale?",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 340 POST THE DARK
+    "NOTHING",
+    INT_NPC,
+    PORT_NONE,
+    1,
+    "There's nothing there after all.",
+    "LINE2",
+    "LINE3",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+
+// 350 CHURCH BOOK L
+    "BOOK",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "polaris waketh; thrice in breath conceal'd, once graven deep on ashen flesh.",
+    "the sphere, that, sleeping, yet its oath doth keep, doth take the marrow,",
+    "and doth guide the hand that deems itself unbound.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 360 CHURCH BOOK R
+    "BOOK",
+    INT_OBJ,
+    PORT_NONE,
+    2,
+    "in time unreckon'd the heav'ns do barter breath for measur'd dust.",
+    "sleep names it fate; but waking calls it law. such freedom runs as straight as any line.",
+    "LINE3",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 370 CHURCH BOOK 3
+    "BOOK",
+    INT_OBJ,
+    PORT_NONE,
+    3,
+    "each path was trac'd ere thou couldst set thy foot, and nam'd ere tongue or voice were given thee.",
+    "man calls it choice; the geometry, an end; and night applauds what day doth never speak.",
+    "know that the skye hath clos'd its eyes.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 380 MOON HOUSE BED
+    "BED",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "The Sleeping Place.",
+    "LINE2",
+    "LINE3",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 390 MOON HOUSE TABLE 1
+    "BOOK",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "A collection of indecipherable symbols. They tug at your semantic network.",
+    "LINE2",
+    "LINE3",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 400 MOON HOUSE TABLE 2
+    "BOOK",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "A collection of indecipherable symbols. They tug at your semantic network.",
+    "LINE2",
+    "LINE3",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 410 MOON HOUSE BODY
+    "BODY",
+    INT_NPC,
+    EXP_JAW,
+    3,
+    "THE MOON DOES NOT WANDER,",
+    "PINNED TO THE DARK BY THE ARRANGING LIGHT,",
+    "ONLY INCIDENTALLY PULLING THE TIDES.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 420 MOON HOUSE PLANT
+    "PLANT",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "Dieffenbachia. It's thriving.",
+    "LINE2",
+    "LINE3",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 430 END STATUE LEFT
+    "IDOL",
+    INT_OBJ,
+    PORT_NONE,
+    1,
+    "SUN",
+    "NULL.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 440 END STATUE RIGHT
+    "IDOL",
+    INT_NPC,
+    PORT_IDOL,
+    1,
+    "MOON",
+    "NULL.",
+    "NULL",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 450 LTQ
+    "Q",
+    INT_NPC,
+    "RPGLTQ",
+    3,
+    "NOT SO LOST AFTER ALL, I GUESS, YEA? LOVE THAT FOR YA'.",
+    "I'M NOT AT LIBERTY TO SAY TOO MUCH, BUT THE DISK UPDATE IS THE LEAST I COULD DO FOR YA'.",
+    "TAKE CARE A' YERSELF.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+// 460 MSX
+    "MSX",
+    INT_NPC,
+    "RPGMSXP",
+    3,
+    "GREAT.",
+    "YOU GET POTION.\nYOU GET BOMB.",
+    "BYE.",
+    EXP_NORMAL,
+    EXP_NORMAL,
+    EXP_NORMAL,
+};
+
+int interactionDB [560] =
+{
+    // ROOM                 // TILE                 // ACTION               // DESTINATION TILE
+    ROOM_POSTGUTS,          EXIT_POSTGUTS_TOP,      ROOM_POSTGUTS2,         ENTER_POSTGUTS2,
+    ROOM_POSTGUTS,          EXIT_POSTGUTS_BOTTOM_1, ROOM_GLOW,              ENTER_GLOW,
+    ROOM_POSTGUTS,          EXIT_POSTGUTS_BOTTOM_2, ROOM_GLOW,              ENTER_GLOW,
+    ROOM_POSTGUTS,          EXIT_POSTGUTS_BOTTOM_3, ROOM_GLOW,              ENTER_GLOW,
+
+    ROOM_TREE_EXIT,         EXIT_TREE_EXIT,         ROOM_MYSTERY,           ENTER_MYSTERY,
+    ROOM_TREE_EXIT,         OBJ_TREE_TUNNELER,      INT_TUNNELER,           0,
+
+    ROOM_MYSTERY,           EXIT_MYSTERY_1,         ROOM_TREE_EXIT,         ENTER_TREE_EXIT,
+    ROOM_MYSTERY,           EXIT_MYSTERY_2,         ROOM_TREE_EXIT,         ENTER_TREE_EXIT,
+
+    ROOM_POSTGUTS2,         EXIT_POSTGUTS2,         ROOM_POSTGUTS,          ENTER_POSTGUTS,
+
+    ROOM_SOUTH_COMPUTER,    EXIT_SOUTH_COMPUTER,    ROOM_KEYS,              ENTER_KEYS,
+
+    ROOM_KEYS,              EXIT_KEYS,              ROOM_SOUTH_COMPUTER,    ENTER_SOUTH_COMPUTER,
+
+    ROOM_BLOCKMAZE,         EXIT_BLOCKMAZE,         ROOM_HOMEMOONBACK,      ENTER_HOMEMOONBACK,
+    ROOM_HOMEMOONBACK,      EXIT_HOMEMOONBACK_STAIRS, ROOM_BLOCKMAZE,       ENTER_BLOCKMAZE,
+    ROOM_HOMEMOONBACK,      EXIT_HOMEMOONBACK_WALL, ROOM_HOMEMOON,          146,
+    ROOM_HOMEMOONBACK,      OBJ_HOMEMOONBACK_BODY,  INT_HOMEMOONBACK_BODY,  0,
+
+    ROOM_HOMEELPH,          OBJ_HOMEELPH_PLANT,     INT_PLANT,              0,
+    ROOM_HOMEELPH,          OBJ_HOMEELPH_TV,        INT_TELEVISION,         0,
+    ROOM_HOMEELPH,          OBJ_HOMEELPH_BOOKS_R,   INT_BOOKCASE,           0,
+    ROOM_HOMEELPH,          OBJ_HOMEELPH_BOOKS_L,   INT_BOOKCASE,           0,
+    ROOM_HOMEELPH,          OBJ_HOMEELPH_BED,       INT_HOMEELPH_BED,       0,
+    ROOM_HOMEELPH,          OBJ_HOMEELPH_TURNTABLE, INT_HOMEELPH_TURNTABLE, 0,
+    ROOM_HOMEELPH,          EXIT_HOMEELPH_EXIT,     ROOM_HOMEHALL,          ENTER_HOMEHALL_FROMELPH,
+
+    ROOM_HOMEHALL,          OBJ_HOMEHALL_PIC_L,     INT_HOMEHALL_PIC_L,     0,
+    ROOM_HOMEHALL,          OBJ_HOMEHALL_PIC_R,     INT_HOMEHALL_PIC_R,     0,
+    ROOM_HOMEHALL,          EXIT_HOMEHALL_EXIT,     ROOM_HOMEOUTSIDE,       ENTER_HOMEOUTSIDE,
+    ROOM_HOMEHALL,          EXIT_HOMEHALL_ELPH,     ROOM_HOMEELPH,          ENTER_HOMEELPH,
+    ROOM_HOMEHALL,          EXIT_HOMEHALL_MOON,     ROOM_HOMEMOON,          ENTER_HOMEMOON,
+
+    ROOM_HOMEMOON,          OBJ_HOMEMOON_RADIO,     INT_HOMEMOON_RADIO,     0,
+    ROOM_HOMEMOON,          OBJ_HOMEMOON_BED,       INT_HOMEMOON_BED,       0,
+    ROOM_HOMEMOON,          OBJ_HOMEMOON_TABLE,     INT_HOMEMOON_TABLE,     0,
+    ROOM_HOMEMOON,          OBJ_HOMEMOON_BOOKS_L,   INT_MOON_BOOK_L,        0,
+    ROOM_HOMEMOON,          OBJ_HOMEMOON_BOOKS_R,   INT_MOON_BOOK_R,        0,
+
+    ROOM_HOMEOUTSIDE,       EXIT_HOMEOUTSIDE_EXIT,  ROOM_HOMEHALL,          ENTER_HOMEHALL_FROMOUT,
+
+    ROOM_CROSSING,          OBJ_CROSSING_STATUE_L,  INT_CROSSING_STATUE_L,  0,
+    ROOM_CROSSING,          OBJ_CROSSING_STATUE_R,  INT_CROSSING_STATUE_R,  0,
+
+    ROOM_PINKTOWER,         OBJ_PINKTOWER_BOOKS,    INT_PINKTOWER_BOOKS,    0,
+
+    ROOM_GLOW,              OBJ_GLOW_TV,            INT_GLOW_TV,            0,
+
+    ROOM_TRACT,             OBJ_TRACT_BOOKS_L,      INT_TRACT_BOOKS_L,      0,
+    ROOM_TRACT,             OBJ_TRACT_BOOKS_R,      INT_TRACT_BOOKS_R,      0,
+
+    ROOM_PROTECTORS,        OBJ_PROTECTORS_GUTS,    INT_GUTS,               0,
+    ROOM_PROTECTORS,        OBJ_PROTECTORS_SNAKE1,  INT_PROTECTORS_SNAKE1,  0,
+    ROOM_PROTECTORS,        OBJ_PROTECTORS_SNAKE2,  INT_PROTECTORS_SNAKE2,  0,
+
+    ROOM_FAE,               OBJ_FAE_TAPE,           INT_FAE_TAPE,           0,
+    ROOM_FAE,               OBJ_FAE_RADIO,          INT_FAE_RADIO,          0,
+    ROOM_FAE,               OBJ_FAE_SPIRIT1,        INT_FAE_SPIRIT1,        0,
+    ROOM_FAE,               OBJ_FAE_SPIRIT2,        INT_FAE_SPIRIT2,        0,
+
+    ROOM_FAIRYTREE,         OBJ_FAIRYTREE_STATUE,   INT_FAIRYTREE_STATUE,   0,
+    ROOM_FAIRYTREE,         EXIT_FAIRYTREE1,        ROOM_TREE_ENTRANCE,     ENTER_TREE_ENTRANCE,
+    ROOM_FAIRYTREE,         EXIT_FAIRYTREE2,        ROOM_TREE_ENTRANCE,     ENTER_TREE_ENTRANCE,
+
+    ROOM_TREE_ENTRANCE,     EXIT_TREE_ENTRANCE,     ROOM_FAIRYTREE,         ENTER_FAIRYTREE,
+
+    ROOM_WEST_GOINGDOWN,    EXIT_WEST_GOINGDOWN,    ROOM_GLITCHTOWER,       ENTER_GLITCHTOWER,
+    ROOM_GLITCHTOWER,       EXIT_GLITCHTOWER,       ROOM_WEST_GOINGDOWN,    ENTER_WEST_GOINGDOWN,
+
+    ROOM_GLITCH,            EXIT_GLITCH,            ROOM_GLITCHTOWER,       ENTER_GLITCHTOWER5,
+    ROOM_GLITCH,            EXIT_GLITCH2,           ROOM_GLITCHTOWER,       ENTER_GLITCHTOWER2,
+    ROOM_GLITCH,            EXIT_GLITCH3,           ROOM_GLITCHTOWER,       ENTER_GLITCHTOWER3,
+    ROOM_GLITCH,            EXIT_GLITCH4,           ROOM_GLITCHTOWER,       ENTER_GLITCHTOWER4,
+    ROOM_GLITCH,            EXIT_GLITCH5,           ROOM_GLITCHTOWER,       ENTER_GLITCHTOWER5,
+    ROOM_GLITCHTOWER,       EXIT_GLITCHTOWER2,      ROOM_GLITCH,            ENTER_GLITCH2,
+    ROOM_GLITCHTOWER,       EXIT_GLITCHTOWER3,      ROOM_GLITCH,            ENTER_GLITCH3,
+    ROOM_GLITCHTOWER,       EXIT_GLITCHTOWER4,      ROOM_GLITCH,            ENTER_GLITCH4,
+    ROOM_GLITCHTOWER,       EXIT_GLITCHTOWER5,      ROOM_GLITCH,            ENTER_GLITCH5,
+
+    ROOM_GLITCHTOWER,       EXIT_GLITCHTOWER6,      ROOM_TOWERA,            ENTER_TOWERA,
+    ROOM_GLITCHTOWER,       EXIT_GLITCHTOWER7,      ROOM_TOWERA,            ENTER_TOWERA,
+
+    ROOM_TOWERA,            EXIT_TOWERA1,           ROOM_GLITCHTOWER,       ENTER_GLITCHTOWER6,
+    ROOM_TOWERA,            EXIT_TOWERA2,           ROOM_GLITCHTOWER,       ENTER_GLITCHTOWER6,
+    ROOM_TOWERA,            EXIT_TOWERA3,           ROOM_TOWERB,            ENTER_TOWERB,
+    ROOM_TOWERA,            OBJ_TOWERA_BODY,        INT_TOWERA_BODY,        0,
+
+    ROOM_TOWERB,            EXIT_TOWERB2,           ROOM_TOWERC,            ENTER_TOWERC,
+    ROOM_TOWERB,            EXIT_TOWERB1,           ROOM_TOWERA,            ENTER_TOWERA2,
+
+    ROOM_TOWERC,            EXIT_TOWERC1,           ROOM_TOWERB,            ENTER_TOWERB2,
+    ROOM_TOWERC,            EXIT_TOWERC2,           ROOM_TOWERBASEMENT,     ENTER_TOWERBASEMENT,
+    ROOM_TOWERBASEMENT,     EXIT_TOWERBASEMENT,     ROOM_TOWERC,            ENTER_TOWERC2,
+    ROOM_TOWERBASEMENT,     OBJ_TOWERBASEMENT_DARK, INT_THEDARK,            0,
+
+    ROOM_BURNING,           EXIT_BURNING1,          ROOM_BUSH_ENTRANCE,     ENTER_BUSH_ENTRANCE,
+    ROOM_BURNING,           EXIT_BURNING2,          ROOM_BUSH_ENTRANCE,     ENTER_BUSH_ENTRANCE,
+
+    ROOM_BUSH_ENTRANCE,     EXIT_BUSH_ENTRANCE_1,   ROOM_BURNING,           ENTER_BURNING,
+    ROOM_BUSH_ENTRANCE,     EXIT_BUSH_ENTRANCE_2,   ROOM_BURNING,           ENTER_BURNING,
+
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_1,       ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_2,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_2,       ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_1,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_2,       ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_1,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_2,       ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_1,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_17,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_27,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_27,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_17,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_28,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_9,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_9,       ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_28,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_10,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_11,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_11,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_10,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_12,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_5,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_5,       ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_12,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_6,       ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_18,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_18,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_6,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_20,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_13,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_13,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_20,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_14,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_8,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_8,       ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_14,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_7,       ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_21,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_21,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_7,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_24,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_9,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_29,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_24,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_22,      ROOM_STAR_MAZE_C,       ENTER_STAR_MAZE_23,
+    ROOM_STAR_MAZE_C,       EXIT_STAR_MAZE_23,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_22,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_15,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_3,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_3,       ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_15,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_30,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_16,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_16,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_30,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_25,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_26,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_26,      ROOM_STAR_MAZE_B,       ENTER_STAR_MAZE_25,
+    ROOM_STAR_MAZE_B,       EXIT_STAR_MAZE_19,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_1,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_4,       ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_12,
+    ROOM_STAR_MAZE_A,       EXIT_STAR_MAZE_12,      ROOM_STAR_MAZE_A,       ENTER_STAR_MAZE_4,
+
+    ROOM_KEYS_OPEN,         EXIT_KEYS_OPEN,         ROOM_SOUTH_COMPUTER,    ENTER_SOUTH_COMPUTER,
+
+    ROOM_STAR_MAZE_POST,    EXIT_STAR_MAZE_POST1,   ROOM_STAR_MAZE_C,       ENTER_STAR_MAZE_C1,
+    ROOM_STAR_MAZE_POST,    EXIT_STAR_MAZE_POST2,   ROOM_STAR_MAZE_C,       ENTER_STAR_MAZE_C2,
+
+    ROOM_STAR_MAZE_D,       OBJ_STAR_MAZE_D_B1,     INT_MOONGUARD,          0,
+    ROOM_STAR_MAZE_D,       OBJ_STAR_MAZE_D_B2,     INT_MOONGUARD,          0,
+
+    ROOM_PAINFRAME,         OBJ_PAINFRAME_3,        INT_PAINFRAME,          0,
+    ROOM_PAINFRAME,         OBJ_PAINFRAME_4,        INT_PAINFRAME,          0,
+
+    ROOM_MOON,              EXIT_MOON_1,            ROOM_MOON_HOUSE,        ENTER_MOON_HOUSE_1,
+    ROOM_MOON,              EXIT_MOON_2,            ROOM_MOON_HOUSE,        ENTER_MOON_HOUSE_2,
+    ROOM_MOON_HOUSE,        EXIT_MOON_HOUSE_1,      ROOM_MOON,              ENTER_MOON_1,
+    ROOM_MOON_HOUSE,        EXIT_MOON_HOUSE_2,      ROOM_MOON,              ENTER_MOON_2,
+
+    ROOM_CHURCH_2,          OBJ_CHURCH_2_BOOK_L,    INT_CHURCH_2_BOOK_L,    0,
+    ROOM_CHURCH_2,          OBJ_CHURCH_2_BOOK_R,    INT_CHURCH_2_BOOK_R,    0,
+    ROOM_CHURCH_3,          OBJ_CHURCH_3_BOOK,      INT_CHURCH_3_BOOK,      0,
+    ROOM_MOON_HOUSE,        OBJ_MOON_HOUSE_BED_1,   INT_MOON_HOUSE_BED,     0,
+    ROOM_MOON_HOUSE,        OBJ_MOON_HOUSE_BED_2,   INT_MOON_HOUSE_BED,     0,
+    ROOM_MOON_HOUSE,        OBJ_MOON_HOUSE_TABLE_1, INT_MOON_HOUSE_TABLE_1, 0,
+    ROOM_MOON_HOUSE,        OBJ_MOON_HOUSE_TABLE_2, INT_MOON_HOUSE_TABLE_2, 0,
+    ROOM_MOON_HOUSE,        OBJ_MOON_HOUSE_BODY,    INT_MOON_HOUSE_BODY,    0,
+    ROOM_MOON_HOUSE_2,      OBJ_MOON_HOUSE_PLANT,   INT_MOON_HOUSE_PLANT,   0,
+
+    ROOM_MOON_HOUSE_END,    OBJ_MOON_HOUSE_END_SUN, INT_MOON_HOUSE_END_SUN, 0,
+    ROOM_MOON_HOUSE_END,    OBJ_MOON_HOUSE_END_MOON,INT_MOON_HOUSE_END_MOON,0,
+
+    ROOM_E,                 EXIT_E,                 ROOM_LTQ,               ENTER_LTQ_1,
+    ROOM_LTQ,               EXIT_LTQ_1,             ROOM_E,                 ENTER_E,
+    ROOM_LTQ,               EXIT_LTQ_2,             ROOM_LTQ_UPPER,         ENTER_LTQ_UPPER,
+    ROOM_LTQ_UPPER,         EXIT_LTQ_UPPER,         ROOM_LTQ,               ENTER_LTQ_2,
+
+    ROOM_MSX,               EXIT_MSX,               ROOM_OUTSIDE_HOUSE,     ENTER_OUTSIDE_HOUSE,
+    ROOM_OUTSIDE_HOUSE,     EXIT_OUTSIDE_HOUSE,     ROOM_MOON_HOUSE,        ENTER_MOON_HOUSE_1,
+
+    ROOM_MSX,               OBJ_MSX,                INT_MSX,                0,
+    ROOM_LTQ,               OBJ_LTQ,                INT_LTQ,                0,
+};

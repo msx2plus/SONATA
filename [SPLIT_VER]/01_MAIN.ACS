@@ -1,0 +1,2453 @@
+#include "zcommon.acs"
+
+// THIS SPLIT VERSION IS ONLY INCLUDED FOR YOUR SANITY AND IS NOT THE VERSION CREATED FOR EOS
+
+// general
+bool anyDisks = 0;
+int sonataTime = 0;
+str sonataTimeDisplay = "";
+int vHardMode = 0;
+bool vOpenedDebug = 0;
+bool booted = 0;
+int vLastMusic = 0;
+int vLastMusicFile = 0; // unused
+int vSanityTimer = 0;
+bool drawTime = 0;
+
+// position & screen
+bool vHasControl = 1;
+int vCurrentScreen = 10;
+int vLastScreen = 0;
+int vPosX = 12;
+int vPosY = 8;
+int vRealPos = 0;
+int vWishPos = 0;
+int vTriedUse = 0;
+int vHP = 40;
+bool vTweening = 0;
+int vTweenX = 0;
+int vTweenY = 0;
+bool vAnim = 0;
+int vTeleportBufferTime = 0;
+int vStepCount = 0;
+
+// input
+bool inputUp = 0;
+bool inputDown = 0;
+bool inputLeft = 0;
+bool inputRight = 0;
+bool inputUse = 0;
+bool inputUpHold = 0;
+bool inputDownHold = 0;
+bool inputLeftHold = 0;
+bool inputRightHold = 0;
+
+// powerups & inventory
+int vBowBoost = 0;
+int vMeleeBoost = 0;
+bool vHasBomb = 0;
+bool vHasPotion = 0;
+int vHasTeleport = 0;
+bool vHasSlowSlots = 0;
+bool vPowerSpeed = 0;
+int vGold = 0;
+bool vHasBook = 0;
+
+bool debugger = 0;
+
+str vStep1 = "RPGSTEP2";
+str vStep2 = "RPGSTEP3";
+
+str debugInteract = "";
+str debugMessage = "";
+str debugMessage2 = "";
+str debugMessage3 = "";
+str debugMessageInput = "";
+str debugMessageRealInput = "";
+str strRpgVersion = "";
+int vRpgVersion = 1;
+bool battlesOn = 1;
+bool battleMusicSwitch = 1;
+
+// progress
+bool boss1Clear = 0;
+bool boss2Clear = 0;
+bool boss3Clear = 0;
+bool boss4Clear = 0;
+bool altboss1Clear = 0;
+bool altboss2Clear = 0;
+bool atlasDone = 0;
+
+bool key1Got = 0;
+bool key2Got = 0;
+bool key3Got = 0;
+
+
+// additional sprite handling
+int sprite1At = 0;
+int sprite2At = 0;
+int sprite3At = 0;
+
+// lock progress
+bool unlocked1 = 0;
+bool unlocked2 = 0;
+bool unlocked3 = 0;
+
+int RNGcount = 0;
+
+bool diskSide = 0;
+
+int killCount = 0;
+
+int RNG[64] =
+{
+    27, 42, 15, 6, 58, 32, 41, 53,
+    4, 33, 9, 46, 54, 10, 0, 24,
+    30, 21, 34, 63, 50, 22, 5, 11,
+    14, 55, 36, 47, 29, 20, 26, 7,
+    17, 38, 8, 43, 35, 13, 60, 28,
+    40, 61, 1, 45, 19, 44, 16, 23,
+    62, 52, 25, 49, 18, 31, 39, 57,
+    48, 59, 12, 2, 56, 37, 3, 51
+};
+
+// BATTLE DEFINITIONS
+
+int areaEncounters[2] = {99, 99};
+int bYSine = 0;
+int bYOffset = 0;
+int bYAmp = 0;
+int bYFreq =  0;
+int bXSine = 0;
+int bXOffset = 0;
+int bXAmp = 0;
+int bXFreq = 0;
+int bEnemyHP = 0;
+int bEnemyType = 0;
+str bEnemyName = "";
+bool bEnemyHurt = 0;
+bool bEnemyBoss = 0;
+
+bool bMoved = 0;
+bool bElphHurt = 0;
+int bElphPos = 4;
+
+int bATBvalue = 0;
+bool bATBactive = 0;
+bool bHasControl = 0;
+bool bSafetyCheck = 0;
+bool bSquareKill = 0;
+
+bool bEnemyAttacking = 0;
+
+function int getRNG (void)
+{
+    int output = RNG[RNGcount];
+    RNGcount = (RNGcount+1)%64;
+    return output;
+}
+
+#include "SN_MENU.ACS"
+
+// NEW INPUTS
+// NOTE: SOME OF THESE ARE NEW TO THE CUSTOM GZDOOM BUILD USED FOR EOS
+
+    #define BT_SNUP 0x4000000
+    #define BT_SNDOWN 0x8000000
+    #define BT_SNLEFT 0x10000000
+    #define BT_SNRIGHT 0x800000
+    #define BT_SNUSE 0x1000000
+
+// UI & GRAPHICS ////////////////////
+
+    int TWEEN_SPEED = 4;
+    int TWEEN_MULT = 4;
+    int MOVE_DELAY = 3;
+
+// ELPH FACES
+    #define EXP_NORMAL "RPGFACE1"
+    #define EXP_WORRY "RPGFACE3"
+    #define EXP_HYSTERIC "RPGFACE5"
+    #define EXP_GLITCH "RPGFACE6"
+    #define EXP_JAW "RPGFACE7"
+    #define EXP_SPLIT "RPGFACE8"
+    #define EXP_MELT "RPGFACE9"
+
+// PORTRAITS
+    #define PORT_NONE "NULL"
+    #define PORT_TUNNEL "RPGTUNL"
+    #define PORT_LTQ "RPGLTQ"
+    #define PORT_MOON "RPGMOON"
+    #define PORT_GHOST "RPGMONS1"
+    #define PORT_IDOL "RPGIDOL"
+
+// UI GRAPHIC LAYERS
+	#define UI_BORDER 1
+    #define UI_STATIC 3
+    #define UI_BATTLESTART 300
+    #define UI_DEBUG 200
+    #define UI_DEBUG2 201
+    #define UI_DEBUG3 202
+    #define UI_DEBUGREAL 203
+    #define UI_DEBUGWISH 204
+    #define UI_DEBUGMENU 40
+    #define UI_DEBUGMENUTEXT 39
+    #define UI_DEBUGMENUVALUES 38
+    #define UI_DEBUGMENUSELECTOR 37
+    #define UI_MENU 50
+    #define UI_MENUINFO 49
+    #define UI_MENUTEXT 48
+    #define UI_MENUSELECTOR 47
+    #define UI_BOX 100
+    #define UI_PORTBOX 99
+    #define UI_PORT 98
+    #define UI_TEXT 97
+    #define UI_HUDFACE 3000
+    #define UI_HUDROOMNAME 3001
+    #define UI_HUDBAR 3049
+    #define UI_HUDKEY1 2999
+    #define UI_HUDKEY2 2998
+    #define UI_HUDKEY3 2997
+    #define UI_HUDSKATE 2996
+    #define UI_HUDBAND 2995
+    #define UI_HUDBOOK 2994
+
+// OVERWORLD GRAPHIC LAYERS
+    #define ZONE_ELPH 4000
+    #define ZONE_ROOM 5001
+    #define ZONE_BG 5002
+    #define ZONE_SPRITE1 5000
+    #define ZONE_SPRITE2 4999
+    #define ZONE_SPRITE3 4998
+
+// GAME FUNCTIONS ////////////////////
+
+// ADDON DISKS
+    #define DISK_EAST 0
+    #define DISK_WEST 1
+    #define DISK_SOUTH 2
+    #define DISK_ATTACKS 3
+    #define DISK_ITEMS 4
+    #define DISK_DEBUG 5
+
+// GAME OVER TYPES
+    #define GO_NORMAL 1
+    #define GO_BATTLE 2 // currently unused
+    #define GO_MOONROOM 3
+    #define GO_GUTS 4
+
+// AUDIO ////////////////////
+
+// MUSIC PATTERNS
+    #define BGM_NONE 999
+    #define BGM_STAR 0
+    #define BGM_ROMANCE 2
+    #define BGM_TENSION 3
+    #define BGM_MOONISH 4
+    #define BGM_FORBADE 5
+    #define BGM_TEMPLE 6
+    #define BGM_GRAVITY 8
+    #define BGM_ENDLESS 9
+    #define BGM_CAVERN 10
+    #define BGM_MOONLIGHT 12
+    #define BGM_PROVOCATEUR 13
+    #define BGM_TRAIN 14
+    #define BGM_INTERLOCUTEUR 15
+    #define BGM_MOONROOM 17
+    #define BGM_ANGEL 18
+    #define BGM_NEXUS 19
+    #define BGM_FAE 21
+    #define BGM_GLITCH 22
+    #define BGM_DEVIL 24
+    #define BGM_PRAYER 25
+    #define BGM_SEER 26
+    #define BGM_SHAMBLE 27
+    #define BGM_CRAWL 29
+    #define BGM_RAINBOW 31
+    #define BGM_ENCROACHING 33
+    #define BGM_SUPERNOVA 34
+    #define BGM_NOISE 35
+    #define BGM_MIRROR 36
+    #define BGM_DIVINITY 37
+    #define BGM_EPISODE 39
+    #define BGM_JADE 40
+    #define BGM_FIELD 42
+    #define BGM_HOLY 43
+    #define BGM_ENT 45
+    #define BGM_EGG 46
+    #define BGM_SPACE 47
+    #define BGM_PFRM 48
+    #define BGM_BLEAK 49
+    #define BGM_SHOP 50
+    #define BGM_DARK 51
+    #define BGM_NERVES 53
+    #define BGM_SHE 54
+    #define BGM_END 55
+    #define BGM_MSX 56
+    #define BGM_LTQ 57
+    #define BGM_DISK 58
+    #define BGM_ATLAS 59
+
+// BATTLE ATTACK INFO ////////////////////
+
+	#define bATK_COL_L 0
+	#define bATK_COL_M 10
+	#define bATK_COL_R 20
+	#define bATK_ROW_U 30
+	#define bATK_ROW_M 40
+	#define bATK_ROW_B 50
+	#define bATK_SLASH_F 60
+	#define bATK_SLASH_B 70
+	#define bATK_TOP_BOT_HOLD 80
+	#define bATK_X 90
+	#define bATK_CARDINAL 100
+	#define bATK_O 110
+	#define bATK_CORNER 120
+
+	#define bPATK_MELEE 1
+	#define bPATK_BOW 0
+	#define bPATK_HEAL 2
+
+int attackGridDB[999] =
+{
+    // 0 LEFT COLUMN
+    1,0,0,1,0,0,1,0,0,"NULL",
+    // 10 MIDDLE COLUMN
+    0,1,0,0,1,0,0,1,0,"NULL",
+    // 20 RIGHT COLUMN
+    0,0,1,0,0,1,0,0,1,"NULL",
+    // 30 TOP ROW
+    1,1,1,0,0,0,0,0,0,"NULL",
+    // 40 MIDDLE ROW
+    0,0,0,1,1,1,0,0,0,"NULL",
+    // 50 BOTTOM ROW
+    0,0,0,0,0,0,1,1,1,"NULL",
+    // 60 FORWARD SLASH
+    1,0,0,0,1,0,0,0,1,"NULL",
+    // 70 BACKSLASH
+    0,0,1,0,1,0,1,0,0,"NULL",
+    // 80 MIDDLE TOP+BOTTOM HOLD
+    0,30,0,0,0,0,0,30,0,"NULL",
+    // 90 X
+    1,0,1,0,1,0,1,0,1,"NULL",
+    // 100 CARDINALS
+    0,1,0,1,0,1,0,1,0,"NULL",
+    // 110 O
+    1,1,1,1,0,1,1,1,1,"NULL",
+    // 120 CORNERS
+    1,0,1,0,0,0,1,0,1,"NULL",
+};
+
+// BATTLE GRAPHIC LAYERS ////////////////////
+
+	#define BATTLE_GRID_X 160.0
+	#define BATTLE_GRID_Y 192.0
+
+	#define BATTLE_DMGNUM 10
+	#define BATTLE_SLOT 500
+	#define BATTLE_FX 1000 // 100-110
+	#define BATTLE_ELPH 2000
+	#define BATTLE_SQUARE 3000 // 300-308
+	#define BATTLE_ICONS 4000 // 400-403
+
+	#define BATTLE_INFO1 5000
+	#define BATTLE_INFO2 6000
+	#define BATTLE_ENEMY 7000
+	#define BATTLE_GRID 8000
+	#define BATTLE_ATBMETER 9000 // 900-924
+	#define BATTLE_BG 10000
+
+////////////////////////////////////////////////////
+
+#include "SN_ROOMS.acs"
+#include "SN_ACT.acs"
+#include "SN_NME.ACS"
+
+// DISK LOADS /////////////////////////
+
+#define LOAD_ARRAY_SIZE 30
+
+int loadArray[30] =
+{
+    ROOM_SOUTHBOUND,        ROOM_SOUTH_START,       1,
+    ROOM_SOUTH_START,       ROOM_SOUTHBOUND,        0,
+
+    ROOM_EASTWARD,          ROOM_GP,                0,
+    ROOM_GP,                ROOM_EASTWARD,          0,
+
+    ROOM_FAIRYTREE,         ROOM_TREE_ENTRANCE,     1,
+    ROOM_TREE_ENTRANCE,     ROOM_FAIRYTREE,         1,
+
+    ROOM_BURNING,           ROOM_BUSH_ENTRANCE,     0,
+    ROOM_BUSH_ENTRANCE,     ROOM_BURNING,           1,
+
+    ROOM_WEST_GOINGDOWN,    ROOM_GLITCHTOWER,       1,
+    ROOM_GLITCHTOWER,       ROOM_WEST_GOINGDOWN,    0,
+};
+
+// DISK PROGRESSIONS ////////////////////
+
+int crossingProgressionCount = 6;
+int crossingProgressionSource[6]    = {ROOM_CROSSING,   ROOM_CROSSING,  ROOM_CROSSING,  ROOM_WESTWARD,  ROOM_EASTWARD,  ROOM_SOUTHBOUND};
+int crossingProgressionTarget[6]    = {ROOM_0X3E,       ROOM_0X40,      ROOM_0X4B,      ROOM_0X4B,      ROOM_0X4B,      ROOM_0X4B};
+int crossingProgressionDisk[6]      = {DISK_WEST,       DISK_EAST,      DISK_SOUTH,     DISK_WEST,      DISK_EAST,      DISK_SOUTH};
+int crossingProgressionOK[6]        = {ROOM_WESTWARD,   ROOM_EASTWARD,  ROOM_SOUTHBOUND,ROOM_CROSSING,  ROOM_CROSSING,  ROOM_CROSSING};
+
+script "mainInput" ENTER
+{
+    while(1)
+    {
+        inputUse =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_USE) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_USE))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNUSE) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_SNUSE));
+
+        inputUp =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_FORWARD) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_FORWARD))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNUP) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_SNUP));
+
+        inputDown =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_BACK) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_BACK))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNDOWN) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_SNDOWN));
+
+        inputLeft =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_MOVELEFT) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_MOVELEFT))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNLEFT) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_SNLEFT));
+
+        inputRight =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_MOVERIGHT) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_MOVERIGHT))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNRIGHT) && !(GetPlayerInput(0,INPUT_OLDBUTTONS) & BT_SNRIGHT));
+
+        inputUpHold =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_FORWARD))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNUP));
+
+        inputDownHold =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_BACK))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNDOWN));
+
+        inputLeftHold =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_MOVELEFT))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNLEFT));
+
+        inputRightHold =
+        ((GetPlayerInput(0,INPUT_BUTTONS) & BT_MOVERIGHT))
+        || ((GetPlayerInput(0,INPUT_BUTTONS) & BT_SNRIGHT));
+
+        Delay(1);
+    }
+}
+
+script "rpg_debugger" (void)
+{
+    str input1 = "";
+    str input2 = "";
+    str input3 = "";
+    str input4 = "";
+    str input5 = "";
+    str debugInfo = "";
+    str debugInfo2 = "";
+    while (debugger)
+    {
+    if (!bSafetyCheck)
+    {
+        debugInfo =
+        StrParam(
+            s:"ROOM ",i:vCurrentScreen,s:" \n",
+            s:"POSX ",i:vPosX,s:".",i:vTweenX*TWEEN_MULT,s:" \n",
+            s:"POSY ",i:vPosY,s:".",i:vTweenY*TWEEN_MULT,s:" \n",
+            s:"REAL ",i:vRealPos,s:" \n",
+            s:"WISH ",i:vWishPos,s:" \n",
+            s:"CTRL ",b:vHasControl,s:" \n",
+            s:"RNGV ",i:RNG[RNGcount],s:" \n",
+            s:"RNGN ",i:RNG[RNGcount+1%64],s:" \n",
+            s:"RNGS ",i:RNGcount,s:" \n",
+            s:"IN_P ",s:debugMessageInput,s:"\n",
+            s:"IN_R ",s:debugMessageRealInput,s:"\n",
+            s:"STEP ",i:vStepCount,s:"\n",
+            s:"NME1 ",i:areaEncounters[0],s:"\n",
+            s:"NME2 ",i:areaEncounters[1],s:"\n",
+            s:"USED ",s:debugInteract,s:" \n",
+            s:"MODP ",i:vLastMusic,s:" \n",
+            s:"TIME ",i:sonataTime
+        );
+        debugInfo2 = StrParam(s:"\n",s:debugMessage,s:debugMessage2,s:debugMessage3);
+    }
+    if (bSafetyCheck)
+    {
+        debugInfo =
+        StrParam(
+            s:"TYPE ",i:bEnemyType,s:" \n",
+            s:"REAL ",i:bElphPos,s:" \n",
+            s:"HURT ",b:bElphHurt,s:" \n",
+            s:"MOVE ",b:bMoved,s:" \n",
+            s:"ATBV ",i:bATBvalue,s:"\n",
+            s:"ATB1 ",b:bATBactive,s:"\n",
+            s:"RNGV ",i:RNG[RNGcount],s:" \n",
+            s:"RNGN ",i:RNG[RNGcount+1%64],s:" \n",
+            s:"RNGS ",i:RNGcount,s:" \n",
+            s:"CTRL ",b:bHasControl,s:"\n",
+            s:"NMEY ",i:bYOffset,s:" \n",
+            s:"NMEX ",i:bXOffset,s:" \n",
+            s:"MODP ",i:enemyDB[bEnemyType+7],s:":",i:enemyDB[bEnemyType+8],s:" \n",
+            s:"TIME ",i:sonataTime
+        );
+        debugInfo2 = StrParam(s:debugMessage,s:debugMessage2,s:debugMessage3);
+    }
+    draw("UNSCII",debugInfo,UI_DEBUG,8.1,248.2);
+    draw("UNSCII",debugInfo2,UI_DEBUG2,8.1,40.1);
+    draw("RPGPOSW","A",UI_DEBUGWISH,(((vWishPos%20)*16)<<16)+0.1,(((vWishPos/20)*16)<<16)+32.1);
+    draw("RPGPOSR","A",UI_DEBUGREAL,((vPosX*16)<<16)+0.1,((vPosY*16)<<16)+32.1);
+
+    // input display
+    if (inputRightHold) {input1 = "R";} else {input1 = "";}
+    if (inputLeftHold) {input2 = "L";} else {input2 = "";}
+    if (inputUpHold) {input3 = "U";} else {input3 = "";}
+    if (inputDownHold) {input4 = "D";} else {input4 = "";}
+    if (inputUse) {input5 = "1";} else {input5 = "";}
+    debugMessageRealInput = strParam(s:input1,s:input2,s:input3,s:input4,s:input5);
+    Delay(1);
+    }
+    clear(UI_DEBUG);
+    clear(UI_DEBUG2);
+    clear(UI_DEBUG3);
+    clear(UI_DEBUGWISH);
+    clear(UI_DEBUGREAL);
+}
+
+script "sonataTimer" (void)
+{
+    sonataTime = 0;
+    while (1)
+    {
+        sonataTime++;
+        Delay(1);
+    }
+}
+
+script "sonataTimeDsiplay" (void)
+{
+    while (1)
+    {
+    int sTimeS = sonataTime/35;
+    int sTimeSec = sTimeS % 60;
+    int sTimeMin = (sTimeS / 60) % 60;
+    int sTimeHr = sTimeS / 3600;
+    sonataTimeDisplay = strParam(i:sTimeHr/10,i:sTimeHr%10,s:":",i:sTimeMin/10,i:sTimeMin%10,s:":",i:sTimeSec/10,i:sTimeSec%10);
+    if (drawTime) {drawHud();}
+    Delay(35);
+    }
+}
+
+script "rpg_Starter" ENTER
+{
+    killCount =
+        (
+            GetCvar("shroKills") +
+            GetCvar("abutKills") +
+            GetCvar("akasKills") +
+            GetCvar("beasKills") +
+            GetCvar("beliKills") +
+            GetCvar("blooKills") +
+            GetCvar("commKills") +
+            GetCvar("demoKills") +
+            GetCvar("direKills") +
+            GetCvar("drauKills") +
+            GetCvar("moonKills") +
+            GetCvar("follKills") +
+            GetCvar("flesKills") +
+            GetCvar("railKills") +
+            GetCvar("gargKills") +
+            GetCvar("growKills") +
+            GetCvar("hellKills") +
+            GetCvar("lunaKills") +
+            GetCvar("maliKills") +
+            GetCvar("procKills") +
+            GetCvar("sentKills") +
+            GetCvar("wallKills") +
+            GetCvar("watcKills") +
+            GetCvar("zealKills") +
+            GetCvar("nitrKills")
+        ) / 500;
+    killCount = killCount > 10 ? 10 : killCount;
+    AmbientSound("FDSON",127);
+    PlaySound(0,"LINENOIS",7,1.0,TRUE);
+    FadeTo(0,0,0,1.0,0.0);
+    SetPlayerProperty(0,1,PROP_TOTALLYFROZEN);
+    Delay(1);
+    ScriptCall("postProcKiller","postProcOff");
+    ScriptCall("postProcKiller","NTSCOn");
+	setRes();
+    SetFont("RPGSTAT0");
+    HudMessage(s:"A";HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_LAYER_OVERHUD,UI_STATIC,CR_UNTRANSLATED,160.0,128.0,0,0.01);
+	SetFont("RPGBRDR");
+	HudMessage(s:"A";HUDMSG_PLAIN|HUDMSG_LAYER_OVERHUD,UI_BORDER,CR_UNTRANSLATED,0.2,0.1,0);
+	SetFont("RPGBRDR");
+	HudMessage(s:"A";HUDMSG_PLAIN|HUDMSG_LAYER_OVERHUD,UI_BORDER+1,CR_UNTRANSLATED,320.1,0.1,0);
+	ACS_NamedExecute("titleMenu",0);
+}
+
+function void reInit (void)
+{
+    vPosX = 12;
+    vPosY = 8;
+    vTweenX = 0;
+    vTweenY = 0;
+    vRealPos = 0;
+    vCurrentScreen = 10;
+    vTriedUse = 0;
+    vHP = 40;
+    vLastMusic = 0;
+    vLastMusicFile = 0;
+    vSanityTimer = 0;
+    vStepCount = 0;
+    vTweening = 0;
+
+    vWishPos = 0;
+
+    vAnim = 0;
+    vHasControl = 0;
+
+    debugger = 0;
+
+    debugInteract = "";
+    debugMessage = "";
+    debugMessage2 = "";
+    debugMessage3 = "";
+    debugMessageInput = "";
+    debugMessageRealInput = "";
+    strRpgVersion = "";
+    vRpgVersion = 1;
+
+    drawTime = 0;
+
+    battlesOn = 1;
+    battleMusicSwitch = 1;
+    boss1Clear = 0;
+    boss2Clear = 0;
+    boss3Clear = 0;
+    boss4Clear = 0;
+    altBoss1Clear = 0;
+    altBoss2Clear = 0;
+    vPowerSpeed = 0;
+    key1Got = 0;
+    key2Got = 0;
+    key3Got = 0;
+    sprite1At = 0;
+    sprite2At = 0;
+    sprite3At = 0;
+    RNGcount = 0;
+
+    unlocked1 = 0;
+    unlocked2 = 0;
+    unlocked3 = 0;
+
+    TWEEN_SPEED = 4;
+    TWEEN_MULT = 4;
+    MOVE_DELAY = 3;
+
+    vBowBoost = 0;
+    vMeleeBoost = 0;
+    vHasBomb = 0;
+    vHasPotion = 0;
+    vHasTeleport = 0;
+    vHasSlowSlots = 0;
+    vHasBook = 0;
+
+    sonataTime = 0;
+
+    vStep1 = "RPGSTEP2";
+    vStep2 = "RPGSTEP3";
+
+    vGold = 0;
+
+    vOpenedDebug = 0;
+}
+
+function void debugGive (void)
+{
+    boss1Clear = 1;
+    boss2Clear = 1;
+    boss3Clear = 1;
+    boss4Clear = 1;
+    key1Got = 1;
+    key2Got = 1;
+    key3Got = 1;
+    altBoss1Clear = 1;
+    altBoss2Clear = 1;
+    vStep1 = "RPGSK81";
+    vStep2 = "RPGSK82";
+    TWEEN_SPEED = 2;
+    TWEEN_MULT = 8;
+    MOVE_DELAY = 1;
+    vBowBoost = 2;
+    vMeleeBoost = 2;
+    vHasBomb = 1;
+    vHasPotion = 1;
+    vHasTeleport = 9;
+    vHasSlowSlots = 1;
+    vHasBook = 1;
+}
+
+function void getVersion (void)
+{
+    str gotWest = "0";
+    str gotEast = "0";
+    str gotSouth = "0";
+    if (GetCvar("diskEast")) {vRpgVersion++; gotEast = "E";}
+    if (GetCvar("diskWest")) {vRpgVersion++; gotWest = "W";}
+    if (GetCvar("diskSouth")) {vRpgVersion++; gotSouth = "S";}
+    if (GetCvar("diskDebug")) {vRpgVersion++;}
+    strRpgVersion = StrParam(s:"\c[FamiGrey]Ver0.",d:vRpgVersion,s:(GetCvar("diskDebug") ? "\c[FamiRed]DEBUG" : strParam(s:gotWest,s:gotSouth,s:gotEast)));
+}
+
+function bool diskCheck (int diskType)
+{
+    bool diskBool = 0;
+    if (diskType == DISK_EAST) {diskBool = GetCvar("diskEast");}
+    if (diskType == DISK_WEST) {diskBool = GetCvar("diskWest");}
+    if (diskType == DISK_SOUTH) {diskBool = GetCvar("diskSouth");}
+    if (diskType == DISK_ATTACKS) {diskBool = GetCvar("diskAttack");}
+    if (diskType == DISK_ITEMS) {diskBool = GetCvar("diskItems");}
+    if (diskType == DISK_DEBUG) {diskBool = GetCvar("diskDebug");}
+    return diskBool;
+}
+
+function void setRes (void)
+{
+    SetHudSize(320,256,TRUE);
+}
+
+function void draw (str fontname, str string, int zone, int posX, int posY)
+{
+    setRes();
+    SetFont(fontname);
+    HudMessage(s:string;HUDMSG_PLAIN|HUDMSG_LAYER_OVERHUD,zone,CR_UNTRANSLATED,posX,posY,0);
+}
+
+function void clear (int zone)
+{
+    HudMessage(s:"";HUDMSG_PLAIN,zone,CR_UNTRANSLATED,0.0,0.0,1873);
+}
+
+function void clearAll (void)
+{
+    clear(ZONE_BG);
+    clear(ZONE_SPRITE1);
+    clear(ZONE_SPRITE2);
+    clear(ZONE_SPRITE3);
+    clear(ZONE_ROOM);
+    clear(ZONE_ELPH);
+    clear(UI_BOX);
+    clear(UI_PORTBOX);
+    clear(UI_TEXT);
+    clear(UI_PORT);
+    clear(UI_HUDFACE);
+    clear(UI_HUDKEY1);
+    clear(UI_HUDKEY2);
+    clear(UI_HUDKEY3);
+    clear(UI_HUDKEY3);
+    clear(UI_HUDSKATE);
+    clear(UI_HUDBAND);
+    clear(UI_HUDBOOK);
+    clear(UI_HUDROOMNAME);
+    clear(UI_HUDBAR);
+    clear(UI_MENU);
+    clear(UI_MENUTEXT);
+    clear(UI_MENUINFO);
+    clear(UI_MENUSELECTOR);
+    clear(BATTLE_SLOT);
+}
+
+function void drawHud (void)
+{
+    draw("RPGHUD","A",UI_HUDBAR,0.1,0.1);
+    //draw(vExpression,"A",UI_HUDFACE,0.1,0.1);
+    draw("UNSCII",strParam(s:"MIND: ",i:(vHP < 0 ? 0 : vHP),s:"/40\nGOLD: ",i:vGold,s:"\n",s:sonataTimeDisplay),UI_HUDROOMNAME,4.1,4.1);
+    if (key1Got) {draw("RPGKEY1","A",UI_HUDKEY1,235.1,7.1);}
+    if (key2Got) {draw("RPGKEY2","A",UI_HUDKEY2,265.1,7.1);}
+    if (key3Got) {draw("RPGKEY3","A",UI_HUDKEY3,295.1,7.1);}
+    if (altboss1Clear) {draw("RPGSKATE","A",UI_HUDSKATE,205.1,7.1);}
+    if (altboss2Clear) {draw((vPowerSpeed == 0 ? "RPGBANDP" : "RPGBANDS"),"A",UI_HUDBAND,175.1,7.1);}
+    if (vHasBook) {draw("RPGBOOK","A",UI_HUDBOOK,145.1,7.1);}
+}
+
+function void drawSprite (int tile, str sprite, int zone)
+{
+    tile = tile;
+    int tileX = tile%20;
+    int tileY = tile/20;
+    draw(SPRITE,"A",zone,0.1+((tileX*16)<<16),32.1+((tileY*16)<<16));
+}
+
+function void drawElph (void)
+{
+    if (Timer()%6 == 0)
+    {
+        vAnim = !vAnim;
+    }
+
+    draw(strParam(s:"RPGELPH",i:vAnim+1),"A",ZONE_ELPH,((vPosX*16)+(vTweenX*TWEEN_MULT)<<16)+0.1,((vPosY*16)+(vTweenY*TWEEN_MULT)<<16)+32.1);
+}
+
+function void interact (int checkXY, int checkRoom)
+{
+    // general cases
+    for (int i = 0 ; i < INTERACTION_ARRAY_SIZE/4 ; i++)
+    {
+        if (checkRoom == interactionDB[i*4])
+        {
+            if (checkXY == interactionDB[(i*4)+1])
+            {
+                if (interactionDB[(i*4)+3] != 0)
+                {
+                    if (vteleportBufferTime <= 0)
+                    {
+                        if (checkRoom != ROOM_E || GetCvar("diskDebug") == 1)
+                        {
+                            ACS_NamedExecute("roomChange",0,interactionDB[(i*4)+2],interactionDB[(i*4)+3]);
+                            ACS_NamedExecute("teleportBuffer",0);
+                        }
+                    }
+                    break;
+                }
+                else
+                {
+                    if (interactionDB[(i*4)+2] == INT_MSX) {vHasBomb = 1; vHasPotion = 1;}
+                    ACS_NamedExecute("interactObject",0,interactionDB[(i*4)+2]);
+                    break;
+                }
+            }
+        }
+    }
+
+    // special cases
+    switch (checkRoom)
+    {
+        case ROOM_HOMEMOON:
+        switch (checkXY)
+        {
+            case EXIT_HOMEMOON_EXIT:
+            ACS_NamedExecute("roomChange",0,ROOM_HOMEHALL,ENTER_HOMEHALL_FROMMOON);
+            ACS_NamedTerminate("sanity",0);
+            break;
+        }
+    }
+}
+
+function void textBox (bool drawClear, int drawType, str portType)
+{
+    if (drawClear)
+    {
+        vHasControl = 0;
+        if (drawType == INT_OBJ)
+        {
+            draw("RPGTBOX","A",UI_BOX,48.1,144.1);
+        }
+        if (drawType == INT_NPC)
+        {
+            draw("RPGTBOX","A",UI_BOX,68.1,144.1);
+            draw("RPGPBOX","A",UI_PORTBOX,28.1,152.1);
+            draw(portType,"A",UI_PORT,36.1,160.1);
+        }
+    }
+    else
+    {
+        vHasControl = 1;
+        clear(UI_TEXT);
+        clear(UI_BOX);
+        clear(UI_PORTBOX);
+        clear(UI_PORT);
+    }
+}
+
+function void moveElph (int direction)
+{
+    getElphReal();
+
+    if (vHasControl)
+    {
+        Switch (direction)
+        {
+            Case 1:
+            vWishPos = vRealPos+1;
+            if (screenDB[vCurrentScreen][vWishPos] == 0) {vTriedUse = 1;}
+            if (screenDB[vCurrentScreen][vWishPos] == 1 || vPosX == 19 || GetCvar("debugMode")) {vPosX++; vTweenX -= TWEEN_SPEED; vTriedUse = 0; PlaySound(0,(vStepCount%2 == 0 ? vStep1 : vStep2),4);}
+            if (screenDB[vCurrentScreen][vWishPos] == 2) {interact(vWishPos,vCurrentScreen); vTriedUse = 2;}
+            Break;
+
+            Case 2:
+            vWishPos = vRealPos-1;
+            if (screenDB[vCurrentScreen][vWishPos] == 0) {vTriedUse = 1;}
+            if (screenDB[vCurrentScreen][vWishPos] == 1 || vPosX == 0 || GetCvar("debugMode")) {vPosX--; vTweenX += TWEEN_SPEED; vTriedUse = 0; PlaySound(0,(vStepCount%2 == 0 ? vStep1 : vStep2),4);}
+            if (screenDB[vCurrentScreen][vWishPos] == 2) {interact(vWishPos,vCurrentScreen); vTriedUse = 2;}
+            Break;
+
+            Case 3:
+            vWishPos = vRealPos+20;
+            if (screenDB[vCurrentScreen][vWishPos] == 0) {vTriedUse = 1;}
+            if (screenDB[vCurrentScreen][vWishPos] == 1 || vPosY == 13 || GetCvar("debugMode")) {vPosY++; vTweenY -= TWEEN_SPEED; vTriedUse = 0; PlaySound(0,(vStepCount%2 == 0 ? vStep1 : vStep2),4);}
+            if (screenDB[vCurrentScreen][vWishPos] == 2) {interact(vWishPos,vCurrentScreen); vTriedUse = 2;}
+            Break;
+
+            Case 4:
+            vWishPos = vRealPos-20;
+            if (screenDB[vCurrentScreen][vWishPos] == 0) {vTriedUse = 1;}
+            if (screenDB[vCurrentScreen][vWishPos] == 1 || vPosY == 0 || GetCvar("debugMode")) {vPosY--; vTweenY += TWEEN_SPEED; vTriedUse = 0; PlaySound(0,(vStepCount%2 == 0 ? vStep1 : vStep2),4);}
+            if (screenDB[vCurrentScreen][vWishPos] == 2) {interact(vWishPos,vCurrentScreen); vTriedUse = 2;}
+            Break;
+        }
+
+        if (vTriedUse == 0 && vPosX < 18 && vPosX > 1 && vPosY < 12 && vPosY > 1)
+        {
+            vStepCount++;
+            vStepCount = vStepCount%128;
+        }
+
+		if (vStepCount > 116 && getRNG()%4 == 0 && vPosX < 19 && vPosX > 0 && vPosY < 13 && vPosY > 0 && vTrieduse == 0)
+		{
+		    int eCheck = areaEncounters[getRNG()%2];
+			if ((echeck != 99 || (eCheck == bENEMY_ATLAS && !atlasDone)) && battlesOn)
+			{
+				ACS_NamedExecute("b_initBattle",0,eCheck);
+			}
+		}
+
+        if (debugger)
+        {
+            if (vTriedUse == 2) {debugInteract = strparam(s:"R", i:vCurrentScreen, s:" T", i:vWishPos);}
+            else if (vTriedUse == 1) {debugInteract = "WALL";}
+            else {debugInteract = "NONE";}
+        }
+
+	if (vPosX > 19 && vCurrentScreen < 143) {ACS_NamedExecute("roomChange",0,vCurrentScreen+1,vPosY*20);}
+	if (vPosX < 0 && vCurrentScreen > 0) {ACS_NamedExecute("roomChange",0,vCurrentScreen-1,(vPosY*20)+19);}
+	if (vPosY > 13 && vCurrentScreen < 131) {ACS_NamedExecute("roomChange",0,vCurrentScreen+12,vPosX);}
+    if (vPosY < 0 && vCurrentScreen > 11) {ACS_NamedExecute("roomChange",0,vCurrentScreen-12,vPosX+260);}
+    }
+
+    getElphReal();
+    if (GetCvar("debugMode")) {getElphReal(); log(s:"R",i:vCurrentScreen,s:" T",i:vRealPos);}
+    if (!bSafetyCheck) {drawElph();}
+
+    // ITEM COLLECTION, OTHER SPECIAL CASES
+    if (vCurrentScreen == ROOM_CROSSING && vWishPos == OBJ_CROSSING_SHOP)
+    {
+        ACS_NamedExecute("shopping",0);
+        PlaySound(0,"RPGRUN",2);
+    }
+    if (vCurrentScreen == ROOM_STAR_MAZE_KEY)
+    {
+        if (vHasBook == 0 && (vPosX + (vPosY*20)) == sprite1At)
+        {
+            clear(ZONE_SPRITE1); vHasBook = 1; AmbientSound("RPGKEY",127); drawHUD();
+        }
+    }
+    if (vCurrentScreen == ROOM_PAINFRAME)
+    {
+        if (key2Got == 0 && (vPosX + (vPosY*20)) == sprite1At)
+        {
+            clear(ZONE_SPRITE1); key2Got = 1; AmbientSound("RPGKEY",127); drawHUD();
+        }
+    }
+    if (vCurrentScreen == ROOM_TOWERBASEMENT)
+    {
+        if (key3Got == 0 && (vPosX + (vPosY*20)) == sprite1At)
+        {
+            clear(ZONE_SPRITE1); key3Got = 1; AmbientSound("RPGKEY",127); drawHUD();
+        }
+    }
+    if (vCurrentScreen == ROOM_POSTGUTS2 && key1Got == 0 && (vPosX + (vPosY*20)) == sprite1At) {clear(ZONE_SPRITE1); key1Got = 1; AmbientSound("RPGKEY",127); drawHUD();}
+    if (vCurrentScreen == ROOM_FLY && altBoss2Clear == 0 && vPosY < 7) {ACS_NamedExecute("b_initBattle",0,bENEMY_FLY);}
+    if (vCurrentScreen == ROOM_KEYS)
+    {
+        if (key1Got == 1 && unlocked1 == 0 && vWishPos == 122)
+        {
+            ACS_NamedExecuteAlways("keyUnlock",0,122,ZONE_SPRITE1);
+            clear(UI_HUDKEY1);
+            unlocked1 = 1;
+            key1Got = 0;
+        }
+        if (key2Got == 1 && unlocked2 == 0 && vWishPos == 49)
+        {
+            ACS_NamedExecuteAlways("keyUnlock",0,49,ZONE_SPRITE2);
+            clear(UI_HUDKEY2);
+            unlocked2 = 1;
+            key2Got = 0;
+        }
+        if (key3Got == 1 && unlocked3 == 0 && vWishPos == 136)
+        {
+            ACS_NamedExecuteAlways("keyUnlock",0,136,ZONE_SPRITE3);
+            clear(UI_HUDKEY3);
+            unlocked3 = 1;
+            key3Got = 0;
+        }
+    }
+}
+
+
+// unused disk flipping routine
+script "diskSide" (int entry)
+{
+    bool hadControl = 0;
+    if (vHasControl) {hadControl = 1; vHasControl = 0;}
+    SetMusic("");
+    clearAll();
+    Delay(5);
+    if (diskSide != loadArray[entry+2])
+    {
+        draw("UNSCII",strParam(s:"SET SIDE ",s:(loadArray[entry+2] == 0 ? "A" : "B")),50,160.0,112.2);
+        while (diskSide != loadArray[entry+2])
+        {
+            Delay(15);
+        }
+    }
+    clearAll();
+    Delay(5);
+    AmbientSound("DISKREAD",127);
+    draw("UNSCII","WAIT A MOMENT",50,160.0,112.2);
+    Delay(125);
+    clearAll();
+    Delay(10);
+    if (hadControl) {hadControl = 0; vHasControl = 1;}
+}
+
+script "keyUnlock" (int tile, int zone)
+{
+    PlaySound(0,"RPGBMEL",1);
+    drawSprite(tile-21,"RPGBFX4",zone);Delay(2);
+    drawSprite(tile-42,"RPGBFX5",zone);Delay(2);
+    drawSprite(tile-42,"RPGBFX6",zone);Delay(3);
+    drawSprite(tile-42,"RPGBFX7",zone);Delay(3);
+    clear(zone);
+    drawHud();
+
+    if (unlocked1 && unlocked2 && unlocked3)
+    {
+        ACS_NamedExecute("roomChange",0,ROOM_KEYS_OPEN,vRealPos);
+    }
+}
+
+function void getElphReal (void)
+{
+    vRealPos = vPosX + (vPosY*20);
+}
+
+function void getElphXY (void)
+{
+    vPosX = vRealPos%20;
+    vPosY = vRealPos/20;
+}
+
+function void changeBGM (str musicName, int unused, bool remember)
+{
+    if (musicName == BGM_NONE || (vCurrentScreen == ROOM_PAINFRAME && boss2Clear)|| (vCurrentScreen == ROOM_STAR_MAZE_D && boss4clear))
+    {
+        SetMusic("");
+    }
+    else
+    {
+        SetMusic("D_SNT",musicName);
+    }
+	if (remember)
+	{
+		vLastMusic = musicName;
+		vLastMusicFile = unused;
+	}
+}
+
+function void drawRoom(bool buffered)
+{
+    if (!buffered)
+    {
+    // CHECK BOSS 1 CLEAR
+    if (vCurrentScreen == ROOM_PROTECTORS && boss1Clear) {vCurrentScreen = ROOM_POSTGUTS;}
+    if (vCurrentScreen == ROOM_STAR_MAZE_D && boss4Clear) {vCurrentScreen = ROOM_STAR_MAZE_POST;}
+    if (vCurrentScreen == ROOM_KEYS && unlocked1 && unlocked2 && unlocked3) {vCurrentScreen = ROOM_KEYS_OPEN;}
+
+    // SPRITES
+    switch (vCurrentScreen)
+    {
+        case ROOM_POSTGUTS2:
+        if (key1Got == 0 && unlocked1 == 0) {drawSprite(130,"RPGKEY1",ZONE_SPRITE1); sprite1At = 130;}
+        break;
+
+        case ROOM_STAR_MAZE_KEY:
+        if (vHasBook == 0) {drawSprite(149,"RPGBOOK",ZONE_SPRITE1); sprite1At = 149;}
+        break;
+
+        case ROOM_LTQ:
+        drawSprite(OBJ_LTQ,"RPGLTQS",ZONE_SPRITE1); sprite1At = OBJ_LTQ;
+        break;
+
+        case 120:
+        drawSprite(72,"RPGTUNLS",ZONE_SPRITE1); sprite1At = 72;
+        break;
+
+        case ROOM_STAR_MAZE_D:
+        if (!boss4Clear) {drawSprite(89,"RPGEYE",ZONE_SPRITE1); sprite1At = 89;}
+        break;
+
+        case ROOM_TOWERBASEMENT:
+        if (boss3Clear && key3Got == 0 && unlocked3 == 0) {drawSprite(170,"RPGKEY3",ZONE_SPRITE1); sprite1At = 170;}
+        break;
+
+        case ROOM_PAINFRAME:
+        if (!boss2Clear) {drawSprite(127,"RPGCOMP1",ZONE_SPRITE1); sprite1At = 127;}
+        else if (boss2Clear && key2Got == 0 && unlocked2 == 0) {drawSprite(125,"RPGKEY2",ZONE_SPRITE1); sprite1At = 125;}
+        break;
+
+        case ROOM_KEYS:
+        if (unlocked1 == 0) {drawSprite(122,"RPGKEYH1",ZONE_SPRITE1); sprite1At = 130;}
+        if (unlocked2 == 0) {drawSprite(49,"RPGKEYH2",ZONE_SPRITE2); sprite2At = 130;}
+        if (unlocked3 == 0) {drawSprite(136,"RPGKEYH3",ZONE_SPRITE3); sprite3At = 130;}
+        break;
+
+        default:
+        sprite1At = 0;
+        sprite2At = 0;
+        sprite3At = 0;
+    }
+
+    vSanityTimer = 0;
+    ACS_NamedTerminate("sanity",0);
+    debugMessage = "";
+    debugMessage2 = "";
+    debugMessage3 = "";
+
+    // special cases
+    switch (vCurrentScreen)
+    {
+        case 111:
+        case 112:
+        case ROOM_PAINFRAME:
+        case ROOM_SOUTH_COMPUTER:
+            draw("SBG004","A",ZONE_BG,160.0,144.0);
+            break;
+
+        case ROOM_KEYS:
+        case ROOM_KEYS_OPEN:
+        case ROOM_STAR_MAZE_A:
+        case ROOM_STAR_MAZE_B:
+        case ROOM_STAR_MAZE_C:
+        case ROOM_STAR_MAZE_D:
+        case ROOM_STAR_MAZE_KEY:
+        case ROOM_STAR_MAZE_POST:
+            draw("SBG003","A",ZONE_BG,160.0,144.0);
+            break;
+
+        case ROOM_WEST_GOINGDOWN:
+        case ROOM_HOMEOUTSIDE:
+        case ROOM_CROSSING:
+        case ROOM_0X3E:
+        case ROOM_0X40:
+        case ROOM_0X4B:
+        case ROOM_WESTWARD:
+        case ROOM_EASTWARD:
+        case ROOM_SOUTHBOUND:
+            draw("SBG001","A",ZONE_BG,160.0,144.0);
+            break;
+
+        case 65:
+        case 66:
+        case 77:
+        case 78:
+        case 90:
+            draw("SBG002","A",ZONE_BG,160.0,144.0);
+            break;
+
+        case ROOM_HOMEELPH:
+            break;
+
+        case ROOM_HOMEHALL:
+            break;
+    }
+
+    // room drawing
+    ACS_NamedExecute("areaSwitcher",0);
+    draw(StrParam(s:"_SRM",i:vCurrentScreen),"A",ZONE_ROOM,160.0,144.0);
+    drawHud();
+    }
+
+    else
+    {
+        setRes();
+        SetFont(StrParam(s:"_SRM",i:vCurrentScreen));
+        HudMessage(s:"A";HUDMSG_PLAIN,ZONE_ROOM,CR_UNTRANSLATED,160.0,-144.0,1873);
+    }
+}
+
+script "titleMenu" (void)
+{
+    reInit();
+    ACS_NamedTerminate("sonataTimer",0);
+    changeBGM(BGM_NONE,2,TRUE);
+    setRes();
+    getVersion();
+    draw("RPGBLSC1","A",50,160.0,128.0);
+    Delay(4);
+    draw("RPGBLSC2","A",50,160.0,128.0+random(-64,64));
+    Delay(1);
+    draw("RPGBLSC2","A",50,160.0,128.0+random(-128,128));
+    Delay(1);
+    Clear(50);
+    Delay(10);
+
+    if (!booted)
+    {
+        changeBGM(BGM_DISK,2,TRUE);
+        draw("RPGDD1","A",50,160.0,128.0); Delay(3);
+        draw("RPGDD2","A",50,160.0,128.0); Delay(3);
+        draw("RPGDD3","A",50,160.0,128.0); Delay(3);
+        draw("RPGDD4","A",50,160.0,128.0); Delay(3);
+        draw("RPGDD5","A",50,160.0,128.0); Delay(1);
+        draw("RPGDD4","A",50,160.0,128.0); Delay(1);
+        draw("RPGDD5","A",50,160.0,128.0); Delay(1);
+        draw("RPGDD4","A",50,160.0,128.0); Delay(1);
+        draw("RPGDD5","A",50,160.0,128.0); Delay(1);
+        draw("RPGDD4","A",50,160.0,128.0); Delay(25);
+        draw("RPGDD3","A",50,160.0,128.0); Delay(5);
+        draw("RPGDD2","A",50,160.0,128.0); Delay(5);
+        draw("RPGDD1","A",50,160.0,128.0); Delay(5);
+        clear(50);
+        booted = 1;
+        delay(30);
+
+        debugmessage2 = "SCREEN_SELENESYSTEMS\n";
+        draw("RPGHOWL","A",50,160.0,128.0);
+        Delay(30);
+        debugmessage2 = "";
+        clear(50);
+        Delay(30);
+    }
+
+    changeBGM(BGM_MOONLIGHT,1,TRUE);
+    draw("RPGTITLE","A",50,160.0,60.1);
+    draw("UNSCII",strRpgVersion,49,268.2,146.1);
+    draw("UNSCII",strParam(s:"START\n",s:"COMBAT: ",s:(vHardMode == 2 ? "LIGHT" : (vHardMode == -1 ? "HYPER" : "NORMAL")),s:"\n",s:(GetCVar("diskDebug") ? "TEST MODE\n" : "\c[FamiGrey]...\n"),s:"QUIT\n"),48,104.1,168.1);
+    draw("UNSCII",">",47,96.1,168.1);
+
+    debugmessage2 = "SCREEN_TITLE\n";
+    bool inMenu = 1;
+    int menuOption = 0;
+
+    while (inMenu)
+    {
+        if (inputDown && menuOption < 3)
+        {
+            menuOption++;
+            PlaySound(0,"RPGMENUS",1);
+            draw("UNSCII",">",47,96.1,168.1+((menuOption*8)<<16));
+        }
+
+        if (inputUp && menuOption > 0)
+        {
+            menuOption--;
+            PlaySound(0,"RPGMENUS",1);
+            draw("UNSCII",">",47,96.1,168.1+((menuOption*8)<<16));
+        }
+
+        if (inputUse)
+        {
+            switch (menuOption)
+            {
+                case 0:
+                    if (diskCheck(DISK_EAST) || diskCheck(DISK_WEST) || diskCheck(DISK_SOUTH) || diskCheck(DISK_DEBUG)) {anyDisks = 1;}
+                    PlaySound(0,"RPGMENUO",1);
+                    inMenu = 0;
+                break;
+
+                case 1:
+                    PlaySound(0,"RPGMENUO",1);
+                    if (vHardMode == -1) {vHardMode = 2;}
+                    else if (vHardMode == 2) {vHardMode = 0;}
+                    else if (vHardMode == 0) {vHardMode = -1;}
+                    draw("UNSCII",strParam(s:"START\n",s:"COMBAT: ",s:(vHardMode == 2 ? "LIGHT" : (vHardMode == -1 ? "HYPER" : "NORMAL")),s:"\n",s:(GetCVar("diskDebug") ? "TEST MODE\n" : "\c[FamiGrey]...\n"),s:"QUIT\n"),48,104.1,168.1);
+                break;
+
+                case 2:
+                    if (GetCvar("diskDebug"))
+                    {
+                        clear(47);
+                        clear(48);
+                        clear(49);
+                        clear(50);
+                        PlaySound(0,"RPGMENUO",1);
+                        ACS_NamedExecute("soundTest",0);
+                        Terminate;
+                    }
+                break;
+
+                case 3:
+                    clear(47);
+                    clear(48);
+                    clear(49);
+                    clear(50);
+                    SetMusic("",0);
+                    StopSound(0,7);
+                    AmbientSound("FDSON",127);
+                    Delay(10);
+                    ChangeLevel("C2M0",0,CHANGELEVEL_NOINTERMISSION|CHANGELEVEL_RESETHEALTH|CHANGELEVEL_RESETINVENTORY,2);
+                break;
+            }
+        }
+        delay(1);
+    }
+
+    debugMessageInput = "";
+
+    changeBGM(BGM_NONE,2,TRUE);
+    clear(47);
+    clear(48);
+    clear(49);
+    clear(50);
+
+
+    drawRoom(1);
+    Delay(20);
+    drawHud();
+    drawRoom(0);
+    drawElph();
+    drawTime = 1;
+    vHasControl = 1;
+    ACS_NamedExecute("HPtracker",0);
+    ACS_NamedExecute("inputHandler",0);
+    ACS_NamedExecute("tweenElph",0);
+    ACS_NamedExecute("sonataTimer",0);
+    ACS_NamedExecute("sonataTimeDsiplay",0);
+}
+
+script "soundTest" (void)
+{
+    changeBGM(BGM_NONE,2,TRUE);
+    Delay(10);
+    debugmessage = "";
+    debugmessage2 = "";
+    debugmessage3 = "";
+    int stMusicFile = 0;
+    int stMusicPattern = 0;
+    int stSoundFile = 0;
+    int stGraphic = 0;
+    int stSelection = 1;
+    bool stUpdate = 1;
+    bool stUpdateHold = 0;
+
+    draw("RPGCONSP","A",52,16.1,240.2);
+
+    while (1)
+    {
+    if (inputUp)
+    {
+        stSelection--;
+        stUpdate = 1;
+        PlaySound(0,"RPGMENUS",1);
+    }
+    if (inputDown)
+    {
+        stSelection++;
+        stUpdate = 1;
+        PlaySound(0,"RPGMENUS",1);
+    }
+
+    if (inputLeft)
+    {
+        switch (stSelection)
+        {
+            case 0:
+                stMusicFile--;
+                stUpdate = 1;
+                PlaySound(0,"RPGMENUS",1);
+            break;
+
+            case 1:
+                stMusicPattern--;
+                stUpdate = 1;
+                PlaySound(0,"RPGMENUS",1);
+            break;
+
+            case 2:
+                stSoundFile--;
+                stUpdate = 1;
+                PlaySound(0,"RPGMENUS",1);
+            break;
+
+            case 3:
+                stGraphic--;
+                stUpdate =1;
+                PlaySound(0,"RPGMENUS",1);
+            break;
+        }
+    }
+
+    if (inputRight)
+    {
+        switch (stSelection)
+        {
+            case 0:
+                stMusicFile++;
+                stUpdate = 1;
+                PlaySound(0,"RPGMENUS",1);
+                break;
+
+            case 1:
+                stMusicPattern++;
+                stUpdate = 1;
+                PlaySound(0,"RPGMENUS",1);
+            break;
+
+            case 2:
+                stSoundFile++;
+                stUpdate = 1;
+                PlaySound(0,"RPGMENUS",1);
+            break;
+
+            case 3:
+                stGraphic++;
+                stUpdate =1;
+                PlaySound(0,"RPGMENUS",1);
+            break;
+        }
+    }
+
+    if (stGraphic < 0) {stGraphic = bgArrayTotal;}
+    if (stGraphic > bgArrayTotal) {stGraphic = 0;}
+    if (stSelection < 1) {stSelection = 1;}
+    if (stSelection > 4) {stSelection = 4;}
+    if (stMusicFile < 0) {stMusicFile = 0;}
+    if (stMusicFile > 1) {stMusicFile = 1;}
+    if (stMusicPattern < 0 ) {stMusicPattern = musicArray1Total-1;}
+    if (stMusicPattern > musicArray1Total-1) {stMusicPattern = 0;}
+    if (stSoundFile < 0) {stSoundFile = sfxArrayTotal-1;}
+    if (stSoundFile > sfxArrayTotal-1) {stSoundFile = 0;}
+
+    if (stUpdate)
+    {
+    draw
+    (
+        "UNSCII",
+        strParam
+        (
+            s:(stSelection == 1 ? ">" : " "), s:"SONG\n",
+            s:(stSelection == 2 ? ">" : " "), s:"SFX\n",
+            s:(stSelection == 3 ? ">" : " "), s:"GFX\n",
+            s:(stSelection == 4 ? ">" : " "), s:"EXIT "
+        ),
+        50,
+        112.1,
+        96.1
+    );
+
+    draw
+    (
+        "UNSCII",
+        strParam
+        (
+            s:hexArray[stMusicPattern], s:"\n",
+            s:"\c-",s:hexArray[stSoundFile],s:"\n",
+            s:"\c-",s:hexArray[stGraphic],s:"\n"
+        ),
+        51,
+        176.1,
+        96.1
+    );
+
+    draw(bgArray[stGraphic],"A",54,160.0,128.0);
+
+    if (stUpdateHold) {Delay(4); stUpdateHold = 0;}
+    stUpdate = 0;
+    }
+
+    if (inputUse && (stSelection == 0 || stSelection == 1))
+    {
+        changeBGM(BGM_NONE,2,TRUE);
+        Delay(5);
+        changeBGM(musicArray1[stMusicPattern],1,TRUE);
+    }
+    if (inputUse && stSelection == 2)
+    {
+        changeBGM(BGM_NONE,2,TRUE);
+        PlaySound(0,sfxArray[stSoundFile],1);
+    }
+    if (inputUse && stSelection == 4)
+    {
+        clear(50);
+        clear(51);
+        clear(52);
+        clear(53);
+        clear(54);
+        changeBGM(BGM_NONE,2,TRUE);
+        StopSound(0,1);
+        PlaySound(0,"RPGMENUO",1);
+        Delay(5);
+        StopSound(0,1);
+        AmbientSound("FDSON",127);
+        ACS_NamedExecute("titleMenu",0);
+        Terminate;
+    }
+
+    Delay(1);
+    }
+}
+
+script "inputHandler" (void)
+{
+    while (1)
+    {
+        if (vHasControl)
+        {
+            if (inputRightHold)
+            {
+                debugMessageInput = StrParam(s:"R");
+                moveElph(1);
+                Delay(MOVE_DELAY);
+            }
+            if (inputLeftHold)
+            {
+                debugMessageInput = StrParam(s:"L");
+                moveElph(2);
+                Delay(MOVE_DELAY);
+            }
+            if (inputDownHold)
+            {
+                debugMessageInput = StrParam(s:"D");
+                moveElph(3);
+                Delay(MOVE_DELAY);
+            }
+            if (inputUpHold)
+            {
+                debugMessageInput = StrParam(s:"U");
+                moveElph(4);
+                Delay(MOVE_DELAY);
+            }
+        }
+        if (inputUse && vHasControl)
+            {
+                ACS_NamedExecuteWait("inGameMenu",0);
+            }
+        debugMessageInput = StrParam(s:"-");
+        Delay(1);
+    }
+}
+
+script "tweenElph" (void)
+{
+    While (vTweenX != 0 || vTweenY != 0)
+    {
+        vTweening = 1;
+        if (vTweenX < 0) {vTweenX+= 1;}
+        if (vTweenX > 0) {vTweenX-= 1;}
+        if (vTweenY < 0) {vTweenY+= 1;}
+        if (vTweenY > 0) {vTweenY-= 1;}
+        if (!bSafetyCheck) {drawElph();}
+        Delay (1);
+    }
+    vTweening = 0;
+    Delay (1);
+    Restart;
+}
+
+script "interactObject" (int intArrayFetch)
+{
+    if (vHasControl)
+    {
+        setRes();
+
+        if (intArrayFetch == INT_HOMEMOONBACK_BODY && altBoss1Clear)
+        {
+            intArrayFetch = INT_HOMEMOONBACK_BODY2;
+        }
+
+        if (intArrayFetch == INT_PAINFRAME && boss2Clear)
+        {
+            intArrayFetch = INT_PAINFRAME_POST;
+        }
+
+        if (intArrayFetch == INT_THEDARK && boss3Clear)
+        {
+            intArrayFetch = INT_THEDARK_POST;
+        }
+
+        if (intArrayFetch == INT_TUNNELER)
+        {
+            AmbientSound("RPGTUNL",127);
+        }
+
+        else
+        {
+            AmbientSound("RPGMENUO",127);
+        }
+
+        int type = intArrayFetch;
+
+        debugMessage = strParam(s:"OBJI ", i:type, s:"\n");
+
+        //textBox(1,objInteractions[type+1],objInteractions[type+2]);
+
+        int lines = objInteractions[type+3];
+        int i = 0;
+        while (i < lines)
+        {
+            clear(UI_TEXT);
+            clear(UI_BOX);
+            clear(UI_PORTBOX);
+            clear(UI_PORT);
+            // if (objInteractions[type+i+7] != EXP_NORMAL)
+            // {
+            //     textBox(1,INT_NPC,objInteractions[type+i+7]);
+            // }
+            // else
+            // {
+            textBox(1,objInteractions[type+1],objInteractions[type+2]);
+            // }
+            SetHudClipRect(0,0,0,0,207,TRUE);
+            draw
+            (
+                anyDisks ? "UNSCII" : "GLTEX",
+                strParam
+                (
+                    s:"\c[FamiGrey]",
+                    s:objInteractions[type+0],
+                    s:"\cl\n",
+                    s:objInteractions[type+i+4]
+                ),
+                UI_TEXT,
+                (objInteractions[type+1] == INT_OBJ ? 56.1 : 76.1),
+                152.1
+            );
+            SetHudClipRect(0,0,0,0,0);
+
+            debugMessage2 = strParam(s:"T_LN ", i:lines, s:"\nC_LN ", i:i, s:"\n");
+
+            while (1)
+            {
+                if (inputUse)
+                {i++; break;}
+                Delay(1);
+                debugMessageInput = StrParam(s:"WAIT");
+            }
+            AmbientSound("RPGSLOT",127);
+            debugMessageInput = "";
+            Delay(1);
+        }
+        debugMessage = "";
+        debugMessage2 = "";
+        textBox(0,0,0);
+        drawHud();
+
+        // SPECIAL CONDITIONS
+
+        switch (intArrayFetch)
+        {
+            case INT_THEDARK:
+            vHasControl = 0;
+            ACS_NamedExecute("b_initBattle",0,bENEMY_DARK);
+            break;
+
+            case INT_MOONGUARD:
+            vHasControl = 0;
+            ACS_NamedExecute("b_initBattle",0,bENEMY_MOONGUARD);
+            break;
+
+            case INT_PAINFRAME:
+            vHasControl = 0;
+            ACS_NamedExecute("b_initBattle",0,bENEMY_PAINFRAME);
+            break;
+
+            case INT_GUTS:
+            vHasControl = 0;
+            ACS_NamedExecute("b_initBattle",0,bENEMY_GUTS);
+            break;
+
+            case INT_GLOW_TV:
+            ACS_NamedExecute("tvEvent",0);
+            break;
+
+            case INT_HOMEMOONBACK_BODY:
+            vHasControl = 0;
+            ACS_NamedExecute("b_initBattle",0,bENEMY_ELPH2);
+            break;
+
+            case INT_MOON_BOOK_R:
+            ACS_NamedExecute("sanity", 0);
+            break;
+        }
+    }
+}
+
+script "roomChange" (int moveToRoom, int moveToXY)
+{
+    vTweenX = 0;
+    vTweenY = 0;
+    vHasControl = 0;
+    ACS_NamedTerminate("sanity",0);
+    clear(ZONE_BG);
+    clear(ZONE_ROOM);
+    clear(ZONE_SPRITE1);
+    clear(ZONE_SPRITE2);
+    clear(ZONE_SPRITE3);
+    clear(ZONE_ELPH);
+    ACS_NamedSuspend("sonataTimer",0);
+    drawRoom(1);
+    Delay(15);
+
+    // progression
+    for (int i = 0; i < crossingProgressionCount; i++)
+    {
+        if (vCurrentScreen == crossingProgressionSource[i] &&
+            moveToRoom == crossingProgressionTarget[i] &&
+            diskCheck(crossingProgressionDisk[i]))
+        {
+            moveToRoom = crossingProgressionOK[i];
+            break;
+        }
+    }
+
+    vCurrentScreen = moveToRoom;
+    vRealPos = moveToXY;
+    vWishPos = movetoXY;
+
+    getElphXY();
+    drawRoom(0);
+    ACS_NamedExecute("sonataTimer",0);
+    drawElph();
+
+    Delay(5);
+    vHasControl = 1;
+}
+
+script "areaSwitcher" (void)
+{
+    for (int i = 0; i < bgmEncounterDBsize/5; i++)
+    {
+        if (vCurrentScreen == bgmEncounterDB[i*5])
+        {
+			areaEncounters[0] = bgmEncounterDB[(i*5)+2];
+			areaEncounters[1] = bgmEncounterDB[(i*5)+3];
+            battleMusicSwitch = bgmEncounterDB[(i*5)+4];
+            if (vLastMusic != bgmEncounterDB[(i*5)+1])
+            {
+                changeBGM(BGM_NONE,2,TRUE); Delay(10);
+                changeBGM(bgmEncounterDB[(i*5)+1],1,TRUE);
+            }
+        }
+    }
+}
+
+script "inGameMenu" (void)
+{
+    SetMusicVolume(0.0);
+    PlaySound(0,"RPGMENUO",1);
+    int menuSelected = 0;
+    setRes();
+    vHasControl = 0;
+    draw("RPGMENU","A",UI_MENU,208.1,176.1);
+    SetFont("UNSCII");
+    HudMessage(s:"\c[FamiGrey]SONATA\n\n\n\n\n\n\n\c[FamiGrey]v0.",i:vRpgVersion,s:(GetCvar("diskDebug") ? "D" : "A");HUDMSG_PLAIN,UI_MENUINFO,CR_UNTRANSLATED,224.1,176.1,0);
+    draw("UNSCII",strParam(s:"RETURN\n",s:(vHasTeleport > 0 ? strParam(s:"TPORT\c[FamiGrey]x",i:vHasTeleport) : "\c[FamiGrey]..."),s:"\n",s:(vHasBook ? "PRAY" : "\c[FamiGrey]..."),s:"\n",s:(altBoss2Clear ? (vPowerSpeed ? "\c[FamiBlue]SPEED\n" : "\c[FamiRed]POWER\n") : "\c[FamiGrey]...\n\cl"),s:(GetCvar("diskDebug") ? "DEBUG\n" : "???\n"),s:"RESET"),UI_MENUTEXT,224.1,184.1);
+
+    while (1)
+    {
+        if (inputDown && menuSelected < 5) {menuSelected++; PlaySound(0,"RPGMENUS",1);}
+        if (inputUp && menuSelected > 0) {menuSelected--; PlaySound(0,"RPGMENUS",1);}
+        if (inputUse)
+        {
+            if (menuSelected == 0)
+            {
+                SetMusicVolume(1.0);
+                vHasControl = 1;
+                clear(UI_MENU);
+                clear(UI_MENUINFO);
+                clear(UI_MENUTEXT);
+                clear(UI_MENUSELECTOR);
+                Terminate;
+            }
+
+            if (menuSelected == 1)
+            {
+                if (vHasTeleport > 0)
+                {
+                    vHasTeleport--;
+                    PlaySound(0,"RPGTELE",1);
+                    changeBGM(BGM_NONE,2,FALSE);
+                    vLastScreen = vCurrentScreen;
+                    vCurrentScreen = ROOM_CROSSING;
+                    ACS_NamedExecute("roomChange",0,vCurrentScreen,196);
+                    clear(UI_MENU);
+                    clear(UI_MENUINFO);
+                    clear(UI_MENUTEXT);
+                    clear(UI_MENUSELECTOR);
+                    Delay(10);
+                    SetMusicVolume(1.0);
+                    ACS_NamedExecute("sonataTimer",0);
+                    Terminate;
+                }
+                else
+                {
+                    PlaySound(0,"RPGMISS",1);
+                }
+            }
+
+            if (menuSelected == 2)
+            {
+                if (vHasBook)
+                {
+                    switch (vCurrentScreen)
+                    {
+                        case ROOM_MYSTERY:
+                            PlaySound(0,"RPGTELE",1);
+                            changeBGM(BGM_NONE,2,FALSE);
+                            vLastScreen = vCurrentScreen;
+                            vCurrentScreen = ROOM_CHURCH;
+                            ACS_NamedExecute("roomChange",0,vCurrentScreen,ENTER_CHURCH);
+                            clear(UI_MENU);
+                            clear(UI_MENUINFO);
+                            clear(UI_MENUTEXT);
+                            clear(UI_MENUSELECTOR);
+                            Delay(10);
+                            SetMusicVolume(1.0);
+                            Terminate;
+                        break;
+
+                        case ROOM_CHURCH:
+                            PlaySound(0,"RPGTELE",1);
+                            changeBGM(BGM_NONE,2,FALSE);
+                            vLastScreen = vCurrentScreen;
+                            vCurrentScreen = ROOM_MYSTERY;
+                            ACS_NamedExecute("roomChange",0,vCurrentScreen,ENTER_MYSTERY+40);
+                            clear(UI_MENU);
+                            clear(UI_MENUINFO);
+                            clear(UI_MENUTEXT);
+                            clear(UI_MENUSELECTOR);
+                            Delay(10);
+                            SetMusicVolume(1.0);
+                            Terminate;
+                        break;
+
+                        case ROOM_MOON_HOUSE_END:
+                            if (vRealPos == 149)
+                            {
+                                PlaySound(0,"RPGTELE",1);
+                                changeBGM(BGM_NONE,2,FALSE);
+                                clear(UI_MENU);
+                                clear(UI_MENUINFO);
+                                clear(UI_MENUTEXT);
+                                clear(UI_MENUSELECTOR);
+                                Delay(5);
+                                SetMusicVolume(1.0);
+                                ACS_NamedExecute("b_initBattle",0,bENEMY_MOON1);
+                                Terminate;
+                            }
+                            else
+                            {
+                                PlaySound(0,"RPGMISS",1);
+                            }
+                        break;
+
+                        default:
+                            PlaySound(0,"RPGMISS",1);
+                        break;
+                    }
+                    drawHud();
+                }
+                else
+                {
+                    PlaySound(0,"RPGMISS",1);
+                }
+            }
+
+            if (menuSelected == 3)
+            {
+                if (altBoss2Clear)
+                {
+                    PlaySound(0,"RPGMENUS",1);
+                    vPowerSpeed = !vPowerSpeed;
+                    draw("UNSCII",strParam(s:"RETURN\n",s:(vHasTeleport > 0 ? strParam(s:"TPORT\c[FamiGrey]x",i:vHasTeleport) : "\c[FamiGrey]..."),s:"\n",s:(vHasBook ? "PRAY" : "\c[FamiGrey]..."),s:"\n",s:(altBoss2Clear ? (vPowerSpeed ? "\c[FamiBlue]SPEED\n" : "\c[FamiRed]POWER\n") : "\c[FamiGrey]...\n\cl"),s:(GetCvar("diskDebug") ? "DEBUG\n" : "???\n"),s:"RESET"),UI_MENUTEXT,224.1,184.1);
+                    drawHud();
+                }
+                else
+                {
+                    PlaySound(0,"RPGMISS",1);
+                }
+            }
+
+            if (menuSelected == 4)
+            {
+                if (GetCvar("diskDebug"))
+                {
+                    PlaySound(0,"RPGMENUO",1);
+                    vOpenedDebug = 1;
+                    ACS_NamedExecuteWait("inGameDebugMenu",0);
+                }
+                else
+                {
+                    PlaySound(0,"RPGMISS",1);
+                }
+            }
+
+            if (menuSelected == 5)
+            {
+                AmbientSound("FDSON",127);
+                changeBGM(BGM_NONE,2,FALSE);
+                ACS_NamedTerminate("sonataTimeDsiplay",0);
+                clearAll();
+                ACS_NamedExecute("titleMenu",0);
+                SetMusicVolume(1.0);
+                Terminate;
+            }
+        }
+        draw("UNSCII",">",UI_MENUSELECTOR,216.1,184.1+((menuSelected*8)<<16));
+        Delay(1);
+    }
+}
+
+function void debugReWriter (int battleType)
+{
+    draw("UNSCII",strParam
+    (
+        s:strParam(s:(debugger ? "ON" : "OFF")),s:"\n",
+        i:vCurrentScreen,s:"\n",
+        i:vPosX,s:"\n",
+        i:vPosY,s:"\n",
+        i:vHP,s:"\n",
+        i:battleType,s:"\n",
+        s:strParam(s:(battlesOn ? "ON" : "OFF"))
+    ),
+    UI_DEBUGMENUVALUES,264.1,160.1);
+}
+
+function void debugRoomSwitch (void)
+{
+    ACS_NamedTerminate("sanity",0);
+    clear(ZONE_SPRITE1);
+    clear(ZONE_SPRITE2);
+    clear(ZONE_SPRITE3);
+    drawRoom(0);
+    drawElph();
+}
+
+script "inGameDebugMenu" (void)
+{
+    int menuSelected = 0;
+    int battleType = 0;
+    draw("RPGDMENU","A",UI_DEBUGMENU,208.1,152.1);
+    draw("UNSCII","INFO\nROOM\nPOSX\nPOSY\nMIND\nTEST\nBATT\nGIVE\nBACK",UI_DEBUGMENUTEXT,224.1,160.1);
+    debugReWriter(battleType);
+    while (1)
+    {
+        if (inputUp && menuSelected > 0)
+        {
+            menuSelected--;
+            PlaySound(0,"RPGMENUS",1);
+        }
+        if (inputDown && menuSelected < 8)
+        {
+            menuSelected++;
+            PlaySound(0,"RPGMENUS",1);
+        }
+        draw("UNSCII",">",UI_DEBUGMENUSELECTOR,216.1,160.1+((menuSelected*8)<<16));
+
+        if (inputLeft)
+        {
+            if (menuSelected == 0)
+            {
+                ACS_NamedExecute("rpg_debugger",0);
+                debugger = !debugger;
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 1)
+            {
+                vCurrentScreen--;
+                if (vCurrentScreen < 0) {vCurrentScreen = 143;}
+                debugRoomSwitch();
+                Delay(1);
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 2)
+            {
+                vPosX--;
+                if (vPosX < 0) {vPosX = 19;}
+                drawElph();
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 3)
+            {
+                vPosY--;
+                if (vPosY < 0) {vPosY = 13;}
+                drawElph();
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 4)
+            {
+                vHP -= 5;
+                if (vHP < 1) {vHP = 1;}
+                drawHud();
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 5)
+            {
+               battleType--;
+               if (battleType < 0) {battleType = 99;}
+               debugReWriter(battleType);
+               PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 6)
+            {
+                battlesOn = !battlesOn;
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+        }
+
+        if (inputRight)
+        {
+            if (menuSelected == 0)
+            {
+                ACS_NamedExecute("rpg_debugger",0);
+                debugger = !debugger;
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 1)
+            {
+                vCurrentScreen++;
+                if (vCurrentScreen > 143) {vCurrentScreen = 0;}
+                debugRoomSwitch();
+                Delay(1);
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 2)
+            {
+                vPosX++;
+                if (vPosX > 19) {vPosX = 0;}
+                drawElph();
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 3)
+            {
+                vPosY++;
+                if (vPosY > 13) {vPosY = 0;}
+                drawElph();
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 4)
+            {
+                vHP += 5;
+                if (vHP > 40) {vHP = 40;}
+                drawHud();
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 5)
+            {
+               battleType++;
+               if (battleType > 99) {battleType = 0;}
+               debugReWriter(battleType);
+               PlaySound(0,"RPGMENUS",1);
+            }
+            if (menuSelected == 6)
+            {
+                battlesOn = !battlesOn;
+                debugReWriter(battleType);
+                PlaySound(0,"RPGMENUS",1);
+            }
+        }
+
+        if (inputUse)
+        {
+            if (menuSelected == 5)
+            {
+                SetMusicVolume(1.0);
+                ACS_NamedTerminate("inGameMenu",0);
+                clear(UI_MENU);
+                clear(UI_MENUINFO);
+                clear(UI_MENUTEXT);
+                clear(UI_MENUSELECTOR);
+                Clear(UI_DEBUGMENU);
+                Clear(UI_DEBUGMENUTEXT);
+                Clear(UI_DEBUGMENUSELECTOR);
+                Clear(UI_DEBUGMENUVALUES);
+                vHasControl = 1;
+                ACS_NamedExecute("b_initBattle",0,battleType*12);
+                Terminate;
+            }
+            if (menuSelected == 7)
+            {
+                PlaySound(0,"RPGMENUS",1);
+                debugGive();
+                drawHud();
+            }
+
+            if (menuSelected ==8)
+            {
+                PlaySound(0,"RPGMENUB",1);
+                Clear(UI_DEBUGMENU);
+                Clear(UI_DEBUGMENUTEXT);
+                Clear(UI_DEBUGMENUSELECTOR);
+                Clear(UI_DEBUGMENUVALUES);
+                Terminate;
+            }
+        }
+        Delay(1);
+    }
+}
+
+script "HPtracker" (void)
+{
+    While (vHP > 0)
+    {
+        Delay(5);
+    }
+    if (vCurrentScreen == ROOM_HOMEMOON)
+    {
+        ACS_NamedTerminate("sanity",0);
+        ACS_NamedExecute("gameOver",0,GO_MOONROOM);
+        Terminate;
+    }
+}
+
+script "gameOver" (int type)
+{
+    drawTime = 0;
+    ACS_NamedTerminate("sonataTimer",0);
+    vHP = 0;
+    changeBGM(BGM_NONE,2,FALSE);
+    clearAll();
+    debugMessage="";
+    debugMessage2="";
+    debugMessage3="";
+    vHasControl = 0;
+    vRealPos = 0;
+    vWishPos = 0;
+    vPosX = 0;
+    vPosY = 0;
+
+    if (type == GO_MOONROOM)
+    {
+        Delay(20);
+        debugmessage2 = "SCREEN_GAMEOVER\n";
+        draw("RPGOVER","A",ZONE_BG,160.0,192.2);
+        draw("UNSCII","GAME OVER",ZONE_ROOM,160.0,208.2);
+        changeBGM(BGM_MOONISH,1,FALSE);
+        Delay(15);
+        debugmessage2 = "";
+        clear(ZONE_BG);
+        clear(ZONE_ROOM);
+        changeBGM(BGM_NONE,2,FALSE);
+        Delay(5);
+        debugmessage2 = "SCREEN_ILLDOITAGAIN\n";
+        draw("GO_ANGEL","A",ZONE_BG,160.0,208.2);
+        draw("UNSCII","******* ********",ZONE_ROOM,160.0,224.2);
+        changeBGM(BGM_ANGEL,2,FALSE);
+        Delay(65);
+        changeBGM(BGM_NONE,2,FALSE);
+        clear(ZONE_BG);
+        clear(ZONE_ROOM);
+        Delay(10);
+        ACS_NamedExecute("titleMenu",0);
+    }
+
+    if (type == GO_NORMAL || type == GO_GUTS)
+    {
+        if (type == GO_GUTS)
+        {
+            for (int i = 0; i < 14; i++)
+            {
+                int eyeCount = i+1;
+                if (eyeCount > 4) {eyeCount = 5+(i%2);}
+                draw(strParam(s:"RPGEYE",i:eyeCount),"A",UI_HUDFACE,0.1,0.1);
+                Delay((i < 2 ? 4 : 2));
+            }
+            clear(UI_HUDFACE);
+        }
+        Delay(20);
+        debugmessage2 = "SCREEN_GAMEOVER\n";
+        draw("RPGOVER","A",ZONE_BG,160.0,192.2);
+        draw("UNSCII","GAME OVER",ZONE_ROOM,160.0,208.2);
+        changeBGM(BGM_MOONISH,1,FALSE);
+        while (!inputUse)
+        {
+            Delay(1);
+            debugMessageInput = StrParam(s:"WAIT");
+        }
+        debugMessageInput = "";
+        changeBGM(BGM_NONE,2,FALSE);
+        clear(ZONE_BG);
+        clear(ZONE_ROOM);
+        Delay(10);
+        ACS_NamedExecute("titleMenu",0);
+    }
+}
+
+script "sanity" (void)
+{
+    while (1)
+    {
+        for (int i = 0; i < 15; i++)
+        {
+            Delay(2);
+            debugmessage2 = strParam(s:"TIME ", i:vSanityTimer, s:".", i:i, s:"\n", i:(vSanityTimer/5), s:" DMG\n");
+        }
+        if (vHasControl)
+        {
+            vSanityTimer++;
+            if (vSanityTimer > 2)
+            {
+                vHP -= vSanityTimer/3;
+            }
+            drawHud();
+        }
+        Delay(1);
+        if (vHP < 0)
+        {
+            ACS_NamedExecute("gameOver",0,GO_MOONROOM);
+            Terminate;
+        }
+    }
+}
+
+#include "SN_BATL.ACS"
+
+bool screenOn = 0;
+
+script "tvEvent" (void)
+{
+    drawTime = 0;
+    clearAll();
+    changeBGM(BGM_NONE,0,0);
+    vHasControl = 0;
+    Delay(10);
+    changeBGM(BGM_NOISE,0,0);
+    str screenTexture = "";
+    screenOn = 1;
+    ACS_NamedExecute("tvEventExiter",0);
+    while (screenOn)
+    {
+        switch (random(0,2))
+        {
+            case 0:
+            screenTexture = "RPGSCRN1";
+            break;
+
+            case 1:
+            screenTexture = "RPGSCRN3";
+            break;
+
+            case 2:
+            screenTexture = "RPGSCRN5";
+            break;
+        }
+        draw(screenTexture, "A", ZONE_BG, 160.0, 128.0);
+        delay(getRNG()%16);
+    }
+    clear(ZONE_BG);
+    changeBGM(BGM_NONE,0,0);
+    Delay(10);
+    ChangeBGM(vLastMusic,vLastMusicFile,TRUE);
+    drawRoom(0);
+    drawElph();
+    drawHud();
+    vHasControl = 1;
+    drawTime = 1;
+}
+
+script "tvEventExiter" (void)
+{
+    while (screenOn)
+    {
+        if (inputUse)
+        {
+            screenOn = 0;
+        }
+        Delay(1);
+    }
+}
+
+#define BOW_COST 100
+#define MELEE_COST 100
+#define BOMB_COST 150
+#define POTION_COST 150
+#define TP_COST 50
+#define SLOTS_COST 1000
+
+function void drawShop (int menuOption)
+{
+    draw("UNSCII",strParam
+    (
+        s:vBowBoost < 2 ? strParam(s:"RANGED UP \c[FamiGold]",i:BOW_COST+(50*vBowBoost),s:"G\nCURRENT:  LV",i:vBowBoost+1) : strParam(s:"\c[FamiRed]SOLD OUT\nCURRENT:  LV",i:vBowBoost+1),s:"\n\n",
+        s:vMeleeBoost < 2 ? strParam(s:"MELEE UP  \c[FamiGold]",i:MELEE_COST+(50*vMeleeBoost),s:"G\nCURRENT:  LV",i:vMeleeBoost+1) : strParam(s:"\c[FamiRed]SOLD OUT\nCURRENT:  LV",i:vMeleeBoost+1),s:"\n\n",
+        s:vHasBomb ? strParam(s:"\c[FamiRed]SOLD OUT\nYOU HAVE: ",i:vHasBomb) : strParam(s:"BOMB      \c[FamiGold]",i:BOMB_COST,s:"G\nYOU HAVE: ",i:vHasBomb),s:"\n\n",
+        s:vHasPotion ? strParam(s:"\c[FamiRed]SOLD OUT\nYOU HAVE: ",i:vHasPotion) : strParam(s:"POTION    \c[FamiGold]",i:POTION_COST,s:"G\nYOU HAVE: ",i:vHasPotion),s:"\n\n",
+        s:vHasTeleport >= 9 ? strParam(s:"\c[FamiRed]SOLD OUT\nYOU HAVE: ",i:vHasTeleport) : strParam(s:"TELEPORT  \c[FamiGold]",i:TP_COST,s:"G\nYOU HAVE: ",i:vHasTeleport),s:"\n\n",
+        s:vHasSlowSlots ? strParam(s:"\c[FamiRed]SOLD OUT\nYOU HAVE: ",i:vHasSlowSlots) : strParam(s:"SLOWSLOTS \c[FamiGold]",i:SLOTS_COST,s:"G\nYOU HAVE: ",i:vHasSlowSlots),s:"\n\n",
+        s:"GOODBYE\n\n\n\n\n\nGOLD: \c[FamiGold]",i:vGold
+    ),
+    3500, 40.1,32.1);
+    draw("UNSCII",">",3501,16.1,32.1+((menuOption*24)<<16));
+    draw(vBowBoost < 2 ? vBowBoost < 1 ? "RPGBBOW0" : "RPGBBOW1" : "RPGBBOW2","A",3499,24.1,32.1);
+    draw(vMeleeBoost < 2 ? vMeleeBoost < 1 ? "RPGBMEL0" : "RPGBMEL1" : "RPGBMEL2","A",3498,24.1,56.1);
+    draw("RPGBOM","A",3497,24.1,80.1);
+    draw("RPGPOT","A",3496,24.1,104.1);
+    draw("RPGTPORT","A",3495,24.1,128.1);
+    draw("RPGSSLT","A",3494,24.1,152.1);
+}
+
+script "shopping" (void)
+{
+    drawTime = 0;
+    vHasControl = 0;
+    clearAll();
+    changeBGM(BGM_NONE,0,0);
+    Delay(10);
+    PlaySound(0,"RPGTUNL",2);
+    int menuSelected = 0;
+    bool inShop = 1;
+    draw("RPGSHOP","A",3502,320.2,248.2);
+    drawShop(menuSelected);
+    Delay(20);
+    changeBGM(BGM_SHOP,0,0);
+
+    while (inShop)
+    {
+        if (inputUp && menuSelected > 0)
+        {
+            menuSelected--;
+            PlaySound(0,"RPGMENUS",1);
+            drawShop(menuSelected);
+        }
+        if (inputDown && menuSelected < 6)
+        {
+            menuSelected++;
+            PlaySound(0,"RPGMENUS",1);
+            drawShop(menuSelected);
+        }
+        if (inputUse)
+        {
+            switch (menuSelected)
+            {
+                case 0:
+                if (vBowBoost < 2 && vGold >= BOW_COST+(50*vBowBoost))
+                {
+                    PlaySound(0,"RPGMENUO",1);
+                    PlaySound(0,"RPGTUNL1",2);
+                    vGold -= BOW_COST+(50*vBowBoost);
+                    vBowBoost++;
+                }
+                else {PlaySound(0,"RPGMISS",1);}
+                break;
+
+                case 1:
+                if (vMeleeBoost < 2 && vGold >= MELEE_COST+(50*vMeleeBoost))
+                {
+                    PlaySound(0,"RPGMENUO",1);
+                    PlaySound(0,"RPGTUNL1",2);
+                    vGold -= MELEE_COST+(50*vMeleeBoost);
+                    vMeleeBoost++;
+                }
+                else {PlaySound(0,"RPGMISS",1);}
+                break;
+
+                case 2:
+                if (!vHasBomb && vGold >= BOMB_COST)
+                {
+                    PlaySound(0,"RPGMENUO",1);
+                    PlaySound(0,"RPGTUNL1",2);
+                    vHasBomb = 1;;
+                    vGold -= BOMB_COST;
+                }
+                else {PlaySound(0,"RPGMISS",1);}
+                break;
+
+                case 3:
+                if (!vHasPotion && vGold >= POTION_COST)
+                {
+                    PlaySound(0,"RPGMENUO",1);
+                    PlaySound(0,"RPGTUNL1",2);
+                    vHasPotion = 1;;
+                    vGold -= POTION_COST;
+                }
+                else {PlaySound(0,"RPGMISS",1);}
+                break;
+
+                case 4:
+                if (vHasTeleport < 9 && vGold >= TP_COST)
+                {
+                    PlaySound(0,"RPGMENUO",1);
+                    PlaySound(0,"RPGTUNL1",2);
+                    vHasTeleport++;
+                    vGold -= TP_COST;
+                }
+                else {PlaySound(0,"RPGMISS",1);}
+                break;
+
+                case 5:
+                if (!vHasSlowSlots && vGold >= SLOTS_COST)
+                {
+                    PlaySound(0,"RPGMENUO",1);
+                    PlaySound(0,"RPGTUNL1",2);
+                    vHasSlowSlots = 1;;
+                    vGold -= SLOTS_COST;
+                }
+                else {PlaySound(0,"RPGMISS",1);}
+                break;
+
+                case 6:
+                changeBGM(BGM_NONE,0,0);
+                PlaySound(0,"RPGTUNL2",2);
+                inShop = 0;
+                Delay(35);
+                break;
+            }
+            drawShop(menuSelected);
+        }
+        Delay(1);
+    }
+
+    clear(3502);
+    clear(3501);
+    clear(3500);
+    clear(3494);
+    clear(3495);
+    clear(3496);
+    clear(3497);
+    clear(3498);
+    clear(3499);
+    clearAll();
+    Delay(10);
+    drawRoom(0);
+    drawElph();
+    drawHud();
+    vHasControl = 1;
+    drawTime = 1;
+    ChangeBGM(vLastMusic,vLastMusicFile,TRUE);
+}
+
+script "teleportBuffer" (void)
+{
+    switch (vCurrentScreen)
+    {
+        case ROOM_STAR_MAZE_A:
+        case ROOM_STAR_MAZE_B:
+        case ROOM_STAR_MAZE_C:
+        case ROOM_STAR_MAZE_D:
+            vTeleportBufferTime = 10;
+            break;
+
+        default:
+            vTeleportBufferTime = 22;
+            break;
+    }
+
+    while (vTeleportBufferTime > 0)
+    {
+        vTeleportBufferTime--;
+        Delay(1);
+    }
+    vTeleportBufferTime = 0;
+}

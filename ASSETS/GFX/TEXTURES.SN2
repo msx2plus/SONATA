@@ -1,0 +1,1014 @@
+// SONATA COMPOSITE GRAPHICS
+
+Texture "RPGSTAT0", 320, 256
+{
+	Patch "NOISEB01", 0, 0
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 0, 100
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 0, 200
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 100, 0
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 100, 100
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 100, 200
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 200, 0
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 200, 100
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 200, 200
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 300, 0
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 300, 100
+	{
+		FlipX
+		FlipY
+	}
+	Patch "NOISEB01", 300, 200
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "RPGSTAT1", 320, 256
+{
+	Patch "NOISEB01", 0, 0
+	Patch "NOISEB01", 0, 100
+	Patch "NOISEB01", 0, 200
+	Patch "NOISEB01", 100, 0
+	Patch "NOISEB01", 100, 100
+	Patch "NOISEB01", 100, 200
+	Patch "NOISEB01", 200, 0
+	Patch "NOISEB01", 200, 100
+	Patch "NOISEB01", 200, 200
+	Patch "NOISEB01", 300, 0
+	Patch "NOISEB01", 300, 100
+	Patch "NOISEB01", 300, 200
+}
+
+Texture "RPGSTAT2", 320, 256
+{
+	Patch "NOISEB01", -76, -37
+	Patch "NOISEB01", -76, 63
+	Patch "NOISEB01", -76, 163
+	Patch "NOISEB01", 24, -37
+	Patch "NOISEB01", 24, 63
+	Patch "NOISEB01", 24, 163
+	Patch "NOISEB01", 124, -37
+	Patch "NOISEB01", 124, 63
+	Patch "NOISEB01", 124, 163
+	Patch "NOISEB01", 224, -37
+	Patch "NOISEB01", 224, 63
+	Patch "NOISEB01", 224, 163
+}
+
+Texture "RPGSTAT3", 320, 256
+{
+	Patch "NOISEB01", -76, -7
+	Patch "NOISEB01", -76, 93
+	Patch "NOISEB01", -76, 193
+	Patch "NOISEB01", 24, -7
+	Patch "NOISEB01", 24, 93
+	Patch "NOISEB01", 24, 193
+	Patch "NOISEB01", 124, -7
+	Patch "NOISEB01", 124, 93
+	Patch "NOISEB01", 124, 193
+	Patch "NOISEB01", 224, -7
+	Patch "NOISEB01", 224, 93
+	Patch "NOISEB01", 224, 193
+}
+
+Texture "RPGSTAT4", 320, 256
+{
+	Patch "NOISEB01", -3, -40
+	Patch "NOISEB01", -3, 60
+	Patch "NOISEB01", -3, 160
+	Patch "NOISEB01", 97, -40
+	Patch "NOISEB01", 97, 60
+	Patch "NOISEB01", 97, 160
+	Patch "NOISEB01", 197, -40
+	Patch "NOISEB01", 197, 60
+	Patch "NOISEB01", 197, 160
+	Patch "NOISEB01", 297, -40
+	Patch "NOISEB01", 297, 60
+	Patch "NOISEB01", 297, 160
+}
+
+Texture "RPGSTAT5", 320, 256
+{
+	Patch "NOISEB01", 0, 0
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 0, 100
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 0, 200
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 100, 0
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 100, 100
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 100, 200
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 200, 0
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 200, 100
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 200, 200
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 300, 0
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 300, 100
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 300, 200
+	{
+		FlipX
+	}
+}
+
+Texture "RPGSTAT6", 320, 256
+{
+	Patch "NOISEB01", -76, -37
+	{
+		FlipY
+	}
+	Patch "NOISEB01", -76, 63
+	{
+		FlipY
+	}
+	Patch "NOISEB01", -76, 163
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 24, -37
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 24, 63
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 24, 163
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 124, -37
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 124, 63
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 124, 163
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 224, -37
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 224, 63
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 224, 163
+	{
+		FlipY
+	}
+}
+
+Texture "RPGSTAT7", 320, 256
+{
+	Patch "NOISEB01", -76, -7
+	{
+		FlipX
+	}
+	Patch "NOISEB01", -76, 93
+	{
+		FlipX
+	}
+	Patch "NOISEB01", -76, 193
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 24, -7
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 24, 93
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 24, 193
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 124, -7
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 124, 93
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 124, 193
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 224, -7
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 224, 93
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 224, 193
+	{
+		FlipX
+	}
+}
+
+Texture "RPGSTAT8", 320, 256
+{
+	Patch "NOISEB01", -3, -40
+	{
+		FlipX
+	}
+	Patch "NOISEB01", -3, 60
+	{
+		FlipX
+	}
+	Patch "NOISEB01", -3, 160
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 97, -40
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 97, 60
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 97, 160
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 197, -40
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 197, 60
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 197, 160
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 297, -40
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 297, 60
+	{
+		FlipX
+	}
+	Patch "NOISEB01", 297, 160
+	{
+		FlipX
+	}
+}
+
+Texture "RPGSTAT9", 320, 256
+{
+	Patch "NOISEB01", -48, -36
+	{
+		FlipY
+	}
+	Patch "NOISEB01", -48, 64
+	{
+		FlipY
+	}
+	Patch "NOISEB01", -48, 164
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 52, -36
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 52, 64
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 52, 164
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 152, -36
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 152, 64
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 152, 164
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 252, -36
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 252, 64
+	{
+		FlipY
+	}
+	Patch "NOISEB01", 252, 164
+	{
+		FlipY
+	}
+}
+
+Texture "BATLBG0", 320, 256
+{
+	Patch "_BBGP0", 0, 0
+	Patch "_BBGP0", 224, 0
+	{
+		FlipX
+	}
+	Patch "_BBGP0", 0, 128
+	{
+		FlipY
+	}
+	Patch "_BBGP0", 224, 128
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "BBGMOON", 320, 256
+{
+	Patch "RPGNMEK", 64, -36
+	{
+		Blend "#23312B", 1.0
+	}
+	Patch "RPGNMEK1", 32, 134
+	{
+		Blend "#23312B", 1.0
+	}
+	Patch "RPGNMEK2", 226, 136
+	{
+		Blend "#23312B", 1.0
+	}
+	Patch "_BBGHALF", 0, 0
+	Patch "_BBGPG", 0, 0
+	Patch "_BBGPG", 192, 0
+	{
+		FlipX
+	}
+}
+
+Texture "BBGMOON2", 320, 256
+{
+	Patch "_BBGPH", 0, 0
+	Patch "_BBGPH", 208, 0
+	{
+		FlipX
+	}
+}
+
+Texture "BATLBG1", 320, 256
+{
+	Patch "_BBGP1", 0, 0
+	Patch "_BBGP1", 242, 0
+	{
+		FlipX
+	}
+	Patch "_BBGP1", 0, 128
+	Patch "_BBGP1", 242, 128
+	{
+		FlipX
+	}
+}
+
+Texture "BATLBG3", 320, 256
+{
+	Patch "_BBGP7", 0, 0
+	Patch "_BBGP7", 233, 0
+	{
+		FlipX
+	}
+	Patch "_BBGP7", 0, 128
+	{
+		FlipY
+	}
+	Patch "_BBGP7", 233, 128
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "BATLBG4", 320, 256
+{
+	Patch "_BBGP5", 0, -16
+	Patch "_BBGP5", 224, -16
+	{
+		FlipX
+	}
+	Patch "_BBGP5", 0, 80
+	Patch "_BBGP5", 224, 80
+	{
+		FlipX
+	}
+	Patch "_BBGP5", 0, 176
+	Patch "_BBGP5", 224, 176
+	{
+		FlipX
+	}
+	Patch "_BBGP5", 0, 32
+	{
+		FlipY
+	}
+	Patch "_BBGP5", 224, 32
+	{
+		FlipX
+		FlipY
+	}
+	Patch "_BBGP5", 0, 128
+	{
+		FlipY
+	}
+	Patch "_BBGP5", 224, 128
+	{
+		FlipX
+		FlipY
+	}
+	Patch "_BBGP5", 0, 224
+	{
+		FlipY
+	}
+	Patch "_BBGP5", 224, 224
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "BATLBG5", 320, 256
+{
+	Patch "_BBGP6", 0, 0
+	Patch "_BBGP6", 224, 0
+	{
+		FlipX
+	}
+	Patch "_BBGP6", 0, 128
+	Patch "_BBGP6", 224, 128
+	{
+		FlipX
+	}
+}
+
+Texture "BATLBG6", 320, 256
+{
+	Patch "_BBGP4", 0, 0
+	Patch "_BBGP4", 224, 0
+	{
+		FlipX
+	}
+	Patch "_BBGP4", 0, 128
+	{
+		FlipY
+	}
+	Patch "_BBGP4", 224, 128
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "BATLBG7", 320, 256
+{
+	Patch "_BBGP8", 0, 0
+	Patch "_BBGP8", 192, 0
+	{
+		FlipX
+	}
+	Patch "_BBGP8", 0, 128
+	{
+		FlipY
+	}
+	Patch "_BBGP8", 192, 128
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "BATLBG8", 320, 256
+{
+	Patch "_BBGPA", 8, 1
+	Patch "_BBGPA", 210, 1
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "BATLBG9", 320, 256
+{
+	Patch "_BBGPB", 0, 128
+	{
+		FlipY
+	}
+	Patch "_BBGPB", 178, 128
+	{
+		FlipX
+		FlipY
+	}
+	Patch "_BBGPB", 0, -62
+	Patch "_BBGPB", 178, -62
+	{
+		FlipX
+	}
+}
+
+Texture "BATLBGA", 320, 256
+{
+	Patch "_BBGPF", 0, 0
+	Patch "_BBGPF", 176, 0
+	{
+		FlipX
+	}
+	Patch "_BBGPF", 0, 128
+	{
+		FlipY
+	}
+	Patch "_BBGPF", 176, 128
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "BATLBGB", 160, 128
+{
+	XScale 0.500
+	YScale 0.500
+	Patch "_BBGPC", 0, 0
+	Patch "_BBGPC", 77, 0
+	{
+		FlipX
+	}
+}
+
+Texture "BATLBGC", 320, 256
+{
+	Patch "_BBGPD", 0, 0
+	Patch "_BBGPD", 224, 0
+	{
+		FlipX
+		FlipY
+	}
+	Patch "_BBGPD", 0, 128
+	Patch "_BBGPD", 224, 128
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "BATLBGD", 320, 256
+{
+	Patch "_BBGPE", 0, 0
+	Patch "_BBGPE", 224, 0
+	{
+		FlipX
+	}
+	Patch "_BBGPEA", 80, 0
+}
+
+Texture "BATLBGE", 320, 256
+{
+	Patch "_ATLFBG1", 0, 0
+	Patch "_ATLFBG1", 236, 0
+	{
+		FlipX
+	}
+	Patch "_ATLFBG1", 0, 128
+	{
+		FlipY
+	}
+	Patch "_ATLFBG1", 236, 128
+	{
+		FlipX
+		FlipY
+	}
+	Patch "_ATLFBG3", 96, 0
+	Patch "_ATLFBG3", 96, 128
+}
+
+Texture "RPGCOMP1", 96, 32
+{
+	Patch "_PGCOMP1", 0, 0
+	Patch "_PGCOMP1", 80, 0
+	Patch "_PGCOMP2", 32, 0
+	Patch "_PGCOMP3", 20, 0
+}
+
+Texture "RPGCOMP2", 96, 32
+{
+	Patch "_PGCOMP3", 20, 0
+}
+
+Texture "SBG001", 320, 224
+{
+	Patch "_BGBS01", 0, 0
+	Patch "_BGBS01", 0, 112
+	{
+		FlipY
+	}
+	Patch "_BGBS01", 160, 0
+	{
+		FlipX
+	}
+	Patch "_BGBS01", 160, 112
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "SBG002", 320, 224
+{
+	Patch "_BGBS02", 0, 0
+	Patch "_BGBS02", 0, 112
+	{
+		FlipY
+	}
+	Patch "_BGBS02", 160, 0
+	{
+		FlipX
+	}
+	Patch "_BGBS02", 160, 112
+	{
+		FlipX
+		FlipY
+	}
+}
+
+Texture "SBG003", 320, 224
+{
+	Patch "_BBGPD", -33, 2
+	{
+		FlipY
+		Rotate 90
+	}
+	Patch "_BBGPD", -44, 33
+	{
+		Rotate 90
+	}
+	Patch "_BBGPD", -32, 135
+	{
+		FlipX
+		Rotate 90
+	}
+	Patch "_BBGPD", 94, 2
+	{
+		FlipY
+		Rotate 90
+	}
+	Patch "_BBGPD", 83, 33
+	{
+		Rotate 90
+	}
+	Patch "_BBGPD", 95, 135
+	{
+		FlipX
+		Rotate 90
+	}
+	Patch "_BBGPD", 221, 2
+	{
+		FlipY
+		Rotate 90
+	}
+	Patch "_BBGPD", 210, 33
+	{
+		Rotate 90
+	}
+	Patch "_BBGPD", 222, 135
+	{
+		FlipX
+		Rotate 90
+	}
+	Patch "_BBGPD", 240, 106
+	{
+		FlipX
+		FlipY
+		Rotate 90
+	}
+	Patch "_BBGPD", -14, 107
+	{
+		FlipX
+		FlipY
+		Rotate 90
+	}
+	Patch "_BBGPD", 113, 107
+	{
+		FlipX
+		FlipY
+		Rotate 90
+	}
+}
+
+Texture "SBG004", 320, 224
+{
+	Patch "_BGBS03", 0, 0
+	{
+		FlipY
+	}
+	Patch "_BGBS03", 160, 0
+	{
+		FlipY
+	}
+	Patch "_BGBS03", 0, 112
+	{
+		FlipX
+	}
+	Patch "_BGBS03", 160, 112
+	{
+		FlipX
+	}
+}
+
+Texture "RPGNME0X", 80, 64
+{
+	Patch "RPGNME0", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -40, -64
+}
+
+Texture "RPGNME1X", 64, 96
+{
+	Patch "RPGNME1", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", 0, -96
+}
+
+Texture "RPGNME2X", 80, 112
+{
+	Patch "RPGNME2", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -72, 0
+}
+
+Texture "RPGNME3X", 96, 104
+{
+	Patch "RPGNME3", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -56, -40
+}
+
+Texture "RPGNME4X", 64, 160
+{
+	Patch "RPGNME4", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -88, -32
+}
+
+Texture "RPGNME5X", 128, 196
+{
+	Patch "RPGNME5", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", 0, 0
+}
+
+Texture "RPGNME6X", 64, 72
+{
+	Patch "RPGNME6", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -72, -120
+}
+
+Texture "RPGNME7X", 96, 96
+{
+	Patch "RPGNME7", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -56, -96
+}
+
+Texture "RPGNME8X", 72, 72
+{
+	Patch "RPGNME8", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -80, -120
+}
+
+Texture "RPGNME9X", 72, 96
+{
+	Patch "RPGNME9", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -80, 0
+}
+
+Texture "RPGNMEAX", 112, 112
+{
+	Patch "RPGNMEA", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", 0, -80
+}
+
+Texture "RPGNMEBX", 96, 112
+{
+	Patch "RPGNMEB", -8, -8
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -24, -15
+}
+
+Texture "RPGNMEKX", 192, 232
+{
+	Patch "RPGNMEK", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+}
+
+Texture "RPGNMECX", 96, 112
+{
+	Patch "RPGNMEB", -7, -7
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -32, -64
+}
+
+Texture "RPGNMEDX", 112, 112
+{
+	Patch "RPGNMED", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -40, -80
+}
+
+Texture "RPGNMEEX", 48, 96
+{
+	Patch "RPGNMEE", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -104, -96
+}
+
+Texture "RPGNMEFX", 72, 96
+{
+	Patch "RPGNMEF", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -48, -96
+}
+
+Texture "RPGNMEGX", 168, 160
+{
+	Patch "RPGNMEG", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", 0, 0
+	Patch "RPGHGLT", 152, 0
+}
+
+Texture "RPGNMEHX", 136, 112
+{
+	Patch "RPGNMEH", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", -16, 0
+}
+
+Texture "RPGNMEIX", 320, 128
+{
+	Patch "RPGNMEI", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", 8, 0
+	Patch "RPGHGLT", 160, 0
+}
+
+Texture "RPGNMEJX", 160, 160
+{
+	Patch "RPGNMEJ", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", 0, 0
+	Patch "RPGHGLT", 152, 0
+}
+
+Texture "RPGNMELX", 168, 136
+{
+	Patch "RPGNMEL", 0, 0
+	{
+		Blend "#E40060", 1.0
+	}
+	Patch "RPGHGLT", 0, -16
+	Patch "RPGHGLT", 152, -16
+}
+
+Texture "RPGNMEMX", 128, 400
+{
+	Patch "RPGNMEM", 0, 0
+	{
+		Blend "#FF0046"
+	}
+	Patch "RPGHGLT", 0, 94
+}
+
+// End of texture definitions
